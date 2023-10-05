@@ -1,0 +1,47 @@
+# Node.js
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Environment Variables
+.env
+
+# macOS
+.DS_Store
+
+# Editor/IDE specific files
+.vscode/
+.idea/
+
+# Dependency lock files
+package-lock.json
+yarn.lock
+
+# Testing files
+__tests__/
+test/
+tests/
+coverage/
+
+# Production build
+dist/
+build/
+
+# Ignore local development configurations
+config/local.json
+config/local.js
+
+# Ignore IDE/Editor settings
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw??
