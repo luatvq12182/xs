@@ -1,5 +1,4 @@
 const KQXSModel = require("../models/kqxs.model");
-const { getTimeInVn } = require("../utils");
 
 const getResult = async (req, res) => {
     try {
@@ -31,7 +30,7 @@ const getResult = async (req, res) => {
         }
 
         const kqxs = await KQXSModel.findOne({
-            ngay: getTimeInVn(ngay),
+            ngay: ngay,
             domain,
         });
 
@@ -56,56 +55,6 @@ const createResult = async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: "Error creating" });
     }
-};
-
-/**
- * method: POST
- * endpoint: /api/ketqua
- * body: {
- *  domain: 1 | 2 | 3 (Mien bac, Mien trung, Mien nam)
- *  thongke: ['dau', 'duoi', '']
- * }
- */
-
-const mock = {
-    domain: 1,
-    ketqua: {
-        giaidacbiet: [73121],
-        giai1: [55217],
-        giai2: [58651, 16695],
-        giai3: [33566, 88641, 33460],
-        giai4: [1730, 9916, 2124, 9960],
-        giai5: [6043, 5427, "0070", 4002, 6493, 5809],
-        giai6: [332, 983, 794],
-        giai7: [64, 68, "07", 56],
-    },
-    thongke: {
-        dau: {
-            0: [2, 7, 8, 9],
-            1: [6, 7],
-            2: [],
-            3: [],
-            4: [],
-            5: [],
-            6: [],
-            7: [],
-            8: [],
-            9: [],
-        },
-        duoi: {
-            0: [2, 3, 5, 6, 6, 7],
-            1: [6, 7],
-            2: [],
-            3: [],
-            4: [],
-            5: [],
-            6: [],
-            7: [],
-            8: [],
-            9: [],
-        },
-    },
-    ngay: "06/10/2023",
 };
 
 module.exports = {

@@ -1,5 +1,5 @@
 const kqxsModel = require("../models/kqxs.model");
-const { lay10SoLonNhat, lay10SoBeNhat, getTimeInVn } = require("../utils");
+const { lay10SoLonNhat, lay10SoBeNhat } = require("../utils");
 
 const xuatHienNhieuNhat = async (req, res) => {
     const { date = new Date(), range = 30 } = req.query;
@@ -9,7 +9,7 @@ const xuatHienNhieuNhat = async (req, res) => {
         const kqxs = await kqxsModel
             .find({
                 ngay: {
-                    $lt: getTimeInVn(date),
+                    $lt: date,
                 },
             })
             .limit(range)
@@ -50,7 +50,7 @@ const xuatHienItNhat = async (req, res) => {
         const kqxs = await kqxsModel
             .find({
                 ngay: {
-                    $lt: getTimeInVn(date),
+                    $lt: date,
                 },
             })
             .limit(range)
@@ -91,7 +91,7 @@ const chuaXuatHien = async (req, res) => {
         const kqxs = await kqxsModel
             .find({
                 ngay: {
-                    $lt: getTimeInVn(date),
+                    $lt: date,
                 },
             })
             .limit(range)
@@ -139,7 +139,7 @@ const raLienTiep = async (req, res) => {
         const kqxs = await kqxsModel
             .find({
                 ngay: {
-                    $lt: getTimeInVn(date),
+                    $lt: date,
                 },
             })
             .limit(range)
@@ -205,7 +205,7 @@ const giaiDacBiet = async (req, res) => {
         const kqxs = await kqxsModel
             .find({
                 ngay: {
-                    $lt: getTimeInVn(date),
+                    $lt: date,
                 },
             })
             .limit(range)
@@ -256,7 +256,7 @@ const dauDuoi = async (req, res) => {
         const kqxs = await kqxsModel
             .find({
                 ngay: {
-                    $lt: getTimeInVn(date),
+                    $lt: date,
                 },
             })
             .limit(range)

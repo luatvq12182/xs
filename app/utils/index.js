@@ -28,15 +28,8 @@ function lay10SoBeNhat(obj) {
     return top10;
 }
 
-function getTimeInVn(date = new Date()) {
-    const options = { timeZone: "Asia/Saigon", timeZoneName: "short" };
-
-    return new Date(date).toISOString(options);
-}
-
 module.exports = {
     generateRandomString,
     lay10SoLonNhat,
     lay10SoBeNhat,
-    getTimeInVn,
 };
