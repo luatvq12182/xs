@@ -30,8 +30,12 @@ const getResult = async (req, res) => {
         }
 
         const kqxs = await KQXSModel.findOne({
-            ngay: ngay,
+            ngay: {
+                $lte: ngay,
+            },
             domain,
+        }).sort({
+            ngay: -1,
         });
 
         if (kqxs) {
