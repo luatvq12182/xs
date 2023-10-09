@@ -115,14 +115,14 @@ const main = async () => {
 
         // console.log(links);
 
-        // for (let i = 0; i <= 31; i++) {
-        //     const date = i;
-        //     const month = 10;
-        //     const year = new Date().getFullYear();
-        //     await crawKQXS(page, date, month, year);
-        // }
+        for (let i = 1; i <= 31; i++) {
+            const date = i;
+            const month = 3;
+            const year = new Date().getFullYear();
+            await crawKQXS(page, date, month, year);
+        }
 
-        await crawKQXS(page, 8, 10, 2023);
+        // await crawKQXS(page, 8, 10, 2023);
 
         process.exit();
     } catch (error) {

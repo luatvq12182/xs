@@ -1,4 +1,5 @@
 const KQXSModel = require("../models/kqxs.model");
+const { getTimeInVn } = require("../utils");
 
 const getResult = async (req, res) => {
     try {
@@ -30,7 +31,7 @@ const getResult = async (req, res) => {
         }
 
         const kqxs = await KQXSModel.findOne({
-            ngay: new Date(ngay),
+            ngay: getTimeInVn(ngay),
             domain,
         });
 
