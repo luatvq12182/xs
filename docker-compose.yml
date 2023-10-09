@@ -13,5 +13,5 @@ services:
       - xs-network
 
 networks:
-  chat-gpt-network:
+  xs-network:
     external: true
