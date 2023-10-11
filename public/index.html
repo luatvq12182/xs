@@ -24,8 +24,10 @@
 
         <p id="rs"></p>
 
-        <table border="1">
-            <thead id="t-head"></thead>
+        <table border="1" style="border-collapse: collapse">
+            <thead id="t-head">
+                <tr></tr>
+            </thead>
 
             <tbody id="t-body"></tbody>
         </table>
@@ -93,7 +95,7 @@
             });
 
             const main = async () => {
-                const data = await httpClient.get("/api/kqxs");
+                const data = await httpClient.get("/api/kqxs?range=90");
 
                 const arr = data.map((e) => {
                     return Object.values(e.ketqua)
@@ -104,9 +106,14 @@
                         });
                 });
 
-                // tHead.querySelector("tr").innerHTML = ;
-
-                console.log(arr);
+                tHead.querySelector("tr").innerHTML = `
+                    <td>Ngày</td>
+                    ${data
+                        .map((e) => {
+                            return `<th>${new Date(e.ngay).getDate()}</th>`;
+                        })
+                        .join("")}
+                `;
 
                 tBody.innerHTML = Array(100)
                     .fill(1)
@@ -121,7 +128,7 @@
                                     console.log();
 
                                     return `
-                                        <th style="padding: 0 6px;">${
+                                        <th style="padding: 2px 8px;">${
                                             e.includes(num)
                                                 ? e.reduce((pre, cr) => {
                                                       if (cr === num) {

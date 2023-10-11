@@ -1,22 +1,55 @@
+const { Constants } = require("../constants");
 const kqxsModel = require("../models/kqxs.model");
 const { lay10SoLonNhat, lay10SoBeNhat } = require("../utils");
 
+const layKetQua = async (req, res, next) => {
+    const { domain, province, date = new Date(), range = 30 } = req.query;
+
+    if (!domain) {
+        res.status(500).json({
+            error: "Vui lòng cung cấp miền cần xem kết quả",
+        });
+        return;
+    }
+
+    if (+domain !== Constants.Domain.MienBac && !province) {
+        res.status(500).json({
+            error: "Vui lòng cung cấp tỉnh thành cần xem kết quả",
+        });
+        return;
+    }
+
+    try {
+        const query = {
+            ngay: {
+                $lt: date,
+            },
+            domain,
+        };
+
+        if (+domain !== Constants.Domain.MienBac) {
+            query.province = province;
+        }
+
+        const kqxs = await kqxsModel.find(query).limit(range).sort({
+            ngay: -1,
+        });
+
+        req.kqxs = kqxs;
+
+        next();
+    } catch (error) {
+        res.status(500).json({
+            msg: "Có lỗi xảy ra, vui lòng thử lại",
+        });
+    }
+};
+
 const xuatHienNhieuNhat = async (req, res) => {
-    const { date = new Date(), range = 30 } = req.query;
+    const { kqxs } = req;
     const numbers = {};
 
     try {
-        const kqxs = await kqxsModel
-            .find({
-                ngay: {
-                    $lt: date,
-                },
-            })
-            .limit(range)
-            .sort({
-                ngay: -1,
-            });
-
         kqxs.forEach((e) => {
             const rs = Object.values(e.ketqua)
                 .filter(Array.isArray)
@@ -37,27 +70,16 @@ const xuatHienNhieuNhat = async (req, res) => {
         res.json(lay10SoLonNhat(numbers));
     } catch (error) {
         res.status(500).json({
-            msg: "Có lỗi xảy ra, vui lòng sửa lại",
+            msg: "Có lỗi xảy ra, vui lòng thử lại",
         });
     }
 };
 
 const xuatHienItNhat = async (req, res) => {
-    const { date = new Date(), range = 30 } = req.query;
+    const { kqxs } = req;
     const numbers = {};
 
     try {
-        const kqxs = await kqxsModel
-            .find({
-                ngay: {
-                    $lt: date,
-                },
-            })
-            .limit(range)
-            .sort({
-                ngay: -1,
-            });
-
         kqxs.forEach((e) => {
             const rs = Object.values(e.ketqua)
                 .filter(Array.isArray)
@@ -78,27 +100,16 @@ const xuatHienItNhat = async (req, res) => {
         res.json(lay10SoBeNhat(numbers));
     } catch (error) {
         res.status(500).json({
-            msg: "Có lỗi xảy ra, vui lòng sửa lại",
+            msg: "Có lỗi xảy ra, vui lòng thử lại",
         });
     }
 };
 
 const chuaXuatHien = async (req, res) => {
-    const { date = new Date(), range = 30 } = req.query;
+    const { kqxs } = req;
     const numbers = {};
 
     try {
-        const kqxs = await kqxsModel
-            .find({
-                ngay: {
-                    $lt: date,
-                },
-            })
-            .limit(range)
-            .sort({
-                ngay: -1,
-            });
-
         kqxs.forEach((e) => {
             const rs = e.ketqua.giaidacbiet.map((e) => {
                 return e.slice(-2);
@@ -123,30 +134,19 @@ const chuaXuatHien = async (req, res) => {
             }
         }
 
-        res.json({ response });
+        res.json(response);
     } catch (error) {
         res.status(500).json({
-            msg: "Có lỗi xảy ra, vui lòng sửa lại",
+            msg: "Có lỗi xảy ra, vui lòng thử lại",
         });
     }
 };
 
 const raLienTiep = async (req, res) => {
-    const { date = new Date(), range = 30 } = req.query;
+    const { kqxs } = req;
     const numbers = {};
 
     try {
-        const kqxs = await kqxsModel
-            .find({
-                ngay: {
-                    $lt: date,
-                },
-            })
-            .limit(range)
-            .sort({
-                ngay: -1,
-            });
-
         const arr = kqxs.map((e) => {
             return Object.values(e.ketqua)
                 .filter(Array.isArray)
@@ -193,26 +193,15 @@ const raLienTiep = async (req, res) => {
         console.log(error);
 
         res.status(500).json({
-            msg: "Có lỗi xảy ra, vui lòng sửa lại",
+            msg: "Có lỗi xảy ra, vui lòng thử lại",
         });
     }
 };
 
 const giaiDacBiet = async (req, res) => {
-    const { date = new Date(), range = 30 } = req.query;
+    const { kqxs } = req;
 
     try {
-        const kqxs = await kqxsModel
-            .find({
-                ngay: {
-                    $lt: date,
-                },
-            })
-            .limit(range)
-            .sort({
-                ngay: -1,
-            });
-
         res.json(
             kqxs
                 .map((e) => {
@@ -222,13 +211,13 @@ const giaiDacBiet = async (req, res) => {
         );
     } catch (error) {
         res.status(500).json({
-            msg: "Có lỗi xảy ra, vui lòng sửa lại",
+            msg: "Có lỗi xảy ra, vui lòng thử lại",
         });
     }
 };
 
 const dauDuoi = async (req, res) => {
-    const { date = new Date(), range = 30 } = req.query;
+    const { kqxs } = req;
     const numbers = {
         "0x": 0,
         "1x": 0,
@@ -253,17 +242,6 @@ const dauDuoi = async (req, res) => {
     };
 
     try {
-        const kqxs = await kqxsModel
-            .find({
-                ngay: {
-                    $lt: date,
-                },
-            })
-            .limit(range)
-            .sort({
-                ngay: -1,
-            });
-
         const arr = kqxs.map((e) => {
             return Object.values(e.ketqua)
                 .filter(Array.isArray)
@@ -290,12 +268,13 @@ const dauDuoi = async (req, res) => {
         res.json(numbers);
     } catch (error) {
         res.status(500).json({
-            msg: "Có lỗi xảy ra, vui lòng sửa lại",
+            msg: "Có lỗi xảy ra, vui lòng thử lại",
         });
     }
 };
 
 module.exports = {
+    layKetQua,
     xuatHienNhieuNhat,
     xuatHienItNhat,
     chuaXuatHien,

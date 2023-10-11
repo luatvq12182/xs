@@ -4,6 +4,7 @@ const ketquaxosoSchema = new mongoose.Schema(
     {
         domain: Number,
         ketqua: Object,
+        province: String,
         thongke: Object,
         ngay: {
             type: Date,

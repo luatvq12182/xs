@@ -1,19 +1,9 @@
+const { Constants } = require("../constants");
 const KQXSModel = require("../models/kqxs.model");
 
 const getResult = async (req, res) => {
     try {
-        const { ngay, domain, range = 30 } = req.query;
-
-        if (!ngay && !domain) {
-            const kqxs = await KQXSModel.find({})
-                .sort({
-                    ngay: -1,
-                })
-                .limit(range);
-            res.json(kqxs);
-
-            return;
-        }
+        const { ngay, domain, province } = req.query;
 
         if (!ngay) {
             res.status(500).json({
@@ -29,14 +19,25 @@ const getResult = async (req, res) => {
             return;
         }
 
-        const kqxs = await KQXSModel.findOne({
+        if (+domain !== Constants.Domain.MienBac && !province) {
+            res.status(500).json({
+                error: "Vui lòng cung cấp tỉnh thành cần xem kết quả",
+            });
+            return;
+        }
+
+        const query = {
             ngay: {
-                $lte: ngay,
+                $gte: new Date(ngay),
             },
             domain,
-        }).sort({
-            ngay: -1,
-        });
+        };
+
+        if (+domain !== Constants.Domain.MienBac) {
+            query.province = province;
+        }
+
+        const kqxs = await KQXSModel.findOne(query);
 
         if (kqxs) {
             res.json(kqxs);
@@ -46,6 +47,8 @@ const getResult = async (req, res) => {
             });
         }
     } catch (error) {
+        console.log(error);
+
         res.status(500).json({ error: "Error fetching" });
     }
 };

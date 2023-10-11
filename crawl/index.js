@@ -1,7 +1,11 @@
 const puppeteer = require("puppeteer");
 const axios = require("axios");
 
-const crawKQXS = async (page, date, month, year) => {
+const MIEN_BAC = 1;
+const MIEN_TRUNG = 2;
+const MIEN_NAM = 3;
+
+const crawKQXSMB = async (page, date, month, year) => {
     const cDate = date < 10 ? "0" + date : date;
     const cMonth = month < 10 ? "0" + month : month;
 
@@ -68,7 +72,7 @@ const crawKQXS = async (page, date, month, year) => {
     });
 
     await axios.post("http://localhost:6262/api/kqxs", {
-        domain: 1,
+        domain: MIEN_BAC,
         ketqua,
         thongke,
         ngay: new Date(`${month}-${date}-${year}`),
@@ -77,15 +81,168 @@ const crawKQXS = async (page, date, month, year) => {
     console.log("Done: ", `${date}-${month}-${year}`);
 };
 
-const crawXqxsMbHomNay = (page) => {
+const crawKQXSMN = async (page, date, month, year) => {
+    const cDate = date < 10 ? "0" + date : date;
+    const cMonth = month < 10 ? "0" + month : month;
+
+    const link = `https://xoso.com.vn/xsmn-${cDate}-${cMonth}-${year}.html`;
+
+    await page.goto(link, {
+        timeout: 0,
+    });
+
+    const rs = await page.evaluate(() => {
+        const rs = [];
+
+        const provinces = document.querySelectorAll(".table-xsmn tr a");
+
+        provinces.forEach((p, index) => {
+            const ketqua = {};
+            const thongke = {
+                dau: {},
+            };
+
+            [
+                ...document.querySelectorAll(
+                    `.table-xsmn tr td:nth-child(${index + 2})`
+                ),
+            ]
+                .reverse()
+                .forEach((e, i) => {
+                    ketqua[i === 0 ? "giaidacbiet" : `giai${i}`] =
+                        e.innerText.split("\n");
+                });
+
+            [
+                ...document.querySelectorAll(
+                    `.table-loto tr td:nth-child(${index + 2})`
+                ),
+            ].forEach((e, i) => {
+                thongke["dau"][i] = e.innerText.split(", ");
+            });
+
+            rs.push({
+                ketqua,
+                thongke,
+                province: p.innerText,
+            });
+        });
+
+        return rs;
+    });
+
+    for (let i = 0; i < rs.length; i++) {
+        const { ketqua, thongke, province } = rs[i];
+
+        await axios.post("http://localhost:6262/api/kqxs", {
+            domain: MIEN_NAM,
+            ketqua,
+            thongke,
+            province,
+            ngay: new Date(`${month}-${date}-${year}`),
+        });
+    }
+
+    console.log("Done: ", `${date}-${month}-${year}`);
+};
+
+const crawKQXSMT = async (page, date, month, year) => {
+    const cDate = date < 10 ? "0" + date : date;
+    const cMonth = month < 10 ? "0" + month : month;
+
+    const link = `https://xoso.com.vn/xsmt-${cDate}-${cMonth}-${year}.html`;
+
+    await page.goto(link, {
+        timeout: 0,
+    });
+
+    const rs = await page.evaluate(() => {
+        const rs = [];
+
+        const provinces = document.querySelectorAll(".table-xsmn tr a");
+
+        provinces.forEach((p, index) => {
+            const ketqua = {};
+            const thongke = {
+                dau: {},
+            };
+
+            [
+                ...document.querySelectorAll(
+                    `.table-xsmn tr td:nth-child(${index + 2})`
+                ),
+            ]
+                .reverse()
+                .forEach((e, i) => {
+                    ketqua[i === 0 ? "giaidacbiet" : `giai${i}`] =
+                        e.innerText.split("\n");
+                });
+
+            [
+                ...document.querySelectorAll(
+                    `.table-loto tr td:nth-child(${index + 2})`
+                ),
+            ].forEach((e, i) => {
+                thongke["dau"][i] = e.innerText.split(", ");
+            });
+
+            rs.push({
+                ketqua,
+                thongke,
+                province: p.innerText,
+            });
+        });
+
+        return rs;
+    });
+
+    for (let i = 0; i < rs.length; i++) {
+        const { ketqua, thongke, province } = rs[i];
+
+        await axios.post("http://localhost:6262/api/kqxs", {
+            domain: MIEN_TRUNG,
+            ketqua,
+            thongke,
+            province,
+            ngay: new Date(`${month}-${date}-${year}`),
+        });
+    }
+
+    console.log("Done: ", `${date}-${month}-${year}`);
+};
+
+const crawKqxsMbHomNay = async (page) => {
     const currentDate = new Date();
 
-    crawKQXS(
+    await crawKQXSMB(
         page,
         currentDate.getDate(),
         currentDate.getMonth() + 1,
         currentDate.getFullYear()
     );
+    await crawKQXSMN(
+        page,
+        currentDate.getDate(),
+        currentDate.getMonth() + 1,
+        currentDate.getFullYear()
+    );
+    await crawKQXSMT(
+        page,
+        currentDate.getDate(),
+        currentDate.getMonth() + 1,
+        currentDate.getFullYear()
+    );
+};
+
+const MONTHS = {
+    3: 31,
+    4: 30,
+    5: 31,
+    6: 30,
+    7: 31,
+    8: 31,
+    9: 30,
+    10: 9,
 };
 
 const main = async () => {
@@ -115,14 +272,19 @@ const main = async () => {
 
         // console.log(links);
 
-        for (let i = 1; i <= 31; i++) {
-            const date = i;
-            const month = 3;
-            const year = new Date().getFullYear();
-            await crawKQXS(page, date, month, year);
-        }
+        // for (let j = 3; j <= 10; j++) {
+        //     for (let i = 1; i <= MONTHS[j]; i++) {
+        //         const date = i;
+        //         const month = j;
+        //         const year = new Date().getFullYear();
+        //         await crawKQXSMT(page, date, month, year);
+        //     }
+        // }
 
         // await crawKQXS(page, 8, 10, 2023);
+        // await crawKQXSMN(page, 9, 10, 2023);
+
+        await crawKqxsMbHomNay(page);
 
         process.exit();
     } catch (error) {
