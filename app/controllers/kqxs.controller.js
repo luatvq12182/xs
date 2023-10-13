@@ -57,6 +57,17 @@ const getResult = async (req, res) => {
             const dau = thongke.dau;
             const duoi = thongke.duoi;
 
+            const genClass = {
+                1: "number-col-1",
+                2: "number-col-1",
+                3: "number-col-2",
+                4: "number-col-3",
+                5: "number-col-4",
+                6: "number-col-3",
+                7: "number-col-3",
+                8: "number-col-4",
+            }
+
             let html = `
                 <div>
                     <table class="kq-table xsmb table-striped js-kq-table">
@@ -71,12 +82,12 @@ const getResult = async (req, res) => {
                                     <tr>
                                     <td>${giai}</td>
                                     <td>
-                                        <div>
+                                        <div class="${genClass[index]}">
                                         ${ketqua[e]
                                             .map((el) => {
                                                 return `
                                             <span
-                                            class="number big red ${el}"
+                                            class="number big ${[1, 8].includes(index) ? "red" : ""} ${el}"
                                             data-id-giai="${index - 1}"
                                             data-num="${el}"
                                             >${el}</span
