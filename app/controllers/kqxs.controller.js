@@ -3,7 +3,7 @@ const KQXSModel = require("../models/kqxs.model");
 
 const getResult = async (req, res) => {
     try {
-        const { ngay, domain, province } = req.query;
+        const { ngay, domain, province, cvHtml } = req.query;
 
         if (!ngay && !domain && !province) {
             const rs = await KQXSModel.find({}).sort({
@@ -50,6 +50,64 @@ const getResult = async (req, res) => {
         }
 
         const kqxs = await KQXSModel.find(query);
+
+        if (cvHtml) {
+            const ketqua = kqxs[0].ketqua;
+
+            let html = `
+              <div>
+                <table class="kq-table xsmb table-striped js-kq-table">
+                  <tbody>
+                    ${Object.keys(ketqua)
+                        .map((e, index) => {
+                            const giai =
+                                index === 1 ? "G.ĐB" : `G.${index - 1}`;
+
+                            if (Array.isArray(ketqua[e])) {
+                                return `
+                            <tr>
+                              <td>${giai}</td>
+                              <td>
+                                <div>
+                                  ${ketqua[e]
+                                      .map((el) => {
+                                          return `
+                                    <span
+                                      class="number big red ${el}"
+                                      data-id-giai="${index - 1}"
+                                      data-num="${el}"
+                                      >${el}</span
+                                    >                      
+                                  `;
+                                      })
+                                      .join("")}
+                                </div>
+                              </td>
+                            </tr>
+                          `;
+                            } else {
+                                return `
+                            <tr>
+                              <td>Mã ĐB</td>
+                              <td>
+                                <span class="winner-code" id="mad_db">
+                                  ${ketqua[e]}
+                                </span>
+                              </td>
+                            </tr>              
+                          `;
+                            }
+                        })
+                        .join("")}
+                  </tbody>
+                </table>
+              </div>
+            `;
+
+            res.json(html);
+
+            return;
+        }
 
         if (kqxs) {
             res.json(kqxs);
