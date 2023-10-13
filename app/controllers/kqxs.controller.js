@@ -38,20 +38,18 @@ const getResult = async (req, res) => {
         const endOfDay = new Date(dateToFind);
         endOfDay.setHours(23, 59, 59, 999);
 
+        console.log(startOfDay, " | ", endOfDay);
+
         const query = {
             ngay: { $gte: startOfDay, $lte: endOfDay },
             domain,
         };
 
-        let kqxs;
-
-        if (+domain !== Constants.Domain.MienBac && province) {
+        if (province) {
             query.province = province;
-
-            kqxs = await KQXSModel.findOne(query);
-        } else {
-            kqxs = await KQXSModel.find(query);
         }
+
+        const kqxs = await KQXSModel.find(query);
 
         if (kqxs) {
             res.json(kqxs);
