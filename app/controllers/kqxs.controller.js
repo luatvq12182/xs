@@ -5,6 +5,16 @@ const getResult = async (req, res) => {
     try {
         const { ngay, domain, province } = req.query;
 
+        if (!ngay && !domain && !province) {
+            const rs = await KQXSModel.find({}).sort({
+                ngay: -1,
+            });
+
+            res.json(rs);
+
+            return;
+        }
+
         if (!ngay) {
             res.status(500).json({
                 error: "Vui lòng cung cấp ngày cần xem kết quả",
@@ -19,25 +29,29 @@ const getResult = async (req, res) => {
             return;
         }
 
-        if (+domain !== Constants.Domain.MienBac && !province) {
-            res.status(500).json({
-                error: "Vui lòng cung cấp tỉnh thành cần xem kết quả",
-            });
-            return;
-        }
+        const [d, m, y] = ngay.split("-");
+
+        const dateToFind = new Date(`${m}-${d}-${y}`);
+        const startOfDay = new Date(dateToFind);
+        startOfDay.setHours(0, 0, 0, 0);
+
+        const endOfDay = new Date(dateToFind);
+        endOfDay.setHours(23, 59, 59, 999);
 
         const query = {
-            ngay: {
-                $gte: new Date(ngay),
-            },
+            ngay: { $gte: startOfDay, $lte: endOfDay },
             domain,
         };
 
-        if (+domain !== Constants.Domain.MienBac) {
-            query.province = province;
-        }
+        let kqxs;
 
-        const kqxs = await KQXSModel.findOne(query);
+        if (+domain !== Constants.Domain.MienBac && province) {
+            query.province = province;
+
+            kqxs = await KQXSModel.findOne(query);
+        } else {
+            kqxs = await KQXSModel.find(query);
+        }
 
         if (kqxs) {
             res.json(kqxs);

@@ -5,6 +5,12 @@ const { lay10SoLonNhat, lay10SoBeNhat } = require("../utils");
 const layKetQua = async (req, res, next) => {
     const { domain, province, date = new Date(), range = 30 } = req.query;
 
+    const [d, m, y] = date.split("-");
+
+    const endDate = new Date(`${m}-${d}-${y}`);
+    const startDate = new Date(endDate);
+    startDate.setDate(endDate.getDate() - range - 1);
+
     if (!domain) {
         res.status(500).json({
             error: "Vui lòng cung cấp miền cần xem kết quả",
@@ -21,9 +27,7 @@ const layKetQua = async (req, res, next) => {
 
     try {
         const query = {
-            ngay: {
-                $lt: date,
-            },
+            ngay: { $gte: startDate, $lt: endDate },
             domain,
         };
 
@@ -31,7 +35,7 @@ const layKetQua = async (req, res, next) => {
             query.province = province;
         }
 
-        const kqxs = await kqxsModel.find(query).limit(range).sort({
+        const kqxs = await kqxsModel.find(query).sort({
             ngay: -1,
         });
 

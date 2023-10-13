@@ -1,13 +1,43 @@
-const puppeteer = require("puppeteer");
 const axios = require("axios");
+// const { format } = require("date-fns");
+const puppeteer = require("puppeteer");
 
 const MIEN_BAC = 1;
 const MIEN_TRUNG = 2;
 const MIEN_NAM = 3;
 
+const getKQ = async (ngay, thang, nam, domain, province) => {
+    try {
+        const dateFind = ngay + "-" + thang + "-" + nam;
+
+        let url =
+            "http://localhost:6262/api/kqxs?ngay=" +
+            dateFind +
+            "&domain=" +
+            domain;
+
+        if (province) {
+            url += "&province=" + province;
+        }
+
+        const res = await axios.get(url);
+
+        return res.data;
+    } catch (error) {
+        return null;
+    }
+};
+
 const crawKQXSMB = async (page, date, month, year) => {
     const cDate = date < 10 ? "0" + date : date;
     const cMonth = month < 10 ? "0" + month : month;
+
+    const isExist = await getKQ(date, month, year, 1);
+
+    if (isExist) {
+        console.log(`Đã cào KQXSMB ngày: ${date}-${month}-${year}`);
+        return;
+    }
 
     const link = `https://xoso.com.vn/xsmb-${cDate}-${cMonth}-${year}.html`;
 
@@ -134,6 +164,15 @@ const crawKQXSMN = async (page, date, month, year) => {
     for (let i = 0; i < rs.length; i++) {
         const { ketqua, thongke, province } = rs[i];
 
+        const isExist = await getKQ(date, month, year, 3, province);
+
+        if (isExist) {
+            console.log(
+                `Đã cào KQXSMN ngày: ${date}-${month}-${year} tỉnh ${province}`
+            );
+            continue;
+        }
+
         await axios.post("http://localhost:6262/api/kqxs", {
             domain: MIEN_NAM,
             ketqua,
@@ -199,6 +238,15 @@ const crawKQXSMT = async (page, date, month, year) => {
     for (let i = 0; i < rs.length; i++) {
         const { ketqua, thongke, province } = rs[i];
 
+        const isExist = await getKQ(date, month, year, 2, province);
+
+        if (isExist) {
+            console.log(
+                `Đã cào KQXSMN ngày: ${date}-${month}-${year} tỉnh ${province}`
+            );
+            continue;
+        }
+
         await axios.post("http://localhost:6262/api/kqxs", {
             domain: MIEN_TRUNG,
             ketqua,
@@ -211,22 +259,16 @@ const crawKQXSMT = async (page, date, month, year) => {
     console.log("Done: ", `${date}-${month}-${year}`);
 };
 
-const crawKqxsMbHomNay = async (page) => {
+const crawKQXS = async (page, date, month, year) => {
+    await crawKQXSMB(page, date, month, year);
+    await crawKQXSMN(page, date, month, year);
+    await crawKQXSMT(page, date, month, year);
+};
+
+const crawKQXSHomNay = async (page) => {
     const currentDate = new Date();
 
-    await crawKQXSMB(
-        page,
-        currentDate.getDate(),
-        currentDate.getMonth() + 1,
-        currentDate.getFullYear()
-    );
-    await crawKQXSMN(
-        page,
-        currentDate.getDate(),
-        currentDate.getMonth() + 1,
-        currentDate.getFullYear()
-    );
-    await crawKQXSMT(
+    crawKQXS(
         page,
         currentDate.getDate(),
         currentDate.getMonth() + 1,
@@ -235,6 +277,8 @@ const crawKqxsMbHomNay = async (page) => {
 };
 
 const MONTHS = {
+    1: 31,
+    2: 28,
     3: 31,
     4: 30,
     5: 31,
@@ -256,35 +300,7 @@ const main = async () => {
 
         const page = await browser.newPage();
 
-        // const links = [];
-
-        // for (let i = 1; i <= 30; i++) {
-        //     await page.goto(
-        //         `https://www.google.com.vn/search?q=XSMB ${i}/9/2023, Kết quả Xổ số Miền Bắc ngày ${i}-09-2023 xoso.com.vn`
-        //     );
-
-        //     const link = await page.evaluate(() => {
-        //         return document.querySelector(".N54PNb a").href;
-        //     });
-
-        //     links.push(link);
-        // }
-
-        // console.log(links);
-
-        // for (let j = 3; j <= 10; j++) {
-        //     for (let i = 1; i <= MONTHS[j]; i++) {
-        //         const date = i;
-        //         const month = j;
-        //         const year = new Date().getFullYear();
-        //         await crawKQXSMT(page, date, month, year);
-        //     }
-        // }
-
-        // await crawKQXS(page, 8, 10, 2023);
-        // await crawKQXSMN(page, 9, 10, 2023);
-
-        await crawKqxsMbHomNay(page);
+        await crawKQXSHomNay(page);
 
         process.exit();
     } catch (error) {

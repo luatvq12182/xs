@@ -18,23 +18,25 @@
         </style>
     </head>
     <body>
-        <!-- <input id="token" type="text" />
-        <button id="gen-token">Gen token</button>
-        <button id="test">Test api</button>
-
-        <p id="rs"></p>
-
-        <table border="1" style="border-collapse: collapse">
-            <thead id="t-head">
-                <tr></tr>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Ngày</th>
+                    <th>Miền Bắc</th>
+                    <th>Miền Trung</th>
+                    <th>Miền Nam</th>
+                </tr>
             </thead>
 
-            <tbody id="t-body"></tbody>
+            <tbody id="rs"></tbody>
         </table>
 
         <script>
             const $ = (selector) => document.querySelector(selector);
-            const token = $("#token");
+
+            const token = {
+                value: "",
+            };
 
             const httpClient = {
                 get: (url) => {
@@ -76,72 +78,49 @@
         </script>
 
         <script>
-            const btn = $("button");
-            const test = $("#test");
-            const rs = $("#rs");
-            const tHead = $("#t-head");
-            const tBody = $("#t-body");
-
-            btn.addEventListener("click", async () => {
-                const data = await httpClient.post("/token/generate");
-
-                rs.innerText = data.accessToken;
-            });
-
-            test.addEventListener("click", async () => {
-                const data = await httpClient.post("/api/test");
-
-                console.log(data);
-            });
-
             const main = async () => {
-                const data = await httpClient.get("/api/kqxs?range=90");
+                const kqxs = await httpClient.get("/api/kqxs");
 
-                const arr = data.map((e) => {
-                    return Object.values(e.ketqua)
-                        .filter(Array.isArray)
-                        .flat()
-                        .map((e) => {
-                            return e.slice(-2);
-                        });
+                const dates = {};
+
+                kqxs.forEach((e) => {
+                    if (!dates[e.ngay]) {
+                        dates[e.ngay] = [e];
+                    } else {
+                        dates[e.ngay].push(e);
+                    }
                 });
 
-                tHead.querySelector("tr").innerHTML = `
-                    <td>Ngày</td>
-                    ${data
-                        .map((e) => {
-                            return `<th>${new Date(e.ngay).getDate()}</th>`;
-                        })
-                        .join("")}
-                `;
+                console.log(dates);
+                console.log(kqxs);
 
-                tBody.innerHTML = Array(100)
-                    .fill(1)
-                    .map((_, index) => {
-                        const num = index < 10 ? "0" + index : "" + index;
+                $("#rs").innerHTML = Object.keys(dates)
+                    .map((e) => {
+                        const date = new Date(e);
 
                         return `
                         <tr>
-                            <th>${num}</th>  
-                            ${arr
-                                .map((e) => {
-                                    console.log();
-
-                                    return `
-                                        <th style="padding: 2px 8px;">${
-                                            e.includes(num)
-                                                ? e.reduce((pre, cr) => {
-                                                      if (cr === num) {
-                                                          return pre + 1;
-                                                      }
-
-                                                      return pre;
-                                                  }, 0)
-                                                : ""
-                                        }</th>
-                                    `;
+                            <td>${date.getDate()}-${
+                            date.getMonth() + 1
+                        }-${date.getFullYear()}</td>
+                            <td>${dates[e]
+                                .filter((kq) => kq.domain === 1)
+                                .map((kq) => {
+                                    return kq.ketqua.giaidacbiet[0].slice(-2);
                                 })
-                                .join("")}
+                                .join(", ")}</td>
+                            <td>${dates[e]
+                                .filter((kq) => kq.domain === 2)
+                                .map((kq) => {
+                                    return kq.ketqua.giaidacbiet[0].slice(-2);
+                                })
+                                .join(", ")}</td>
+                            <td>${dates[e]
+                                .filter((kq) => kq.domain === 3)
+                                .map((kq) => {
+                                    return kq.ketqua.giaidacbiet[0].slice(-2);
+                                })
+                                .join(", ")}</td>
                         </tr>
                     `;
                     })
@@ -149,6 +128,6 @@
             };
 
             main();
-        </script> -->
+        </script>
     </body>
 </html>
