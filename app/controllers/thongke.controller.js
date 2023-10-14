@@ -51,6 +51,7 @@ const layKetQua = async (req, res, next) => {
 
 const xuatHienNhieuNhat = async (req, res) => {
     const { kqxs } = req;
+    const { cvHtml } = req.query;
     const numbers = {};
 
     try {
@@ -71,7 +72,34 @@ const xuatHienNhieuNhat = async (req, res) => {
             });
         });
 
-        res.json(lay10SoLonNhat(numbers));
+        const resData = lay10SoLonNhat(numbers);
+
+        if (cvHtml) {
+            const html = `
+                <table class="table table-bordered">
+                    <tbody>
+                        ${resData.map((e) => {
+                            return `
+                                <tr>
+                                    <td style="padding: 3px;">
+                                        span class="tk_number font-weight-bold display-block red js-tk-number" data-kyquay="30" data-mientinh="mb">${e[0]}</span>                                    
+                                    </td>
+                                    <td style="padding: 3px;">
+                                        ${e[1]} lần
+                                    </td>
+                                </tr>
+                            `;
+                        }).join('')}
+                    </tbody>             
+                </table>
+            `;
+
+            res.json(html);
+
+            return;
+        }
+
+        res.json(resData);
     } catch (error) {
         res.status(500).json({
             msg: "Có lỗi xảy ra, vui lòng thử lại",
