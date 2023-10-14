@@ -78,8 +78,9 @@ const xuatHienNhieuNhat = async (req, res) => {
             const html = `
                 <table class="table table-bordered">
                     <tbody>
-                        ${resData.map((e) => {
-                            return `
+                        ${resData
+                            .map((e) => {
+                                return `
                                 <tr>
                                     <td style="padding: 3px; text-align: center;">
                                         <span class="tk_number font-weight-bold display-block red js-tk-number" data-kyquay="30" data-mientinh="mb">${e[0]}</span>                                    
@@ -89,7 +90,8 @@ const xuatHienNhieuNhat = async (req, res) => {
                                     </td>
                                 </tr>
                             `;
-                        }).join('')}
+                            })
+                            .join("")}
                     </tbody>             
                 </table>
             `;
@@ -176,6 +178,7 @@ const chuaXuatHien = async (req, res) => {
 
 const raLienTiep = async (req, res) => {
     const { kqxs } = req;
+    const { cvHtml } = req.query;
     const numbers = {};
 
     try {
@@ -216,11 +219,49 @@ const raLienTiep = async (req, res) => {
             numbers[num] = [biggestContinuously, count];
         }
 
-        res.json(
-            Object.entries(numbers)
-                .sort((a, b) => b[1][0] - a[1][0])
-                .slice(0, 10)
-        );
+        const resData = Object.entries(numbers)
+            .sort((a, b) => b[1][0] - a[1][0])
+            .slice(0, 10);
+
+        if (cvHtml) {
+            const bigArray = [...resData];
+
+            const arrayOfArrays = bigArray.reduce((acc, el, index) => {
+                const subArrayIndex = Math.floor(index / 5);
+                if (!acc[subArrayIndex]) {
+                    acc[subArrayIndex] = [];
+                }
+                acc[subArrayIndex].push(el);
+                return acc;
+            }, []);
+
+            const html = `
+                <table class="table table-bordered">
+                    <tbody>
+                        ${arrayOfArrays.map((subArr) => {
+                            return `
+                                <tr>
+                                    ${subArr.map((e) => {
+                                        return `
+                                            <td style="text-align: center;">
+                                                <span class="tk_number font-weight-bold display-block red js-tk-number" style="display: block;" data-kyquay="30" data-mientinh="mb">${e[0]}</span>
+                                                <small>${e[1][0]} ngày<br>(${e[1][1]} lần)</small>
+                                            </td>                                    
+                                        `
+                                    }).join('')}
+                                </tr>
+                            `
+                        }).join('')}
+                    </tbody>
+                </table>
+            `;
+
+            res.json(html);
+
+            return;
+        }
+
+        res.json(resData);
     } catch (error) {
         console.log(error);
 
