@@ -173,10 +173,10 @@ const lauXuatHienNhat = async (req, res) => {
             const html = `
                 <table class="table">
                     <thead>
-                        <th>Con số</th>
-                        <th>Số ngày chưa ra</th>
-                        <th>Ngày ra gần nhất</th>
-                        <th>Gan cực đại</th>
+                        <td style="text-align: center;">Con số</td>
+                        <td style="text-align: center;">Số ngày chưa ra</td>
+                        <td style="text-align: center;">Ngày ra gần nhất</td>
+                        <td style="text-align: center;">Gan cực đại</td>
                     </thead>
 
                     <tbody>
@@ -193,7 +193,7 @@ const lauXuatHienNhat = async (req, res) => {
                                         ${row[1][1]}
                                     </td>
                                     <td style="text-align: center; padding: 3px;">
-                                        ${row[1][2] || 'Coming soon...'}
+                                        ${row[1][2] || '...'}
                                     </td>
                                 </tr>
                             `
