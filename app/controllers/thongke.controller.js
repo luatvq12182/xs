@@ -244,8 +244,8 @@ const raLienTiep = async (req, res) => {
                                     ${subArr.map((e) => {
                                         return `
                                             <td style="text-align: center;">
-                                                <span class="tk_number font-weight-bold display-block red js-tk-number" style="display: block;" data-kyquay="30" data-mientinh="mb">${e[0]}</span>
-                                                <small>${e[1][0]} ngày<br>(${e[1][1]} lần)</small>
+                                                <span class="tk_number font-weight-bold display-block red js-tk-number" style="display: block; line-height: 20px;" data-kyquay="30" data-mientinh="mb">${e[0]}</span>
+                                                <small style="line-height: 20px;">${e[1][0]} ngày<br style="display: block;">(${e[1][1]} lần)</small>
                                             </td>                                    
                                         `
                                     }).join('')}
