@@ -256,12 +256,12 @@ const giaiDacBiet = async (req, res) => {
                                     .map(({ ngay, value }) => {
                                         return `
                                         <td style="text-align: center;">${ngay}</td>
-                                        <td style="text-align: center; font-weight: bold;">
-                                            ${value.slice(0, -2)}
-                                            <span style="font-weight: bold; color: red;">${value.slice(
-                                                -2
-                                            )}</span>
-                                        </td>
+                                        <td style="text-align: center; font-weight: bold;">${value.slice(
+                                            0,
+                                            -2
+                                        )}<span style="font-weight: bold; color: red;">${value.slice(
+                                            -2
+                                        )}</span></td>
                                     `;
                                     })
                                     .join("")}
