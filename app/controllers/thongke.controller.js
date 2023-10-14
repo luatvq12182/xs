@@ -139,6 +139,84 @@ const xuatHienItNhat = async (req, res) => {
     }
 };
 
+const lauXuatHienNhat = async (req, res) => {
+    const { kqxs } = req;
+    const { cvHtml } = req.query;
+    const numbers = {};
+
+    Array(100)
+        .fill(1)
+        .forEach((e, index) => {
+            numbers[index < 10 ? `0${index}` : index] = [0, ""];
+        });
+
+    try {
+        for (let i = 0; i < kqxs.length; i++) {
+            const kq = Object.values(kqxs[i].toObject().ketqua).flat().slice(1);
+            let date = new Date(kqxs[i].toObject().ngay);
+            date = `${date.getDate()}/${
+                date.getMonth() + 1
+            }/${date.getFullYear()}`;
+
+            kq.forEach((num) => {
+                if (numbers[num.slice(-2)][0] === 0) {
+                    numbers[num.slice(-2)] = [i, date];
+                }
+            });
+        }
+
+        const resData = Object.entries(numbers)
+            .sort((a, b) => a[1][0] - b[1][0])
+            .slice(-10);
+
+        if (cvHtml) {
+            const html = `
+                <table class="table">
+                    <thead>
+                        <th>Con số</th>
+                        <th>Số ngày chưa ra</th>
+                        <th>Ngày ra gần nhất</th>
+                        <th>Gan cực đại</th>
+                    </thead>
+
+                    <tbody>
+                        ${resData.map((row) => {
+                            return `
+                                <tr>
+                                    <td style="text-align: center; padding: 3px;">
+                                        <span class="tk_number font-weight-bold red" data-kyquay="30" data-mientinh="mb">${row[0]}</span>
+                                    </td>
+                                    <td style="text-align: center; padding: 3px;">
+                                        ${row[1][0]}
+                                    </td>
+                                    <td style="text-align: center; padding: 3px;">
+                                        ${row[1][1]}
+                                    </td>
+                                    <td style="text-align: center; padding: 3px;">
+                                        ${row[1][2] || 'Coming soon...'}
+                                    </td>
+                                </tr>
+                            `
+                        }).join('')}
+                    </tbody>
+                </table>
+            `;
+
+            res.json(html);
+
+            return;
+        }
+
+        res.json(resData);
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json({
+            msg: "Có lỗi xảy ra, vui lòng thử lại",
+        });
+    }
+};
+
 const chuaXuatHien = async (req, res) => {
     const { kqxs } = req;
     const numbers = {};
@@ -419,20 +497,26 @@ const dauDuoi = async (req, res) => {
             const html = `
                 <table class="table table-bordered">
                     <tbody>
-                        ${dau.map((key, index) => {
-                            return `
+                        ${dau
+                            .map((key, index) => {
+                                return `
                                 <tr>
                                     <td style="text-align: center;">
                                         <span class="tk_number font-weight-bold display-block" style="font-size: 1rem; padding: 3px;">${index}<small>x</small></span>
                                     </td>
-                                    <td style="text-align: center;">${resData[key]} lần</td>
+                                    <td style="text-align: center;">${
+                                        resData[key]
+                                    } lần</td>
                                     <td style="text-align: center;">
                                         <span class="tk_number font-weight-bold display-block" style="font-size: 1rem; padding: 3px; color: #00aecd;"><small>x</small>${index}</span>
                                     </td>
-                                    <td style="text-align: center;">${resData[duoi[index]]} lần</td>
+                                    <td style="text-align: center;">${
+                                        resData[duoi[index]]
+                                    } lần</td>
                                 </tr>
-                            `
-                        }).join('')}
+                            `;
+                            })
+                            .join("")}
                     </tbody>
                 </table>
             `;
@@ -452,6 +536,7 @@ const dauDuoi = async (req, res) => {
 
 module.exports = {
     layKetQua,
+    lauXuatHienNhat,
     xuatHienNhieuNhat,
     xuatHienItNhat,
     chuaXuatHien,
