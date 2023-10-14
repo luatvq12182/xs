@@ -231,7 +231,7 @@ const getResult = async (req, res) => {
                                                     ? "big red"
                                                     : ""
                                             }" data-id-giai="${giai}" data-num="${num}">${num}</span>`;
-                                        })}
+                                        }).join('')}
                                     </td>
                                     `;
                                     })
