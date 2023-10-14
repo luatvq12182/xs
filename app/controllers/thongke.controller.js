@@ -111,6 +111,7 @@ const xuatHienNhieuNhat = async (req, res) => {
 
 const xuatHienItNhat = async (req, res) => {
     const { kqxs } = req;
+    const { cvHtml } = req.query;
     const numbers = {};
 
     try {
