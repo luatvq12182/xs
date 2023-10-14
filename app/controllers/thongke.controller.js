@@ -422,14 +422,14 @@ const dauDuoi = async (req, res) => {
                         ${dau.map((key, index) => {
                             return `
                                 <tr>
-                                    <td>
-                                        <span class="tk_number font-weight-bold display-block" style="font-size: 1rem; padding: 3px; text-align: center;">${index}<small>x</small></span>
+                                    <td style="text-align: center;">
+                                        <span class="tk_number font-weight-bold display-block" style="font-size: 1rem; padding: 3px;">${index}<small>x</small></span>
                                     </td>
-                                    <td>${resData[key]} lần</td>
-                                    <td>
-                                        <span class="tk_number font-weight-bold display-block" style="font-size: 1rem; padding: 3px; text-align: center; color: #00aecd;"><small>x</small>${index}</span>
+                                    <td style="text-align: center;">${resData[key]} lần</td>
+                                    <td style="text-align: center;">
+                                        <span class="tk_number font-weight-bold display-block" style="font-size: 1rem; padding: 3px; color: #00aecd;"><small>x</small>${index}</span>
                                     </td>
-                                    <td>${resData[duoi[index]]} lần</td>
+                                    <td style="text-align: center;">${resData[duoi[index]]} lần</td>
                                 </tr>
                             `
                         }).join('')}
