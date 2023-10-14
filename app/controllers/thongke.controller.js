@@ -167,7 +167,7 @@ const lauXuatHienNhat = async (req, res) => {
 
         const resData = Object.entries(numbers)
             .sort((a, b) => a[1][0] - b[1][0])
-            .slice(-10);
+            .slice(-10).reverse();
 
         if (cvHtml) {
             const html = `
