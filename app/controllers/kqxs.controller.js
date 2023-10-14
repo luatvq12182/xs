@@ -38,8 +38,6 @@ const getResult = async (req, res) => {
         const endOfDay = new Date(dateToFind);
         endOfDay.setHours(23, 59, 59, 999);
 
-        console.log(startOfDay, " | ", endOfDay);
-
         const query = {
             ngay: { $gte: startOfDay, $lte: endOfDay },
             domain,
@@ -52,7 +50,7 @@ const getResult = async (req, res) => {
         const kqxs = await KQXSModel.find(query);
 
         if (cvHtml) {
-            if (domain === Constants.Domain.MienBac) {
+            if (+domain === Constants.Domain.MienBac) {
                 const ketqua = kqxs[0].ketqua;
                 const thongke = kqxs[0].thongke;
                 const dau = thongke.dau;
