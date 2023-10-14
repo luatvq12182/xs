@@ -131,7 +131,36 @@ const xuatHienItNhat = async (req, res) => {
             });
         });
 
-        res.json(lay10SoBeNhat(numbers));
+        const resData = lay10SoBeNhat(numbers);
+
+        if (cvHtml) {
+            const html = `
+                <table class="table table-bordered">
+                    <tbody>
+                        ${resData
+                            .map((e) => {
+                                return `
+                                <tr>
+                                    <td style="padding: 3px; text-align: center;">
+                                        <span class="tk_number font-weight-bold display-block red js-tk-number" data-kyquay="30" data-mientinh="mb">${e[0]}</span>                                    
+                                    </td>
+                                    <td style="padding: 3px; text-align: center;">
+                                        ${e[1]} lần
+                                    </td>
+                                </tr>
+                            `;
+                            })
+                            .join("")}
+                    </tbody>             
+                </table>
+            `;
+
+            res.json(html);
+
+            return;
+        }
+
+        res.json(resData);
     } catch (error) {
         res.status(500).json({
             msg: "Có lỗi xảy ra, vui lòng thử lại",
@@ -167,7 +196,8 @@ const lauXuatHienNhat = async (req, res) => {
 
         const resData = Object.entries(numbers)
             .sort((a, b) => a[1][0] - b[1][0])
-            .slice(-10).reverse();
+            .slice(-10)
+            .reverse();
 
         if (cvHtml) {
             const html = `
@@ -180,11 +210,14 @@ const lauXuatHienNhat = async (req, res) => {
                     </thead>
 
                     <tbody>
-                        ${resData.map((row) => {
-                            return `
+                        ${resData
+                            .map((row) => {
+                                return `
                                 <tr>
                                     <td style="text-align: center; padding: 3px;">
-                                        <span class="tk_number font-weight-bold red" data-kyquay="30" data-mientinh="mb">${row[0]}</span>
+                                        <span class="tk_number font-weight-bold red" data-kyquay="30" data-mientinh="mb">${
+                                            row[0]
+                                        }</span>
                                     </td>
                                     <td style="text-align: center; padding: 3px;">
                                         ${row[1][0]}
@@ -193,11 +226,12 @@ const lauXuatHienNhat = async (req, res) => {
                                         ${row[1][1]}
                                     </td>
                                     <td style="text-align: center; padding: 3px;">
-                                        ${row[1][2] || '...'}
+                                        ${row[1][2] || "..."}
                                     </td>
                                 </tr>
-                            `
-                        }).join('')}
+                            `;
+                            })
+                            .join("")}
                     </tbody>
                 </table>
             `;
