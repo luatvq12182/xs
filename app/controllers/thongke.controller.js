@@ -238,20 +238,24 @@ const raLienTiep = async (req, res) => {
             const html = `
                 <table class="table table-bordered">
                     <tbody>
-                        ${arrayOfArrays.map((subArr) => {
-                            return `
+                        ${arrayOfArrays
+                            .map((subArr) => {
+                                return `
                                 <tr>
-                                    ${subArr.map((e) => {
-                                        return `
+                                    ${subArr
+                                        .map((e) => {
+                                            return `
                                             <td style="text-align: center;">
                                                 <span class="tk_number font-weight-bold display-block red js-tk-number" style="display: block; line-height: 20px;" data-kyquay="30" data-mientinh="mb">${e[0]}</span>
                                                 <small style="line-height: 20px;">${e[1][0]} ngày<br style="display: block;">(${e[1][1]} lần)</small>
                                             </td>                                    
-                                        `
-                                    }).join('')}
+                                        `;
+                                        })
+                                        .join("")}
                                 </tr>
-                            `
-                        }).join('')}
+                            `;
+                            })
+                            .join("")}
                     </tbody>
                 </table>
             `;
@@ -409,16 +413,23 @@ const dauDuoi = async (req, res) => {
         const resData = numbers;
 
         if (cvHtml) {
+            const dau = Object.keys(resData).slice(0, 10);
+            const duoi = Object.keys(resData).slice(10);
+
             const html = `
                 <table class="table table-bordered">
                     <tbody>
-                        ${Object.keys(resData).map((e, index) => {
+                        ${dau.map((key, index) => {
                             return `
                                 <tr>
-                                    <td ${index > 9 ? 'style="font-size: 1.2rem; color: #00aecd;"' : ''}>
-                                        <span class="tk_number font-weight-bold display-block" style="font-size: 1.2rem;">${e}</span>
+                                    <td>
+                                        <span class="tk_number font-weight-bold display-block" style="font-size: 1rem; padding: 3px; text-align: center;">${index}<small>x</small></span>
                                     </td>
-                                    <td>${resData[e]} lần</td>
+                                    <td>${resData[key]} lần</td>
+                                    <td>
+                                        <span class="tk_number font-weight-bold display-block" style="font-size: 1rem; padding: 3px; text-align: center; color: #00aecd;"><small>x</small>${index}</span>
+                                    </td>
+                                    <td>${resData[duoi[index]]} lần</td>
                                 </tr>
                             `
                         }).join('')}
