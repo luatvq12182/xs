@@ -82,7 +82,7 @@ const xuatHienNhieuNhat = async (req, res) => {
                             return `
                                 <tr>
                                     <td style="padding: 3px;">
-                                        span class="tk_number font-weight-bold display-block red js-tk-number" data-kyquay="30" data-mientinh="mb">${e[0]}</span>                                    
+                                        <span class="tk_number font-weight-bold display-block red js-tk-number" data-kyquay="30" data-mientinh="mb">${e[0]}</span>                                    
                                     </td>
                                     <td style="padding: 3px;">
                                         ${e[1]} lần
