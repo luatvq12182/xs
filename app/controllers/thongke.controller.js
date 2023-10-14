@@ -358,6 +358,7 @@ const giaiDacBiet = async (req, res) => {
 
 const dauDuoi = async (req, res) => {
     const { kqxs } = req;
+    const { cvHtml } = req.query;
     const numbers = {
         "0x": 0,
         "1x": 0,
@@ -405,7 +406,32 @@ const dauDuoi = async (req, res) => {
             });
         }
 
-        res.json(numbers);
+        const resData = numbers;
+
+        if (cvHtml) {
+            const html = `
+                <table class="table table-bordered">
+                    <tbody>
+                        ${Object.keys(resData).map((e, index) => {
+                            return `
+                                <tr>
+                                    <td ${index > 9 ? 'style="font-size: 1.2rem; color: #00aecd;"' : ''}>
+                                        <span class="tk_number font-weight-bold display-block" style="font-size: 1.2rem;">${e}</span>
+                                    </td>
+                                    <td>${resData[e]} lần</td>
+                                </tr>
+                            `
+                        }).join('')}
+                    </tbody>
+                </table>
+            `;
+
+            res.json(html);
+
+            return;
+        }
+
+        res.json(resData);
     } catch (error) {
         res.status(500).json({
             msg: "Có lỗi xảy ra, vui lòng thử lại",
