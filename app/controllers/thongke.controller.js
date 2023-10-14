@@ -3,9 +3,9 @@ const kqxsModel = require("../models/kqxs.model");
 const { lay10SoLonNhat, lay10SoBeNhat } = require("../utils");
 
 const layKetQua = async (req, res, next) => {
-    const { domain, province, date = new Date(), range = 30 } = req.query;
+    const { domain, province, ngay = new Date(), range = 30 } = req.query;
 
-    const [d, m, y] = date.split("-");
+    const [d, m, y] = ngay.split("-");
 
     const endDate = new Date(`${m}-${d}-${y}`);
     const startDate = new Date(endDate);
@@ -204,15 +204,82 @@ const raLienTiep = async (req, res) => {
 
 const giaiDacBiet = async (req, res) => {
     const { kqxs } = req;
+    const { cvHtml } = req.query;
+
+    const resData = kqxs
+        .map((e) => {
+            const date = new Date(e.toObject().ngay);
+
+            return {
+                ngay: `${date.getDate()}/${date.getMonth() + 1}`,
+                value: e.toObject().ketqua.giaidacbiet[0],
+            };
+        })
+        .flat();
+
+    if (cvHtml) {
+        const bigArray = [...resData];
+
+        const arrayOfArrays = bigArray.reduce((acc, el, index) => {
+            const subArrayIndex = Math.floor(index / 3);
+            if (!acc[subArrayIndex]) {
+                acc[subArrayIndex] = [];
+            }
+            acc[subArrayIndex].push(el);
+            return acc;
+        }, []);
+
+        const html = `
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Ngày</th>
+                        <th>
+                            <span class="hidden-xs">Giải</span> ĐB
+                        </th>
+                        <th>Ngày</th>
+                        <th>
+                            <span class="hidden-xs">Giải</span> ĐB
+                        </th>
+                        <th>Ngày</th>
+                        <th>
+                            <span class="hidden-xs">Giải</span> ĐB
+                        </th>
+                    </tr>
+                </thead>   
+                <tbody>
+                    ${arrayOfArrays
+                        .map((subArr) => {
+                            return `
+                            <tr>
+                                ${subArr
+                                    .map(({ ngay, value }) => {
+                                        return `
+                                        <td style="text-align: center;">${ngay}</td>
+                                        <td style="text-align: center; font-weight: bold;">
+                                            ${value.slice(0, -2)}
+                                            <span style="font-weight: bold; color: red;">${value.slice(
+                                                -2
+                                            )}</span>
+                                        </td>
+                                    `;
+                                    })
+                                    .join("")}
+                            </tr>
+                        `;
+                        })
+                        .join("")}
+                </tbody>             
+            </table>
+        `;
+
+        res.json(html);
+
+        return;
+    }
 
     try {
-        res.json(
-            kqxs
-                .map((e) => {
-                    return e.toObject().ketqua.giaidacbiet;
-                })
-                .flat()
-        );
+        res.json(resData);
     } catch (error) {
         res.status(500).json({
             msg: "Có lỗi xảy ra, vui lòng thử lại",
