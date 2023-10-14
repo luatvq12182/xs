@@ -200,7 +200,7 @@ const getResult = async (req, res) => {
 
                 const html = `
                     <div>
-                        <table border="1">
+                        <table class="kq-table table-striped js-kq-table">
                             <tr class="kq-city-name">
                                 <th>Tỉnh</th>
                                 ${provinces
