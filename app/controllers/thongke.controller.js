@@ -81,10 +81,10 @@ const xuatHienNhieuNhat = async (req, res) => {
                         ${resData.map((e) => {
                             return `
                                 <tr>
-                                    <td style="padding: 3px;">
+                                    <td style="padding: 3px; text-align: center;">
                                         <span class="tk_number font-weight-bold display-block red js-tk-number" data-kyquay="30" data-mientinh="mb">${e[0]}</span>                                    
                                     </td>
-                                    <td style="padding: 3px;">
+                                    <td style="padding: 3px; text-align: center;">
                                         ${e[1]} lần
                                     </td>
                                 </tr>
