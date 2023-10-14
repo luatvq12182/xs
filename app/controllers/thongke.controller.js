@@ -233,16 +233,16 @@ const giaiDacBiet = async (req, res) => {
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>Ngày</th>
-                        <th>
+                        <th style="text-align: center;">Ngày</th>
+                        <th style="text-align: center;">
                             <span class="hidden-xs">Giải</span> ĐB
                         </th>
-                        <th>Ngày</th>
-                        <th>
+                        <th style="text-align: center;">Ngày</th>
+                        <th style="text-align: center;">
                             <span class="hidden-xs">Giải</span> ĐB
                         </th>
-                        <th>Ngày</th>
-                        <th>
+                        <th style="text-align: center;">Ngày</th>
+                        <th style="text-align: center;">
                             <span class="hidden-xs">Giải</span> ĐB
                         </th>
                     </tr>
@@ -255,8 +255,8 @@ const giaiDacBiet = async (req, res) => {
                                 ${subArr
                                     .map(({ ngay, value }) => {
                                         return `
-                                        <td style="text-align: center;">${ngay}</td>
-                                        <td style="text-align: center; font-weight: bold;">${value.slice(
+                                        <td style="text-align: center; font-size: 14px; padding: 3px;">${ngay}</td>
+                                        <td style="text-align: center; font-weight: bold; font-size: 14px; padding: 3px;">${value.slice(
                                             0,
                                             -2
                                         )}<span style="font-weight: bold; color: red;">${value.slice(
