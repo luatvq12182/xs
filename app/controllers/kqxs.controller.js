@@ -1,5 +1,6 @@
 const { Constants } = require("../constants");
 const KQXSModel = require("../models/kqxs.model");
+const { getInitials } = require("../utils");
 
 const getResult = async (req, res) => {
     try {
@@ -184,6 +185,7 @@ const getResult = async (req, res) => {
             } else {
                 const provinces = kqxs.map((e) => e.province);
                 const ketquas = kqxs.map((e) => e.ketqua);
+                const thongkes = kqxs.map((e) => e.thongke);
                 const giais = [
                     "ĐB",
                     "G.1",
@@ -220,16 +222,18 @@ const getResult = async (req, res) => {
 
                                         return `
                                     <td>
-                                        ${kq[giai].map((num) => {
-                                            return `<span class="number ${
-                                                [
-                                                    "giai8",
-                                                    "giaidacbiet",
-                                                ].includes(giai)
-                                                    ? "big red"
-                                                    : ""
-                                            }" data-id-giai="${giai}" data-num="${num}">${num}</span>`;
-                                        }).join('')}
+                                        ${kq[giai]
+                                            .map((num) => {
+                                                return `<span class="number ${
+                                                    [
+                                                        "giai8",
+                                                        "giaidacbiet",
+                                                    ].includes(giai)
+                                                        ? "big red"
+                                                        : ""
+                                                }" data-id-giai="${giai}" data-num="${num}">${num}</span>`;
+                                            })
+                                            .join("")}
                                     </td>
                                     `;
                                     })
@@ -266,6 +270,49 @@ const getResult = async (req, res) => {
                                 <span class="hl_number js-hl-number" data-highlight-number="9">9</span>
                             </div>
                         </div> 
+
+                        <div class="kq-block box-thong-ke-nhanh">
+                            <h4 class="kq-block-title font-weight-normal text-center">
+                                THỐNG KÊ LÔ TÔ KẾT QUẢ ${
+                                    +domain === Constants.Domain.MienTrung
+                                        ? "XSMT"
+                                        : "XSMN"
+                                } NGÀY ${ngay}
+                            </h4>
+        
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Đầu</th>
+                                        ${provinces
+                                            .map((e) => {
+                                                return `<th>${e}</th>`;
+                                            })
+                                            .join("")}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+                                        .map((e) => {
+                                            return `
+                                                <tr>
+                                                    <td>${e}</td>
+                                                    ${thongkes
+                                                        .map((tk) => {
+                                                            return `
+                                                            <td>${Object.values(
+                                                                tk.dau[e]
+                                                            ).join(", ")}</td>
+                                                        `;
+                                                        })
+                                                        .join("")}
+                                                </tr>
+                                            `;
+                                        })
+                                        .join("")}
+                                </tbody>
+                            </table>                 
+                        </div>                                         
                     </div>                 
                 `;
 
