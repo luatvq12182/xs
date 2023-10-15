@@ -1,4 +1,4 @@
-const { Constants } = require("../constants");
+// const { Constants } = require("../constants");
 const kqxsModel = require("../models/kqxs.model");
 const { lay10SoLonNhat, lay10SoBeNhat } = require("../utils");
 
@@ -18,20 +18,13 @@ const layKetQua = async (req, res, next) => {
         return;
     }
 
-    if (+domain !== Constants.Domain.MienBac && !province) {
-        res.status(500).json({
-            error: "Vui lòng cung cấp tỉnh thành cần xem kết quả",
-        });
-        return;
-    }
-
     try {
         const query = {
             ngay: { $gte: startDate, $lt: endDate },
             domain,
         };
 
-        if (+domain !== Constants.Domain.MienBac) {
+        if (province) {
             query.province = province;
         }
 
@@ -569,6 +562,18 @@ const dauDuoi = async (req, res) => {
     }
 };
 
+const general = async (req, res) => {
+    const { kqxs } = req;
+    const { cvHtml, domain, province } = req.query;
+
+    if (!cvHtml) {
+        res.status(400).json({
+            msg: "Close",
+        });
+        return;
+    }
+};
+
 module.exports = {
     layKetQua,
     lauXuatHienNhat,
@@ -578,4 +583,5 @@ module.exports = {
     raLienTiep,
     giaiDacBiet,
     dauDuoi,
+    general,
 };
