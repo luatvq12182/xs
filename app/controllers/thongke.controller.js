@@ -1,5 +1,5 @@
-// const { Constants } = require("../constants");
 const { Constants } = require("../constants");
+const ThongKeService = require("../services/thongke.service");
 const kqxsModel = require("../models/kqxs.model");
 const { lay10SoLonNhat, lay10SoBeNhat } = require("../utils");
 
@@ -10,7 +10,7 @@ const layKetQua = async (req, res, next) => {
 
     const endDate = new Date(`${m}-${d}-${y}`);
     const startDate = new Date(endDate);
-    startDate.setDate(endDate.getDate() - range - 1);
+    startDate.setDate(endDate.getDate() - range);
 
     if (!domain) {
         res.status(500).json({
@@ -34,6 +34,7 @@ const layKetQua = async (req, res, next) => {
         });
 
         req.kqxs = kqxs;
+        req.day = endDate.getDay();
 
         next();
     } catch (error) {
@@ -46,54 +47,12 @@ const layKetQua = async (req, res, next) => {
 const xuatHienNhieuNhat = async (req, res) => {
     const { kqxs } = req;
     const { cvHtml } = req.query;
-    const numbers = {};
 
     try {
-        kqxs.forEach((e) => {
-            const rs = Object.values(e.ketqua)
-                .filter(Array.isArray)
-                .flat()
-                .map((e) => {
-                    return e.slice(-2);
-                });
-
-            rs.forEach((e) => {
-                if (numbers[e]) {
-                    numbers[e] = numbers[e] + 1;
-                } else {
-                    numbers[e] = 1;
-                }
-            });
-        });
-
-        const resData = lay10SoLonNhat(numbers);
-
-        if (cvHtml) {
-            const html = `
-                <table class="table table-bordered">
-                    <tbody>
-                        ${resData
-                            .map((e) => {
-                                return `
-                                <tr>
-                                    <td style="padding: 3px; text-align: center;">
-                                        <span class="tk_number font-weight-bold display-block red js-tk-number" data-kyquay="30" data-mientinh="mb">${e[0]}</span>                                    
-                                    </td>
-                                    <td style="padding: 3px; text-align: center;">
-                                        ${e[1]} lần
-                                    </td>
-                                </tr>
-                            `;
-                            })
-                            .join("")}
-                    </tbody>             
-                </table>
-            `;
-
-            res.json(html);
-
-            return;
-        }
+        const resData = ThongKeService.thongKe10SoXuatHienNhieuNhat(
+            kqxs,
+            cvHtml
+        );
 
         res.json(resData);
     } catch (error) {
@@ -166,75 +125,9 @@ const xuatHienItNhat = async (req, res) => {
 const lauXuatHienNhat = async (req, res) => {
     const { kqxs } = req;
     const { cvHtml } = req.query;
-    const numbers = {};
-
-    Array(100)
-        .fill(1)
-        .forEach((e, index) => {
-            numbers[index < 10 ? `0${index}` : index] = [0, ""];
-        });
 
     try {
-        for (let i = 0; i < kqxs.length; i++) {
-            const kq = Object.values(kqxs[i].toObject().ketqua).flat().slice(1);
-            let date = new Date(kqxs[i].toObject().ngay);
-            date = `${date.getDate()}/${
-                date.getMonth() + 1
-            }/${date.getFullYear()}`;
-
-            kq.forEach((num) => {
-                if (numbers[num.slice(-2)][0] === 0) {
-                    numbers[num.slice(-2)] = [i, date, Constants.GanCucDai[num.slice(-2)]];
-                }
-            });
-        }
-
-        const resData = Object.entries(numbers)
-            .sort((a, b) => a[1][0] - b[1][0])
-            .slice(-10)
-            .reverse();
-
-        if (cvHtml) {
-            const html = `
-                <table class="table">
-                    <thead>
-                        <td style="text-align: center;">Con số</td>
-                        <td style="text-align: center;">Số ngày chưa ra</td>
-                        <td style="text-align: center;">Ngày ra gần nhất</td>
-                        <td style="text-align: center;">Gan cực đại</td>
-                    </thead>
-
-                    <tbody>
-                        ${resData
-                            .map((row) => {
-                                return `
-                                <tr>
-                                    <td style="text-align: center; padding: 3px;">
-                                        <span class="tk_number font-weight-bold red" data-kyquay="30" data-mientinh="mb">${
-                                            row[0]
-                                        }</span>
-                                    </td>
-                                    <td style="text-align: center; padding: 3px;">
-                                        ${row[1][0]}
-                                    </td>
-                                    <td style="text-align: center; padding: 3px;">
-                                        ${row[1][1]}
-                                    </td>
-                                    <td style="text-align: center; padding: 3px;">
-                                        ${row[1][2] || "..."}
-                                    </td>
-                                </tr>
-                            `;
-                            })
-                            .join("")}
-                    </tbody>
-                </table>
-            `;
-
-            res.json(html);
-
-            return;
-        }
+        const resData = ThongKeService.thongKe10SoLauXuatHienNhat(kqxs, cvHtml);
 
         res.json(resData);
     } catch (error) {
@@ -286,91 +179,9 @@ const chuaXuatHien = async (req, res) => {
 const raLienTiep = async (req, res) => {
     const { kqxs } = req;
     const { cvHtml } = req.query;
-    const numbers = {};
 
     try {
-        const arr = kqxs.map((e) => {
-            return Object.values(e.ketqua)
-                .filter(Array.isArray)
-                .flat()
-                .map((e) => {
-                    return e.slice(-2);
-                });
-        });
-
-        for (let i = 0; i <= 99; i++) {
-            const num = i < 10 ? "0" + i : "" + i;
-
-            let count = 0;
-            let continuously = 0;
-            let biggestContinuously = 0;
-
-            arr.forEach((e, index) => {
-                e.forEach((numb) => {
-                    if (numb === num) {
-                        count++;
-                    }
-                });
-
-                if (e.includes(num) && (arr[index - 1] || []).includes(num)) {
-                    continuously = continuously + 1;
-                } else {
-                    continuously = 1;
-                }
-
-                if (continuously > biggestContinuously) {
-                    biggestContinuously = continuously;
-                }
-            });
-
-            numbers[num] = [biggestContinuously, count];
-        }
-
-        const resData = Object.entries(numbers)
-            .sort((a, b) => b[1][0] - a[1][0])
-            .slice(0, 10);
-
-        if (cvHtml) {
-            const bigArray = [...resData];
-
-            const arrayOfArrays = bigArray.reduce((acc, el, index) => {
-                const subArrayIndex = Math.floor(index / 5);
-                if (!acc[subArrayIndex]) {
-                    acc[subArrayIndex] = [];
-                }
-                acc[subArrayIndex].push(el);
-                return acc;
-            }, []);
-
-            const html = `
-                <table class="table table-bordered">
-                    <tbody>
-                        ${arrayOfArrays
-                            .map((subArr) => {
-                                return `
-                                <tr>
-                                    ${subArr
-                                        .map((e) => {
-                                            return `
-                                            <td style="text-align: center;">
-                                                <span class="tk_number font-weight-bold display-block red js-tk-number" style="display: block; line-height: 20px;" data-kyquay="30" data-mientinh="mb">${e[0]}</span>
-                                                <small style="line-height: 20px;">${e[1][0]} ngày<br style="display: block;">(${e[1][1]} lần)</small>
-                                            </td>                                    
-                                        `;
-                                        })
-                                        .join("")}
-                                </tr>
-                            `;
-                            })
-                            .join("")}
-                    </tbody>
-                </table>
-            `;
-
-            res.json(html);
-
-            return;
-        }
+        const resData = ThongKeService.thongKe10SoRaLienTiep(kqxs, cvHtml);
 
         res.json(resData);
     } catch (error) {
@@ -565,7 +376,13 @@ const dauDuoi = async (req, res) => {
 
 const general = async (req, res) => {
     const { kqxs } = req;
-    const { cvHtml, domain, province } = req.query;
+    const { ngay, cvHtml, domain } = req.query;
+    const day = req.day;
+    const labels = {
+        1: "XSMB",
+        2: "XSMT",
+        3: "XSMN",
+    };
 
     if (!cvHtml) {
         res.status(400).json({
@@ -574,7 +391,45 @@ const general = async (req, res) => {
         return;
     }
 
-    res.json(kqxs)
+    const provinces = Constants.LichQuayThuong[day][domain];
+
+    kqxs.forEach((kq) => {
+        if (provinces[kq.toObject().province]) {
+            provinces[kq.toObject().province].push(kq.toObject());
+        }
+    });
+
+    const html = `
+        <h3>Thống kê các tỉnh ${labels[domain]} ngày ${ngay}: ${Object.keys(
+        provinces
+    )
+        .map((e) => e)
+        .join(", ")}:</h3>
+        ${Object.keys(provinces)
+            .map((province) => {
+                return `
+                <p>XS ${province}</p>
+                <p class="title mb5">10 con số <span style="color: red;">xuất hiện nhiều nhất</span> trong 30 lần quay, tính đến ngày ${ngay}</p>
+                ${ThongKeService.thongKe10SoXuatHienNhieuNhat(
+                    provinces[province],
+                    true
+                )}
+                <p class="mt0 mb5">10 con số <span style="color: red;">lâu xuất hiện nhất</span> trong 30 lần quay, tính đến ngày ${ngay}</p>
+                ${ThongKeService.thongKe10SoLauXuatHienNhat(
+                    provinces[province],
+                    true
+                )}
+                <p class="title">10 con số <span style="color: red;">ra liên tiếp</span> trong vòng 30 lần quay, tính đến ngày ${ngay}</p>
+                ${ThongKeService.thongKe10SoRaLienTiep(
+                    provinces[province],
+                    true
+                )}
+            `;
+            })
+            .join("")}
+    `;
+
+    res.json(html);
 };
 
 module.exports = {
