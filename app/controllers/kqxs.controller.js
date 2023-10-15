@@ -6,8 +6,8 @@ const getResult = async (req, res) => {
     try {
         const { ngay, domain, province, cvHtml } = req.query;
 
-        if (!ngay && !domain && !province) {
-            const rs = await KQXSModel.find({}).sort({
+        if (!ngay && !province) {
+            const rs = await KQXSModel.find({ domain }).sort({
                 ngay: -1,
             });
 

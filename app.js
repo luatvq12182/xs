@@ -1,5 +1,4 @@
 const express = require("express");
-const compression = require("compression");
 const passport = require("passport");
 const tokenRouter = require("./app/routes/token.route");
 const kqxsRouter = require("./app/routes/kqxs.route");
@@ -13,7 +12,6 @@ const app = express();
 
 app.use(express.json()); // Parse JSON request bodies
 app.use(express.static("public"));
-app.use(compression());
 
 // app.use(
 //     "/api",

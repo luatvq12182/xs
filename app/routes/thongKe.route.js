@@ -11,5 +11,6 @@ router.get("/chua-xuat-hien", thongKeController.chuaXuatHien); // chi tinh giai 
 router.get("/ra-lien-tiep", thongKeController.raLienTiep);
 router.get("/giai-dac-biet", thongKeController.giaiDacBiet);
 router.get("/dau-duoi", thongKeController.dauDuoi);
+router.get("/general", thongKeController.general);
 
 module.exports = router;

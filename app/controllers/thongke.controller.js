@@ -1,4 +1,5 @@
 // const { Constants } = require("../constants");
+const { Constants } = require("../constants");
 const kqxsModel = require("../models/kqxs.model");
 const { lay10SoLonNhat, lay10SoBeNhat } = require("../utils");
 
@@ -183,7 +184,7 @@ const lauXuatHienNhat = async (req, res) => {
 
             kq.forEach((num) => {
                 if (numbers[num.slice(-2)][0] === 0) {
-                    numbers[num.slice(-2)] = [i, date];
+                    numbers[num.slice(-2)] = [i, date, Constants.GanCucDai[num.slice(-2)]];
                 }
             });
         }
@@ -572,6 +573,8 @@ const general = async (req, res) => {
         });
         return;
     }
+
+    res.json(kqxs)
 };
 
 module.exports = {
