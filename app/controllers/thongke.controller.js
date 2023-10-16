@@ -391,7 +391,9 @@ const general = async (req, res) => {
         return;
     }
 
-    const provinces = Constants.LichQuayThuong[day][domain];
+    const provinces = JSON.parse(
+        JSON.stringify(Constants.LichQuayThuong[day][domain])
+    );
 
     kqxs.forEach((kq) => {
         if (provinces[kq.toObject().province]) {
@@ -407,6 +409,8 @@ const general = async (req, res) => {
         .join(", ")}:</h3>
         ${Object.keys(provinces)
             .map((province) => {
+                console.log(provinces[province].length);
+
                 return `
                 <p>XS ${province}</p>
                 <p class="title mb5">10 con số <span style="color: red;">xuất hiện nhiều nhất</span> trong 30 lần quay, tính đến ngày ${ngay}</p>
