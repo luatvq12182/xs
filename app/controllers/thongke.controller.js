@@ -271,27 +271,27 @@ const general = async (req, res) => {
 
     if (+domain === Constants.Domain.MienBac) {
         const html = `
-            <p>10 con số <span style="color: red;">xuất hiện nhiều nhất</span> trong vòng 30 lần quay, tính đến ngày ${ngay}:</p>
+            <p style="font-weight: bolder;">⭐ 10 con số <span style="color: red;">xuất hiện nhiều nhất</span> trong vòng 30 lần quay, tính đến ngày ${ngay}:</p>
             ${ThongKeService.thongKe10SoXuatHienNhieuNhat(
                 kqxs,
                 true
             )}
-            <p>10 con số <span style="color: red;">lâu xuất hiện nhất</span> trong 30 kỳ quay, tính đến ngày ${ngay}:</p>
+            <p style="font-weight: bolder;">⭐ 10 con số <span style="color: red;">lâu xuất hiện nhất</span> trong 30 kỳ quay, tính đến ngày ${ngay}:</p>
             ${ThongKeService.thongKe10SoLauXuatHienNhat(
                 kqxs,
                 true
             )}
-            <p>10 con số <span style="color: red;">ra liên tiếp</span> trong vòng 30 kỳ quay, tính đến ngày ${ngay}:</p>
+            <p style="font-weight: bolder;">⭐ 10 con số <span style="color: red;">ra liên tiếp</span> trong vòng 30 kỳ quay, tính đến ngày ${ngay}:</p>
             ${ThongKeService.thongKe10SoRaLienTiep(
                 kqxs,
                 true
             )}
-            <p>Thống kê 30 kỳ quay <span style="color: red;">giải đặc biệt</span> XSMB tính đến ngày ${ngay}:</p>
+            <p style="font-weight: bolder;">⭐ Thống kê 30 kỳ quay <span style="color: red;">giải đặc biệt</span> XSMB tính đến ngày ${ngay}:</p>
             ${ThongKeService.thongKeGiaiDacBiet(
                 kqxs,
                 true
             )}            
-            <p>Thống kê <span style="color: red;">đầu đuôi</span> trong vòng 30 tính đến ngày ${ngay}:</p>
+            <p style="font-weight: bolder;">⭐ Thống kê <span style="color: red;">đầu đuôi</span> trong vòng 30 tính đến ngày ${ngay}:</p>
             ${ThongKeService.thongKeDauDuoi(
                 kqxs,
                 true
