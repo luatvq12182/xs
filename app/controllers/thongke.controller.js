@@ -435,7 +435,7 @@ const general = async (req, res) => {
         ${Object.keys(provinces)
             .map((province) => {
                 return `
-                <p>XS ${province}</p>
+                <p style="color: red;"><b>XS ${province}</b></p>
                 <p class="title mb5">10 con số <span style="color: red;">xuất hiện nhiều nhất</span> trong 30 lần quay, tính đến ngày ${ngay}</p>
                 ${ThongKeService.thongKe10SoXuatHienNhieuNhat(
                     provinces[province],
