@@ -4,7 +4,7 @@ const kqxsModel = require("../models/kqxs.model");
 const { lay10SoLonNhat, lay10SoBeNhat } = require("../utils");
 
 const layKetQua = async (req, res, next) => {
-    const { domain, province, ngay = new Date(), range = 30 } = req.query;
+    const { domain, ngay = new Date(), range = 30 } = req.query;
 
     const [d, m, y] = ngay.split("-");
 
@@ -20,24 +20,49 @@ const layKetQua = async (req, res, next) => {
     }
 
     try {
-        const query = {
-            ngay: { $gte: startDate, $lt: endDate },
-            domain,
-        };
+        const provinces = Object.keys(
+            Constants.LichQuayThuong[endDate.getDay()][domain]
+        );
 
-        if (province) {
-            query.province = province;
+        let kqxs = [];
+
+        if (+domain !== +Constants.Domain.MienBac) {
+            for (let i = 0; i < provinces.length; i++) {
+                const query = {
+                    ngay: { $lt: endDate },
+                    domain,
+                    province: provinces[i],
+                };
+
+                const res = await kqxsModel
+                    .find(query)
+                    .sort({
+                        ngay: -1,
+                    })
+                    .limit(30);
+                kqxs = [...kqxs, ...res];
+            }
+        } else {
+            const query = {
+                ngay: { $lt: endDate },
+                domain,
+            };
+
+            const res = await kqxsModel
+                .find(query)
+                .sort({
+                    ngay: -1,
+                })
+                .limit(30);
+            kqxs = [...kqxs, ...res];
         }
-
-        const kqxs = await kqxsModel.find(query).sort({
-            ngay: -1,
-        });
 
         req.kqxs = kqxs;
         req.day = endDate.getDay();
 
         next();
     } catch (error) {
+        console.log(error);
         res.status(500).json({
             msg: "Có lỗi xảy ra, vui lòng thử lại",
         });
@@ -409,8 +434,6 @@ const general = async (req, res) => {
         .join(", ")}:</h3>
         ${Object.keys(provinces)
             .map((province) => {
-                console.log(provinces[province].length);
-
                 return `
                 <p>XS ${province}</p>
                 <p class="title mb5">10 con số <span style="color: red;">xuất hiện nhiều nhất</span> trong 30 lần quay, tính đến ngày ${ngay}</p>
