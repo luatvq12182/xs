@@ -211,8 +211,176 @@ const thongKe10SoRaLienTiep = (kqxs, cvHtml = false) => {
     res.json(resData);
 };
 
+const thongKeDauDuoi = (kqxs, cvHtml = false) => {
+    const numbers = {
+        "0x": 0,
+        "1x": 0,
+        "2x": 0,
+        "3x": 0,
+        "4x": 0,
+        "5x": 0,
+        "6x": 0,
+        "7x": 0,
+        "8x": 0,
+        "9x": 0,
+        x0: 0,
+        x1: 0,
+        x2: 0,
+        x3: 0,
+        x4: 0,
+        x5: 0,
+        x6: 0,
+        x7: 0,
+        x8: 0,
+        x9: 0,
+    };
+
+    try {
+        const arr = kqxs.map((e) => {
+            return Object.values(e.ketqua)
+                .filter(Array.isArray)
+                .flat()
+                .map((e) => {
+                    return e.slice(-2);
+                });
+        });
+
+        for (let i = 0; i <= 9; i++) {
+            arr.forEach((e) => {
+                e.forEach((numb) => {
+                    if (numb.startsWith(i)) {
+                        numbers[`${i}x`] = numbers[`${i}x`] + 1;
+                    }
+
+                    if (numb.endsWith(i)) {
+                        numbers[`x${i}`] = numbers[`x${i}`] + 1;
+                    }
+                });
+            });
+        }
+
+        const resData = numbers;
+
+        if (cvHtml) {
+            const dau = Object.keys(resData).slice(0, 10);
+            const duoi = Object.keys(resData).slice(10);
+
+            const html = `
+                <table class="table table-bordered">
+                    <tbody>
+                        ${dau
+                            .map((key, index) => {
+                                return `
+                                <tr>
+                                    <td style="text-align: center;">
+                                        <span class="tk_number font-weight-bold display-block" style="font-size: 1rem; padding: 3px;">${index}<small>x</small></span>
+                                    </td>
+                                    <td style="text-align: center;">${
+                                        resData[key]
+                                    } lần</td>
+                                    <td style="text-align: center;">
+                                        <span class="tk_number font-weight-bold display-block" style="font-size: 1rem; padding: 3px; color: #00aecd;"><small>x</small>${index}</span>
+                                    </td>
+                                    <td style="text-align: center;">${
+                                        resData[duoi[index]]
+                                    } lần</td>
+                                </tr>
+                            `;
+                            })
+                            .join("")}
+                    </tbody>
+                </table>
+            `;
+
+            return html;
+        }
+
+        return resData;
+    } catch (error) {
+        res.status(500).json({
+            msg: "Có lỗi xảy ra, vui lòng thử lại",
+        });
+    }
+};
+
+const thongKeGiaiDacBiet = (kqxs, cvHtml = false) => {
+    const resData = kqxs
+        .map((e) => {
+            const date = new Date(e.toObject().ngay);
+
+            return {
+                ngay: `${date.getDate()}/${date.getMonth() + 1}`,
+                value: e.toObject().ketqua.giaidacbiet[0],
+            };
+        })
+        .flat();
+
+    if (cvHtml) {
+        const bigArray = [...resData];
+
+        const arrayOfArrays = bigArray.reduce((acc, el, index) => {
+            const subArrayIndex = Math.floor(index / 3);
+            if (!acc[subArrayIndex]) {
+                acc[subArrayIndex] = [];
+            }
+            acc[subArrayIndex].push(el);
+            return acc;
+        }, []);
+
+        const html = `
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th style="text-align: center;">Ngày</th>
+                        <th style="text-align: center;">
+                            <span class="hidden-xs">Giải</span> ĐB
+                        </th>
+                        <th style="text-align: center;">Ngày</th>
+                        <th style="text-align: center;">
+                            <span class="hidden-xs">Giải</span> ĐB
+                        </th>
+                        <th style="text-align: center;">Ngày</th>
+                        <th style="text-align: center;">
+                            <span class="hidden-xs">Giải</span> ĐB
+                        </th>
+                    </tr>
+                </thead>   
+                <tbody>
+                    ${arrayOfArrays
+                        .map((subArr) => {
+                            return `
+                            <tr>
+                                ${subArr
+                                    .map(({ ngay, value }) => {
+                                        return `
+                                        <td style="text-align: center; font-size: 14px; padding: 3px;">${ngay}</td>
+                                        <td style="text-align: center; font-weight: bold; font-size: 14px; padding: 3px;">${value.slice(
+                                            0,
+                                            -2
+                                        )}<span style="font-weight: bold; color: red;">${value.slice(
+                                            -2
+                                        )}</span></td>
+                                    `;
+                                    })
+                                    .join("")}
+                            </tr>
+                        `;
+                        })
+                        .join("")}
+                </tbody>             
+            </table>
+        `;
+
+        return html;
+    }
+
+    return resData;
+};
+
 module.exports = {
     thongKe10SoXuatHienNhieuNhat,
     thongKe10SoLauXuatHienNhat,
     thongKe10SoRaLienTiep,
+    thongKeDauDuoi,
+    thongKeGiaiDacBiet,
 };

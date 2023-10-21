@@ -2,7 +2,13 @@ const Constants = {
     Domain: {
         MienBac: 1,
         MienTrung: 2,
-        MientNam: 3,
+        MienNam: 3,
+        XSMB: 1,
+        XSMT: 2,
+        XSMN: 3,
+        1: "XSMB",
+        2: "XSMT",
+        3: "XSMN",
     },
     GanCucDai: {
         10: 33,
