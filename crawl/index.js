@@ -303,7 +303,7 @@ const main = async () => {
         const page = await browser.newPage();
 
         // await crawKQXSHomNay(page);
-        await crawKQXS(page, 21, 10, 2023);
+        await crawKQXS(page, 22, 10, 2023);
 
         // for (let i = 4; i <= 4; i++) { // dang cao den thang 5
         //     for (let j = 1; j <= MONTHS[i]; j++) {

@@ -3,7 +3,7 @@ const { Constants } = require("../app/constants");
 
 const WEBS = [
     {
-        DOMAIN: "https://soicau9999.pro",
+        DOMAIN: "https://soicau568.us",
         USERNAME: "admin",
         PASSWORD: "Abc!@#123",
     },
@@ -143,17 +143,18 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
 
             if (+domain === 1) {
                 postContent = `
-                Soi Cầu 9999 sở hữu một đội ngũ chuyên gia với nhiều năm kinh nghiệm soi kèo và phân tích lô đề. Trong ngày ${date}, hãy cùng đi tìm con số may mắn nhất thông qua các phương pháp soi cầu cùng chúng tôi nhé.
+                Bằng những kinh nghiệm cũng như công cụ thống kê, phân tích bảng kết quả xổ số trước đó <strong>Soi Cầu 568</strong> có thể tạo ra cặp số may mắn, chuẩn xác cho các Anh Em miền Bắc tham khảo.
 
-                [caption id="attachment_536" align="alignnone" width="1200"]<img class="size-full wp-image-536" src="https://soicau9999.pro/wp-content/uploads/2023/10/XSMB-${ngay}-${thang}.png" alt="Hình ảnh Soi Cầu 9999 Dự Đoán KQXS MB Hôm Nay ${date}" width="1200" height="628" /> Hình ảnh Soi Cầu 9999 Dự Đoán KQXS MB Hôm Nay ${date}[/caption]
+                [caption id="attachment_536" align="alignnone" width="1200"]<img class="size-full wp-image-536" src="https://soicau568.us/wp-content/uploads/2023/10/XSMB-${ngay}-${thang}.png" alt="Hình ảnh Soi Cầu 9999 Dự Đoán KQXS MB Hôm Nay ${date}" width="1200" height="628" /> Hình ảnh Soi Cầu 9999 Dự Đoán KQXS MB Hôm Nay ${date}[/caption]
                 
-                Xem lại KQXS Miền Bắc ${dayLabel} tuần trước Ngày ${date}
+                Xem lại KQXS Miền Bắc ${dayLabel} tuần trước Ngày ${ngayTuanTruocLabel}
                 
                 [ket_qua_xo_so domain="${domain}" ngay="${ngayTuanTruocLabel}"]
                 
-                Với nhiều năm kinh nghiệm Soi Cầu 9999 có thể cho số miền Bắc ngày ${date} và tất cả những ngày khác với tỉ lệ trúng cực cao. Theo đánh giá của các Anh Em, những con số từ các chuyên gia cung cấp luôn mang về tỷ lệ trúng giải cao với xác suất cao đến không tưởng.
+                Đối với những chuyên gia trong lĩnh vực xổ số có nhiều kinh nghiệm họ thường áp dụng các phương pháp, tính toán xác suất thống kê. Từ đó đưa ra quy luật thông qua bảng kết quả của kỳ trước với mục đích chọn ra cặp số lô có tỷ lệ trúng cao nhất trong ngày hôm nay.
                 
-                Để đạt được thành quả đó chúng tôi phải tập hợp được đội ngũ chuyên gia giỏi nhất với nhiều năm kinh nghiệm. Họ giành nhiều thời gian để tìm ra công thức phân tích và thuật toán ngày càng chính xác hơn cho người dùng. Để không mất nhiều thời gian của các bạn, hãy xem xem hôm nay SC 9999 cho Anh Em những con số gì nha.
+                Theo cách soi cầu, phân tích từ Soi Cầu 568 người chơi có thể tham khảo các cầu kèo dưới đây:
+
                 <div class="table_dudoan_wrapper">
                 <h3>✅ Soi cầu Lô dự đoán XSMB ngày ${date}</h3>
                 <table class="table_dudoan">
@@ -231,32 +232,26 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
                 </tbody>
                 </table>
                 </div>
-                Muốn tìm ra con số chơi lô đề chuẩn xác, người dùng nên tổng hợp lại bảng kết quả xổ số miền Bắc những kỳ trước. Từ đó, anh em có thể so sánh, phân tích và tìm ra quy luật trò chơi. Lúc này, việc lựa chọn một con số may mắn sẽ dễ dàng và tăng cơ hội trúng giải.
+                Cách soi cầu xổ số miền Bắc dựa trên cách phân tích, nhận định cũng như áp dụng chiến thuật để tăng khả năng chiến thắng. Ngoài các phương pháp soi cầu được đúc rút kinh nghiệm qua các năm thì chúng tôi còn giựa vào các bảng thống kê để lựa chọn các con số có tỉ lệ trúng cao.
                 [thong_ke_general domain="${domain}" ngay="${date}"]
                 </div>                
                 `;
             } else if (+domain === 3) {
                 postContent = `
-                    Hãy cùng đi tìm những con số may mắn nhất trong xổ số miền Nam ngày ${date} với đội ngũ chuyên gia giàu kinh nghiệm. Nhận về những con số may mắn nhất của ${
-                    provinces.length
-                } nhà đài ${provinces.join(
-                    ", "
-                )} ngày hôm nay cùng chúng tôi nhé.
+                    Với những bí kíp soi cầu chuẩn từ các chuyên gia của <strong>Soi Cầu 568</strong>, Anh Em có thể dễ dàng tìm kiếm và lựa chọn cho mình những cặp số may mắn giải miền Nam. Hệ thống sở hữu công cụ phân tích cộng thêm đội ngũ chuyên gia giàu kinh nghiệm hứa hẹn mang đến may mắn tài lộc cho bạn.
 
-                    [caption id="attachment_543" align="alignnone" width="1200"]<img class="size-full wp-image-543" src="https://soicau9999.pro/wp-content/uploads/2023/10/XSMN-${ngay}-${thang}.png" alt="Hình ảnh Soi Cầu 9999 Dự Đoán KQXS MN Hôm Nay ${date}" width="1200" height="628" /> Hình ảnh Soi Cầu 9999 Dự Đoán KQXS MN Hôm Nay ${ngay}-${thang}-2023[/caption]
+                    [caption id="attachment_543" align="alignnone" width="1200"]<img class="size-full wp-image-543" src="https://soicau568.us/wp-content/uploads/2023/10/XSMN-${ngay}-${thang}.png" alt="Hình ảnh Soi Cầu 9999 Dự Đoán KQXS MN Hôm Nay ${date}" width="1200" height="628" /> Hình ảnh Soi Cầu 9999 Dự Đoán KQXS MN Hôm Nay ${ngay}-${thang}-2023[/caption]
                     
-                    Xem lại KQXS Miền Nam vào ${dayLabel} tuần trước Ngày ${date}
+                    Xem lại KQXS Miền Nam vào ${dayLabel} tuần trước Ngày ${ngayTuanTruocLabel}
                     
                     [thong_ke_general domain="${domain}" ngay="${date}"]
                     
-                    Nhờ những bí kíp độc không công bố ra ngoài, các chuyên gia của Soi Cầu 9999 có thể cho số miền Nam hôm nay với tỉ lệ chính xác cực cao. Anh EM có thể tham khảo các con số mà chúng tôi đưa ra để mang về những phần thưởng ngoài mong đợi.
-                    
-                    Với nhiều năm kinh nghiệm theo dõi thị trường xổ số và phân tích kết quả, đội ngũ chuyên gia Soi Cầu 9999 có khả năng soi cầu chính xác, phân tích cực kì thuyết phục để đề xuất các con số có tỷ lệ thắng cao cho các bạn.
+                    Phương pháp cho số miền Nam thông qua việc phân tích kết quả, xác định con số xuất hiện nhằm đưa ra dự đoán chuẩn xác nhất. Soi Cầu 568 cung cấp các phương pháp như soi cầu đưa ra các kết quả giải tám, giải đặc biệt hoặc bao lô. Từ đó người chơi khi tham gia sẽ có được đa dạng sự lựa chọn.
                     
                     ${provinces
                         .map((prv) => {
                             return `
-                            <h3>✅ Rồng Bạch Kim 666 soi cầu KQXS ${prv} ngày ${date}</h3>
+                            <h3>✅ Soi cầu dự đoán kết quả xổ số ${prv} ngày ${date}</h3>
                             <div class="table_dudoan_wrapper">
                             <table class="table_dudoan">
                             <tbody>
@@ -282,28 +277,26 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
                         })
                         .join("")}                
                     
-                    1 Trong những cách để loại bỏ những con số có tỉ lệ không về là so sánh với các bảng Thống kê. Với những người có thâm niên trong ngành Lô Đề chắc chắn họ sẽ phải tham khảo Bảng thống kê trước khi chốt số. Anh Em cũng nên tập làm quen với việc theo dõi các bảng Thống kê để rút ra phương pháp soi cầu cho riêng bản thân mình.
+                    Soi Cầu 568 sở hữu hệ thống chuyên gia chuyên soi cầu, dự đoán kết quả xổ số miền Nam. Tất cả mang đến người chơi lợi ích giá trị dựa vào kết quả bảng trả thưởng trong nhiều lần quay. Đồng thời tổng hợp các dữ liệu với các bảng thống kê chính xác.
+
+                    Để đưa ra quyết định lựa chọn con số lô đẹp người chơi cần tham khảo bảng quay thưởng của những kỳ gần nhất. Bên cạnh đó so sánh, thống kê các con số may mắn đồng thời nuôi trong các kỳ tiếp theo để có thể vào bờ ngay lập tức.
                     
                     [thong_ke_general domain="${domain}" ngay="${date}"]         
                     `;
             } else {
                 postContent = `
-                Đội ngũ chuyên gia giàu kinh nghiệm ngày đêm nghiên cứu để phát triển công cụ soi cầu, cho số miền Trung chính xác. Hệ thống có thể chốt được các giải đặc biệt, giải tám, bao lô 2 số... của miền Trung đạt hiệu quả cao. Cùng theo dõi kết quả cho số ngày ${date} cùng chúng tôi nhé.
+                Soi Cầu 568 chia sẻ miễn phí đến thành viên bảng soi cầu lô đề miền Trung từng ngày. Anh em khi truy cập vào website soicau568.us có thể tham khảo, dự đoán con số lô đẹp ${date} từ chuyên gia lâu năm. Chắc chắn với những công cụ, phương pháp soi cầu bạn sẽ có được cơ hội ăn lô, ăn đề cao nhất.
 
-                [caption id="attachment_576" align="alignnone" width="1200"]<img class="size-full wp-image-576" src="https://soicau9999.pro/wp-content/uploads/2023/10/XSMT-${ngay}-${thang}.png" alt="Hình ảnh Soi Cầu 9999 Dự Đoán KQXS MT Hôm Nay ${date}" width="1200" height="628" /> Hình ảnh Soi Cầu 9999 Dự Đoán KQXS MT Hôm Nay ${ngay}-${thang}-2023[/caption]
+                [caption id="attachment_576" align="alignnone" width="1200"]<img class="size-full wp-image-576" src="https://soicau568.us/wp-content/uploads/2023/10/XSMT-${ngay}-${thang}.png" alt="Hình ảnh Soi Cầu 9999 Dự Đoán KQXS MT Hôm Nay ${date}" width="1200" height="628" /> Hình ảnh Soi Cầu 9999 Dự Đoán KQXS MT Hôm Nay ${ngay}-${thang}-2023[/caption]
                 
-                Xem lại KQXS Miền Trung vào ${dayLabel} tuần trước Ngày ${date}
+                Xem lại KQXS Miền Trung vào ${dayLabel} tuần trước Ngày ${ngayTuanTruocLabel}
                 
                 [ket_qua_xo_so domain="${domain}" ngay="${ngayTuanTruocLabel}"]
-                
-                Soi Cầu 9999 có thể giúp bạn dự đoán và cho số miền Trung với độ chuẩn xác cao dựa vào các phương pháp lô xiên, bạc nhớ, tổng đề, bóng âm dương. Cùng đi tìm con số may mắn trong ngày ${date}.
-                
-                Soi Cầu 9999 tập hợp một đội ngũ chuyên gia có nhiều năm kinh nghiệm trong việc cho số miền Trung. Họ có phương pháp riêng để tổng hợp lại kết quả xổ số miền Trung nhiều kỳ sau đó so sánh và tìm ra quy luật.
                 
                 ${provinces
                     .map((prv) => {
                         return `
-                        <h3>✅ Soi cầu xổ số Miền Trung đài ${prv} ngày ${date}</h3>
+                        <h3>✅ Soi cầu dự đoán xổ số ${prv} ngày ${date}</h3>
                         <div class="table_dudoan_wrapper">
                         <table class="table_dudoan">
                         <tbody>
@@ -329,7 +322,9 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
                     })
                     .join("")}                
                 
-                Sau khi đã nhận được những con số may mắn ngày ngày ${date} chính xác và tăng cơ hội thắng. Thông qua những phân tích chuyên sâu và khả năng chọn lọc tốt, chúng tôi luôn đưa ra những gợi ý mang về tỷ lệ trúng giải cao cho người chơi. Tuy nhiên để chắc chắn bạn cũng có thể xem các Bảng thống kê dưới đây và tự phân tích thêm để có sự lựa chọn đúng đắn.
+                Vai trò của cho số miền Trung vô cùng quan trọng ảnh hưởng đến chiến thắng của bạn nên việc soi cầu, dự đoán con số lô là vô cùng cần thiết. Soi Cầu 568 chính là đơn vị uy tín cho người chơi tham khảo nhận định, soi cầu, dự đoán KQXS MT chuẩn. Chúng tôi tập hợp các chuyên gia giàu kinh nghiệm có kiến thức chuyên sâu về lĩnh vực lô đề.
+
+                <strong>Soi Cầu 568</strong> hiện đang là kênh soi cầu hoàn toàn miễn phí dành cho tín đồ đam mê số học. Anh em khi lựa chọn có thể đối chiếu với bảng thống kê của chúng tôi để quyết định xuống tiền con số nào.
                 
                 [thong_ke_general domain="${domain}" ngay="${date}"]
                 `;
@@ -337,9 +332,7 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
 
             document.querySelector(
                 "#title"
-            ).value = `Soi Cầu 9999 Dự Đoán KQXS ${
-                domain == 1 ? "MB" : domain == 2 ? "MT" : "MN"
-            } Hôm Nay ${date}`;
+            ).value = `Soi Cầu 568 Dự Đoán Kết Quả ${domainLabel} Ngày ${date}`;
             document.querySelector("#content").value = postContent;
         },
         ngay,
