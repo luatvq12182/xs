@@ -3,8 +3,8 @@ const { Constants } = require("../app/constants");
 
 const WEBS = [
     {
-        DOMAIN: "https://rongbachkim555.com",
-        USERNAME: "rbk555",
+        DOMAIN: "https://rongbachkim666.me",
+        USERNAME: "admin",
         PASSWORD: "Abc!@#123",
     },
 ];
@@ -48,7 +48,7 @@ const taoBaiVietSoiCau = async (page, domain, ngay, thang, nam) => {
     const provinces = Object.keys(Constants.LichQuayThuong[day][domain]);
 
     await page.goto(
-        `https://rongbachkim555.com/wp-admin/post-new.php?post_type=${post_type[domain]}`,
+        `https://rongbachkim666.me/wp-admin/post-new.php?post_type=${post_type[domain]}`,
         { timeout: 0 }
     );
 
@@ -58,7 +58,7 @@ const taoBaiVietSoiCau = async (page, domain, ngay, thang, nam) => {
     await sleep(1000);
     await page.type(
         "#media-search-input",
-        `${ngay}-${thang}-${DOMAINS[domain]}`
+        `${DOMAINS[domain]}-${ngay}-${thang}`
     );
 
     await sleep(3000);
@@ -85,12 +85,22 @@ const taoBaiVietSoiCau = async (page, domain, ngay, thang, nam) => {
             }-${ngayTuanTruoc.getFullYear()}`;
 
             const genRandomNumber = () => {
-                return Math.floor(Math.random() * 100);
+                return Math.floor(Math.random() * 99);
             };
 
             const genCapLo = () => {
-                const randomNumber = Math.floor(Math.random() * 90) + 10;
-                const reverseNumber = parseInt(
+                let randomNumber;
+                let reverseNumber;
+
+                randomNumber = Math.floor(Math.random() * 90) + 10;
+
+                while (
+                    [99, 88, 77, 66, 55, 44, 33, 22, 11].includes(randomNumber)
+                ) {
+                    randomNumber = Math.floor(Math.random() * 90) + 10;
+                }
+
+                reverseNumber = parseInt(
                     randomNumber.toString().split("").reverse().join("")
                 );
 
@@ -133,18 +143,25 @@ const taoBaiVietSoiCau = async (page, domain, ngay, thang, nam) => {
 
             if (+domain === 1) {
                 postContent = `
-                Còn gì tuyệt vời hơn khi Anh Em tham khảo Kết Quả Soi Cầu Miền Bắc hôm nay ${dayLabel} ngày ${date} từ <strong><a href="https://rongbachkim555.com/">Rồng Bạch Kim 555</a></strong> và dành được thắng lợi. Những con số được các chuyên gia của chúng tôi dùng nhiều phương pháp soi cầu có tỉ lệ chính xác cao nhất ở thời điểm hiện tại cho ra dự đoán.
+                Chào mừng bạn đến với soi cầu dự đoán kết quả Xổ Số Miền Bắc (XSMB) hôm nay ngày ${date}, nơi bạn có cơ hội nhận những con số may mắn với sự chắc chắn và hoàn toàn miễn phí! Rồng Bạch Kim 666 tự hào mang đến cho bạn những dự đoán XSMB chất lượng và chính xác nhất, giúp bạn chốt số trúng thưởng giải đặc biệt, lô 2 số, 3 càng và lô xiên một cách hiệu quả.
 
-                <img class="alignnone size-full wp-image-226" src="https://rongbachkim555.com/wp-content/uploads/2023/10/${ngay}-${thang}-${domainLabel}.png" alt="" width="1800" height="942" />
+                [caption id="attachment_547" align="alignnone" width="1200"]<img class="alignnone size-full wp-image-547" src="https://rongbachkim666.me/wp-content/uploads/2023/10/${domainLabel}-${ngay}-${thang}.png" alt="" width="1200" height="628" /> Hình ảnh Rồng Bạch Kim 666 Soi Cầu Dự Đoán Kết Quả ${domainLabel} ${date}[/caption]
+                <h2>Bảng thống kê KQXS Miền Bắc của Rồng Bạch Kim 666</h2>
+                Soi cầu dự đoán XSMB ngày ${date} của chúng tôi không chỉ dựa trên may mắn mà còn dựa trên cơ sở thống kê số học và phân tích sâu rộng. <strong><a href="https://rongbachkim666.me/">Rồng Bạch Kim 666</a></strong> tập trung vào việc cung cấp cho bạn những con số có khả năng trúng thưởng cao nhất, từ đặc biệt đầu đuôi đến các lô tô và lô xiên. Chúng tôi cam kết cung cấp thông tin chính xác và dự đoán XSMB hôm nay theo tính chuẩn xác cao nhất để giúp bạn có cơ hội trúng lớn.
                 
                 <h2>Cùng xem lại kết quả ${domainLabel} ${dayLabel} tuần rồi ngày ${ngayTuanTruocLabel}</h2>
-                [ket_qua_xo_so domain="1" ngay="${ngayTuanTruocLabel}"]
-                <h3>✅ Soi cầu Lô dự đoán XSMB ngày ${date}</h3>
+                [ket_qua_xo_so domain="${domain}" ngay="${ngayTuanTruocLabel}"]
+                
+                [thong_ke_general domain="1" ngay="${date}"]  
+
+                <h2>Soi cầu Rồng Bạch Kim 666 xổ số Miền Bắc hôm nay ngày ${date}</h2>
+                Bên cạnh việc thống kê kết quả XSMB, bằng cách phân tích các mô hình số học chúng tôi đã chọn được các thông tin bổ ích và cầu kèo đẹp để đưa ra những con số chuẩn xác nhất hôm nay ngày ${date}. RBK 666 luôn sẵn sàng hỗ trợ bạn trong việc tìm ra những con số lô, số đề đẹp nhất để đảm bảo bạn gặp được nhiều may mắn mỗi ngày.
+                <h3>Soi cầu dự đoán kết quả xổ số Miền Bắc ngày ${date}</h3>
                 <div class="table_dudoan_wrapper">
                 <table class="table_dudoan">
                 <tbody>
                 <tr>
-                <td>🌟 Bạch thủ lô siêu VIP hôm nay: <span class="number-red">${genRandomNumber()}</span></td>
+                <td>🌟 Bạch thủ lô siêu VIP hôm nay: <span class="number-red">${renderNum(genRandomNumber())}</span></td>
                 </tr>
                 <tr>
                 <td>🌟 Cặp lô đẹp nhất hôm nay: <span class="number-red">${genCapLo()}</span></td>
@@ -184,9 +201,9 @@ const taoBaiVietSoiCau = async (page, domain, ngay, thang, nam) => {
                 <table class="table_dudoan">
                 <tbody>
                 <tr>
-                <td>🌟 Bạch thủ đề siêu VIP hôm nay: <span class="number-red">${genRandomNumber(
+                <td>🌟 Bạch thủ đề siêu VIP hôm nay: <span class="number-red">${renderNum(genRandomNumber(
                     4
-                )}</span></td>
+                ))}</span></td>
                 </tr>
                 <tr>
                 <td>🌟 Đề đầu đuôi: <span class="number-red">Đầu ${gen1Num()} - Đuôi ${gen1Num()}</span></td>
@@ -213,40 +230,94 @@ const taoBaiVietSoiCau = async (page, domain, ngay, thang, nam) => {
                 </tr>
                 </tbody>
                 </table>
-                </div>
-                Thông tin được chia sẻ hoàn toàn miễn phí. Mọi con số Lô và Đề được Rồng Bạch Kim 555 cập nhật liên tục đều đặt hàng ngày, tuy nhiên mọi thông tin chỉ mang tính tham khảo. Các bạn cần đọc thêm <a href="https://rongbachkim555.com/dieu-khoan/" target="_blank" rel="noopener">Điều khoản</a> từ chúng tôi để có cái nhìn khách quan nhất.
+                <h3>Soi cầu XSMB chính xác hôm nay ${date}</h3>
+                Hãy luôn luôn theo dõi Rồng Bạch Kim 666 để cập nhật các dự đoán và chốt số XSMB hàng ngày chính xác. Chúng tôi hy vọng rằng bạn sẽ có nhiều may mắn trong việc trúng giải cao và đạt được những giấc mơ của mình thông qua bảng kết quả Xổ Số Miền Bắc sẽ về hôm nay!
                 
-                Ngoài ra các bạn cũng có thể tham khảo thêm các thông tin Thống Kê KQXS Miền Bắc từ chúng tôi để nâng cao tỉ lệ chiến thắng:
-                
-                [thong_ke_general domain="1" ngay="${date}"]        
+                </div>                
                 `;
-            } else {
+            } else if (+domain === 3) {
                 postContent = `
-                Bạn đang tìm kiếm cho mình con số may mắn nhất trong ngày hôm nay. Đừng đánh lô đề theo cảm tính hoặc lựa chọn 1 con số ngẫu nhiên, không ai có thể may mắn theo thời gian dài bằng cách đánh may rủi này. Những con số được <strong><a href="https://rongbachkim555.com/">Rồng Bạch Kim 555</a></strong> đưa ra luôn có căn cứ.
+                Hãy cùng Rồng Bạch Kim 666 soi cầu dự đoán kết quả Xổ Số Miền Nam (${domainLabel}) hôm nay ngày ${date} với sự chính xác cao và chi tiết nhất. Tại đây, chúng tôi cam kết đem đến cho bạn những con số đẹp nhất và có tỉ lệ về cao nhất để bạn có nhiều cơ hội đổi đời.
 
-                Chuyên gia của chúng tôi đã cập nhật Dự đoán KQ ${domainLabel} hôm nay ${dayLabel} ngày ${date} mở thưởng tại <strong>${provinces.join(
-                    ", "
-                )}</strong>. Bạn có thể tham khảo để lựa chọn cho mình những con số phù hợp nhất.
-                
-                <img class="alignnone size-full wp-image-211" src="https://rongbachkim555.com/wp-content/uploads/2023/10/${ngay}-${thang}-${domainLabel}.png" alt="" width="1200" height="628" />
-                
-                <h2>Cùng xem lại kết quả ${domainLabel} ${dayLabel} tuần rồi ngày ${ngayTuanTruocLabel}</h2>
+                [caption id="attachment_547" align="alignnone" width="1200"]<img class="alignnone size-full wp-image-547" src="https://rongbachkim666.me/wp-content/uploads/2023/10/${domainLabel}-${ngay}-${thang}.png" alt="" width="1200" height="628" /> Hình ảnh Rồng Bạch Kim 666 Soi Cầu Dự Đoán Kết Quả ${domainLabel} ${date}[/caption]
+                <h2>Bảng thống kê KQXS Miền Nam ${dayLabel} tuần trước của Rồng Bạch Kim 666</h2>
                 [ket_qua_xo_so domain="${domain}" ngay="${ngayTuanTruocLabel}"]
+                
+                Soi cầu ${domainLabel} chuẩn xác hôm nay ${date} tại RBK 666 không chỉ phụ thuộc vào sự may mắn, mà được xây dựng trên cơ sở phân tích dữ liệu đã có và kiến thức đáng tin cậy. Ngoài ra, chúng tôi liên tục cập nhật thông tin và thống kê kết quả trước đây, giúp bạn hiểu rõ hơn về các xu hướng số học sẽ ra trong bảng kết quả ${domainLabel} sẽ ra hôm nay.
+                
+                [thong_ke_general domain="${domain}" ngay="${date}"]
+                
+                Dự đoán Xổ Số Miền Nam ngày ${date} được chia sẻ bởi những chuyên gia <strong><a href="https://rongbachkim666.me/">Rồng Bạch Kim 666</a></strong> có chuyên môn và kinh nghiệm trong lĩnh vực soi cầu xổ số. Với sự cẩn trọng và kiểm chứng kỹ lưỡng cùng những thống kê chính xác từ kết quả xổ số các kì quay trước, chúng tôi đưa ra những con số có khả năng trúng giải cao nhất, giúp những ai đang loạn số tìm được cho mình những con số may mắn.
                 ${provinces
                     .map((prv) => {
                         return `
-                        <h3>✅ Soi cầu dự đoán kết quả xổ số ${prv} ngày ${date}</h3>
+                        <h3>✅ Rồng Bạch Kim 666 soi cầu KQXS ${prv} ngày ${date}</h3>
                         <div class="table_dudoan_wrapper">
                         <table class="table_dudoan">
                         <tbody>
                         <tr>
-                        <td>🌟 Giải tám: <span class="number-red">${genRandomNumber()}</span></td>
+                        <td>🌟 Giải tám: <span class="number-red">${renderNum(
+                            genRandomNumber()
+                        )}</span></td>
                         </tr>
                         <tr>
-                        <td>🌟 Đặc biệt: <span class="number-red">${genRandomNumber()}</span></td>
+                        <td>🌟 Đặc biệt: <span class="number-red">${renderNum(
+                            genRandomNumber()
+                        )}</span></td>
                         </tr>
                         <tr>
-                        <td>🌟 Bao lô 2 số: <span class="number-red">${randomMulNum(2)}</span></td>
+                        <td>🌟 Bao lô 2 số: <span class="number-red">${randomMulNum(
+                            2
+                        )}</span></td>
+                        </tr>
+                        </tbody>
+                        </table>
+                        </div>            
+                    `;
+                    })
+                    .join("")}    
+
+                <h2>Soi cầu dự đoán ${domainLabel} chính xác hôm nay</h2>
+                Rồng Bạch Kim 666 mong rằng những thông tin và soi cầu ${domainLabel} của chúng tôi sẽ đồng hành cùng bạn trong quá trình chơi xổ số, mang lại cho bạn niềm vui và hy vọng vào việc giành được những phần thưởng hấp dẫn từ kết quả Xổ Số Miền Nam hôm nay ${date}. Hãy luôn kết nối với chúng tôi để cập nhật những dự đoán và chốt số chính xác nhất. Đừng để bất kỳ cơ hội nào có thể thay đổi cuộc đời bạn trôi qua một cách vô nghĩa.
+                
+                </div>                
+                `;
+            } else {
+                postContent = `
+                Soi cầu dự đoán kết quả Xổ Số Miền Trung (XSMT) ngày hôm nay ngày ${date} với sự tỉ mỉ và chính xác. Rồng Bạch Kim 666 sẽ giúp bạn chốt số lô giải tám, giải đặc biệt và bao lô 2 số chính xác nhất cho các đài <strong>${provinces.join(
+                    ", "
+                )}</strong> xổ số Miền Trung hôm nay.
+                
+                [caption id="attachment_547" align="alignnone" width="1200"]<img class="alignnone size-full wp-image-547" src="https://rongbachkim666.me/wp-content/uploads/2023/10/XSMT-${ngay}-${thang}.png" alt="" width="1200" height="628" /> Hình ảnh Rồng Bạch Kim 666 Soi Cầu Dự Đoán Kết Quả ${domainLabel} ${date}[/caption]                
+                <h2>Bảng thống kê KQXS Miền Trung ${dayLabel} tuần trước của Rồng Bạch Kim 666</h2>
+                [ket_qua_xo_so domain="${domain}" ngay="${ngayTuanTruocLabel}"]
+                
+                Soi cầu dự đoán XSMT hôm nay ${date} của chúng tôi không chỉ là kết quả của sự may mắn mù quáng, mà nó dựa trên phân tích chuyên sâu. <strong><a href="https://rongbachkim666.me/">Rồng Bạch Kim 666</a></strong> đã tận dụng sự hiểu biết và kiến thức về xổ số Miền Trung để đưa ra các con số có khả năng trúng thưởng cao nhất hàng ngày. Các chuyên gia chúng tôi luôn cập nhật thông tin và thống kê kết quả trước đây để giúp bạn có cái nhìn rõ ràng hơn về những con số sẽ về trong bảng kết quả xổ số miền Trung ngày ${date}.
+                
+                [thong_ke_general domain="${domain}" ngay="${date}"]
+                <h2>Soi cầu Rồng Bạch Kim 666 xổ số Miền Trung hôm nay ngày ${date}</h2>
+                Hãy cùng chuyên gia hàng đầu tại Rồng Bạch Kim 666 khám phá kết quả soi cầu xổ số Miền Trung ngày ${date} một cách siêu chính xác, với sự chắc chắn trong việc dự đoán giải tám, giải đặt biệt và bảo lô 2 số nên mọi người hoàn toàn yên tâm khi tham khảo các con số chúng tôi đưa ra dưới đây:
+                ${provinces
+                    .map((prv) => {
+                        return `
+                        <h3>✅ Soi cầu xổ số Miền Trung đài ${prv} ngày ${date}</h3>
+                        <div class="table_dudoan_wrapper">
+                        <table class="table_dudoan">
+                        <tbody>
+                        <tr>
+                        <td>🌟 Giải tám: <span class="number-red">${renderNum(
+                            genRandomNumber()
+                        )}</span></td>
+                        </tr>
+                        <tr>
+                        <td>🌟 Đặc biệt: <span class="number-red">${renderNum(
+                            genRandomNumber()
+                        )}</span></td>
+                        </tr>
+                        <tr>
+                        <td>🌟 Bao lô 2 số: <span class="number-red">${randomMulNum(
+                            2
+                        )}</span></td>
                         </tr>
                         </tbody>
                         </table>
@@ -254,17 +325,15 @@ const taoBaiVietSoiCau = async (page, domain, ngay, thang, nam) => {
                     `;
                     })
                     .join("")}
-                Cần lưu ý rằng những cặp số này được chúng tôi chia sẻ hoàn toàn miễn phí hàng ngày. Chúng tôi cập nhật số Lô và Đề liên tục đều đặt hàng ngày, tuy nhiên mọi thông tin chỉ mang tính tham khảo. Các bạn cần đọc thêm <a href="https://rongbachkim555.com/dieu-khoan/" target="_blank" rel="noopener">Điều khoản</a> từ chúng tôi để có cái nhìn khách quan nhất.
-                
-                Ngoài ra các bạn cũng có thể tham khảo thêm các thông tin Thống Kê KQ ${domainLabel} từ chúng tôi để nâng cao tỉ lệ chiến thắng:
-                
-                [thong_ke_general domain="${domain}" ngay="${date}"]        
+                <h2>Soi cầu dự đoán XSMT chính xác hôm nay ${date}</h2>
+                Rồng Bạch Kim 666 hi vọng rằng thông tin và dự đoán KQXSMT của chúng tôi sẽ giúp bạn có trải nghiệm thú vị và có cơ hội giành được những giải thưởng hấp dẫn từ kết quả XS Miền Trung hôm nay. Hãy theo dõi chúng tôi để không bỏ lỡ bất kỳ thông tin quan trọng nào về những thông tin soi cầu XSMT.
+                </div>
                 `;
             }
 
             document.querySelector(
                 "#title"
-            ).value = `Rồng Bạch Kim 555 Soi Cầu Dự Đoán Kết Quả ${domainLabel} ${date}`;
+            ).value = `Rồng Bạch Kim 666 Soi Cầu Dự Đoán Kết Quả ${domainLabel} ${date}`;
             document.querySelector("#content").value = postContent;
         },
         ngay,
@@ -278,12 +347,16 @@ const taoBaiVietSoiCau = async (page, domain, ngay, thang, nam) => {
 
     await sleep(2000);
 
-    await page.evaluate(async (ngay, thang) => {
-        document.querySelector(".edit-timestamp").click();
-        document.querySelector("#jj").value = ngay;
-        document.querySelector("#mm").value = thang;
-        document.querySelector(".save-timestamp").click();
-    }, ngay, thang);
+    await page.evaluate(
+        async (ngay, thang) => {
+            document.querySelector(".edit-timestamp").click();
+            document.querySelector("#jj").value = ngay;
+            document.querySelector("#mm").value = thang;
+            document.querySelector(".save-timestamp").click();
+        },
+        ngay,
+        thang
+    );
 
     await sleep(1000);
     await page.click("#publish");
@@ -303,25 +376,33 @@ const main = async () => {
 
         const page = await browser.newPage();
 
+        const MONTHS = {
+            10: 31,
+            11: 30,
+            12: 31,
+        };
+
         for (let i = 0; i < WEBS.length; i++) {
             const web = WEBS[i];
 
             await loginToWordpress(page, web);
             await page.waitForNavigation();
 
-            const DOMAIN = Constants.Domain.MienNam;
+            const DOMAIN = Constants.Domain.MienBac;
 
-            for (let j = 1; j <= 31; j++) {
-                try {
-                    const date = j;
-                    const month = 12;
-                    const year = 2023;
+            for (let m = 10; m <= 12; m++) {
+                for (let j = 1; j <= MONTHS[m]; j++) {
+                    try {
+                        const date = j;
+                        const month = m;
+                        const year = 2023;
 
-                    await taoBaiVietSoiCau(page, DOMAIN, date, month, year);
+                        await taoBaiVietSoiCau(page, DOMAIN, date, month, year);
 
-                    console.log("Done: " + `${date}-${month}-${year}`);
-                } catch (error) {
-                    console.log("Error loop taoBaiViet", error);
+                        console.log("Done: " + `${date}-${month}-${year}`);
+                    } catch (error) {
+                        console.log("Error loop taoBaiViet", error);
+                    }
                 }
             }
         }
