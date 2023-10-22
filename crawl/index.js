@@ -108,7 +108,7 @@ const crawKQXSMB = async (page, date, month, year) => {
         ngay: new Date(`${month}-${date}-${year}`),
     });
 
-    console.log("Done: ", `${date}-${month}-${year}`);
+    console.log("Done craw XSMB: ", `${date}-${month}-${year}`);
 };
 
 const crawKQXSMN = async (page, date, month, year) => {
@@ -182,7 +182,7 @@ const crawKQXSMN = async (page, date, month, year) => {
         });
     }
 
-    console.log("Done: ", `${date}-${month}-${year}`);
+    console.log("Done craw XSMN: ", `${date}-${month}-${year}`);
 };
 
 const crawKQXSMT = async (page, date, month, year) => {
@@ -256,7 +256,7 @@ const crawKQXSMT = async (page, date, month, year) => {
         });
     }
 
-    console.log("Done: ", `${date}-${month}-${year}`);
+    console.log("Done craw XSMT: ", `${date}-${month}-${year}`);
 };
 
 const crawKQXS = async (page, date, month, year) => {
@@ -268,7 +268,7 @@ const crawKQXS = async (page, date, month, year) => {
 const crawKQXSHomNay = async (page) => {
     const currentDate = new Date();
 
-    crawKQXS(
+    await crawKQXS(
         page,
         currentDate.getDate(),
         currentDate.getMonth() + 1,
@@ -286,7 +286,9 @@ const MONTHS = {
     7: 31,
     8: 31,
     9: 30,
-    10: 9,
+    10: 31,
+    11: 30,
+    12: 31,
 };
 
 const main = async () => {
@@ -300,7 +302,18 @@ const main = async () => {
 
         const page = await browser.newPage();
 
-        await crawKQXSHomNay(page);
+        // await crawKQXSHomNay(page);
+        await crawKQXS(page, 21, 10, 2023);
+
+        // for (let i = 4; i <= 4; i++) { // dang cao den thang 5
+        //     for (let j = 1; j <= MONTHS[i]; j++) {
+        //         try {
+        //             await crawKQXS(page, j, i, 2020);
+        //         } catch (error) {
+        //             console.log(`Error in: ${j}/${i}/2020`, error);
+        //         }
+        //     }
+        // }
 
         process.exit();
     } catch (error) {
