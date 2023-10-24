@@ -3,7 +3,7 @@ const { Constants } = require("../app/constants");
 
 const WEBS = [
     {
-        DOMAIN: "https://soicauvip888.info",
+        DOMAIN: "https://soicau6666.info",
         USERNAME: "admin",
         PASSWORD: "Abc!@#123",
     },
@@ -148,17 +148,13 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
 
             if (+domain === 1) {
                 postContent = `
-                Soi Cầu VIP 888 thông qua một số phương pháp thống kê, phân tích, soi cầu giúp anh em có được những cặp số chuẩn xác áp dụng nhiều cách chơi khác nhau với mục đích tăng khả năng chiến thắng.
-
-                Theo cách chuyên gia từ Soi Cầu VIP 888 mỗi con số xuất hiện trong bảng kết quả xổ số sẽ có một quy luật riêng. Đội ngũ chuyên gia với thời gian hoạt động lâu năm tại hệ thống liên tục cập nhật, nghiên cứu để đưa ra được quy luật cũng như cách soi cầu, dự đoán con số may mắn, chuẩn xác nhất.
-
-                [caption id="attachment_564" align="alignnone" width="1200"]<img class="size-full wp-image-564" src="https://soicauvip888.info/wp-content/uploads/2023/10/XSMB-${ngay}-${thang}.png" alt="Hình ảnh Soi Cầu VIP 888 Dự Đoán KQXS Miền Bắc Ngày ${ngay}-${thang}-${nam}" width="1200" height="628" /> Hình ảnh Soi Cầu VIP 888 Dự Đoán KQXS Miền Bắc Ngày ${date}[/caption]
+                Thay mặt các chuyên gia tại Soi Cầu 6666 hôm nay Chung sẽ chia sẻ tới các Anh Em miền Bắc những con số may mắn nhất. Hi vọng rằng với những con số may mắn này sẽ giúp các bạn có 1 ngày tài lộc tiền vào như nước. Tất nhiên mọi thông tin được chúng tôi đưa ra hãy chỉ mang tính chất tham khảo còn quyết định sẽ nằm ở các bạn.
+                
+                [caption id="attachment_551" align="alignnone" width="1200"]<img class="size-full wp-image-551" src="https://soicau6666.info/wp-content/uploads/2023/10/XSMB-${ngay}-${thang}.png" alt="Hình ảnh Soi Cầu 6666 Nhận Định KQXS MB Hôm Nay ${date}" width="1200" height="628" /> Hình ảnh Soi Cầu 6666 Nhận Định KQXS MB Hôm Nay ${date}[/caption]
                 
                 Xem lại KQXS Miền Bắc hôm qua Ngày ${ngayTuanTruocLabel}
                 
                 [ket_qua_xo_so domain="${domain}" ngay="${ngayTuanTruocLabel}"]
-                
-                Cầu lô xổ số miền Bắc là sự kết hợp giữa các vị trí bất kỳ trong bảng trả thưởng. Chính vì thế cách soi cầu lô chính là cách kiểm tra, xem xét diễn biến việc ghép nối chính xác. Thông qua bảng kết quả xổ số hàng ngày được lưu trữ, thống kê kết hợp thêm các thuật toán xác suất Soi Cầu VIP 888 đã phân tích ra những con số may mắn. Đặc biệt tất cả kết quả dự đoán tại hệ thống đều miễn phí giúp người chơi tham khảo dễ dàng.
                 
                 <div class="table_dudoan_wrapper">
                 <h3>✅ Soi cầu Lô dự đoán XSMB ngày ${date}</h3>
@@ -237,24 +233,23 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
                 </tbody>
                 </table>
                 </div>
-                Người chơi khi tham gia xổ số miền Bắc cần phải theo dõi, tìm hiểu bảng kết quả trong những kỳ gần nhất. Bên cạnh đó áp dụng những phương pháp soi cầu, nhận định, thống kê để có dự đoán nhanh chóng về cặp số lô tài lộc.
+                
+                Dưới đây là những thống kê đến từ Soi Cầu 6666. Những người Anh Em chơi lô đề đã lâu chắc chắn sẽ rất thích những bảng thông kê mang lại những số liệu hữu ích cho Anh Em.
+
                 [thong_ke_general domain="${domain}" ngay="${date}"]
-                Soi Cầu VIP 888 sở hữu đội ngũ chuyên gia, công cụ phân tích hiệu quả chắc chắn sẽ là điểm đến lý tưởng giúp anh em lựa chọn được những con số tăng khả năng về bờ nhanh chóng.
                 </div>                
                 `;
             } else if (+domain === 3) {
                 postContent = `
-                    Các bạn đã từng chơi Lô Đề giải Miền Nam mà chưa bao giờ trúng liền 3 - 7 hoặc 10 ngày liên tiếp. Vậy thì hãy tham khảo các con số của chúng tôi, Soi Cầu VIP 888 dựa các phương pháp Soi Cầu độc để phân tích để tìm ra những con số đẹp và may mắn mang lại cơ hội chiến thắng cao cho các bạn.
+                    Với những Dự đoán KQXS Miền Nam giúp cho rất nhiều các Anh Em về bờ. Hôm nay các chuyên gia tại Soi Cầu 6666 tiếp tục cập nhật cho các bạn những con số may mắn để giúp Anh Em ăn đậm 3 đài TP. HCM, Đồng Tháp, Cà Mau. Hi vọng rằng với những đóng góp không ngừng và chia sẻ hoàn toàn miễn phí sẽ giúp mọi người có một cuộc sống sung túc đầy đủ hơn.
 
-                    [caption id="attachment_573" align="alignnone" width="1200"]<img class="size-full wp-image-573" src="https://soicauvip888.info/wp-content/uploads/2023/10/XSMN-${ngay}-${thang}.png" alt="Hình ảnh Soi Cầu VIP 888 Dự Đoán KQXS Miền Nam Ngày ${date}" width="1200" height="628" /> Hình ảnh Soi Cầu VIP 888 Dự Đoán KQXS Miền Nam Ngày ${date}[/caption]
+                    [caption id="attachment_573" align="alignnone" width="1200"]<img class="size-full wp-image-573" src="https://soicau6666.info/wp-content/uploads/2023/10/XSMN-${ngay}-${thang}.png" alt="Hình ảnh Soi Cầu 6666 Dự Đoán KQXS Miền Nam Ngày ${date}" width="1200" height="628" /> Hình ảnh Soi Cầu 6666 Dự Đoán KQXS Miền Nam Ngày ${date}[/caption]
                     
                     Xem lại KQXS Miền Nam vào ${dayLabel} tuần trước Ngày ${ngayTuanTruocLabel}
                     
                     [ket_qua_xo_so domain="${domain}" ngay="${ngayTuanTruocLabel}"]
                     
-                    Trong bảng kết quả xổ số miền Nam có rất nhiều con số xuất hiện theo một quy luật. Nếu tìm hiểu kỹ càng cộng thêm công cụ, phần mềm được sử dụng tại Soi Cầu VIP 888 anh em sẽ có được con số sử dụng nuôi trong những ngày tiếp theo phù hợp nhất.
-                    
-                    Khi nắm bắt được quy luật anh em có thể dự đoán dễ dàng kết quả xổ số miền Nam chính xác nhất. Hệ thống Soi Cầu VIP 888 mang đến người chơi những bí kíp, chia sẻ bởi chuyên gia hàng đầu giúp bạn có được những con số tài lộc. Cùng xem dự đoán của chúng tôi hôm nay nhé.
+                    Dưới đây là những Dự đoán của chúng tôi, người chơi có thể tham khảo.
 
                     ${provinces
                         .map((prv) => {
@@ -285,23 +280,21 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
                         })
                         .join("")}                
                     
-                    Nếu muốn tăng cao phần trăm chiến thắng anh em có thể theo dõi các Bảng thống kê của chúng tôi. Đồng thời phân tích, soi cầu con số có xác suất trả về ở những kỳ quay tiếp theo hiệu quả tuyệt đối.
+                    Những con số Thống kê chắc chắn sẽ giúp cho những người Anh Em có thêm tính toàn và tự tin vào sự lựa chọn của mình. Cùng tra lại các Bảng Thống kê dưới đây để nắm chắc phần thắng trong tay mình nhé.
                     
                     [thong_ke_general domain="${domain}" ngay="${date}"]         
                     `;
             } else {
                 postContent = `
-                Soi Cầu VIP 888 thực hiện quá trình soi cầu giúp người chơi chọn ra được con số đẹp tăng cao cơ hội chiến thắng. Đây là bước vô cùng cần thiết, quan trọng được đội ngũ chuyên gia quan tâm với mục đích tạo ra các cặp số may mắn nhất trong ngày gửi tới các Anh Em.
+                Tiếp tục với những con số may mắn dành cho những người Anh Em nghiện chơi lô đề tại Miền Trung. Hôm nay các chuyên gia tại Soi Cầu 6666 sẽ tiếp tục Dự đoán KQXS của đài ${provinces.join(', ')} ngày ${date}.
 
-                [caption id="attachment_546" align="alignnone" width="1200"]<img src="https://soicauvip888.info/wp-content/uploads/2023/10/XSMT-${ngay}-${thang}.png" alt="Hình ảnh Soi Cầu VIP 888 Dự Đoán KQXS Miền Trung Ngày ${date}" width="1200" height="628" class="size-full wp-image-546" /> Hình ảnh Soi Cầu VIP 888 Dự Đoán KQXS Miền Trung Ngày ${date}[/caption]                
+                [caption id="attachment_546" align="alignnone" width="1200"]<img src="https://soicau6666.info/wp-content/uploads/2023/10/XSMT-${ngay}-${thang}.png" alt="Hình ảnh Soi Cầu 6666 Dự Đoán KQXS Miền Trung Ngày ${date}" width="1200" height="628" class="size-full wp-image-546" /> Hình ảnh Soi Cầu 6666 Dự Đoán KQXS Miền Trung Ngày ${date}[/caption]                
                 
                 Xem lại KQXS Miền Trung vào ${dayLabel} tuần trước Ngày ${ngayTuanTruocLabel}
                 
                 [ket_qua_xo_so domain="${domain}" ngay="${ngayTuanTruocLabel}"]
 
-                Để có thể dự đoán cặp số khả năng trả về cao nhất bạn cần theo dõi bảng kết quả miền Trung trong khoảng 30 ngày liên tiếp. Đồng thời thống kê, phân tích giải đặc biệt theo các ngày trong tuần để tạo con số đẹp. Kết hợp thêm kinh nghiệm soi cầu từ chuyên gia Soi Cầu VIP 888 chắc chắn bạn sẽ có được dàn số xác suất trả về cao để thử sức.
-
-                Chúng tôi sở hữu đội ngũ chuyên gia liên tục nghiên cứu, tổng hợp các con số cho người chơi tham khảo. Kết quả tại hệ thống cũng được đánh giá về tính hiệu quả và độ chính xác. Anh em có thể tin tưởng lựa chọn các cặp số dưới đây để có vể về bờ nhanh chóng nhất.                
+                Hi vọng rằng những Dự đoán của chúng tôi về KQXS MT sẽ giúp cho các bạn trúng đậm.       
                 
                 ${provinces
                     .map((prv) => {
@@ -332,7 +325,7 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
                     })
                     .join("")}                
                 
-                Đặc biệt các kỳ quay của xổ số miền Trung được chia thành các tỉnh thành theo các ngày, tuy hơi khó nhưng các chuyên gia vẫn có thể tính được. Các phương pháp Soi cầu được áp dụng cộng thêm công cụ, phần mềm hiện đại chính là mang lại chiến thắng cho mọi người. Ngoài ra đối chiếu với những Bảng thống kê bên dưới cùng giúp chúng ta loại bỏ đi những con số ít có khả năng về trong ngày hôm nay.
+                Ngoài việc tham khảo những con số đẹp ngày hôm nay các bạn cũng có thể xem thêm các Bảng Thống Kê của Soi Cầu 6666. Chúng tôi luôn khuyến khích các Anh Em tự soi các con số thống kê để rút kinh nghiệm cho bản thân mình và đưa ra các phương án chơi hợp lý.
                 
                 [thong_ke_general domain="${domain}" ngay="${date}"]
                 `;
@@ -340,9 +333,9 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
 
             document.querySelector(
                 "#title"
-            ).value = `Soi Cầu VIP 888 Dự Đoán KQXS Miền ${
-                domain == 1 ? "Bắc" : domain == 2 ? "Trung" : "Nam"
-            } Ngày ${date}`;
+            ).value = `Soi Cầu 6666 Nhận Định KQXS ${
+                domain == 1 ? "MB" : domain == 2 ? "MT" : "MN"
+            } Hôm Nay ${date}`;
             document.querySelector("#content").value = postContent;
         },
         ngay,
@@ -397,7 +390,7 @@ const main = async () => {
             await loginToWordpress(page, web);
             await page.waitForNavigation();
 
-            for (let d = 1; d < 3; d++) {
+            for (let d = 1; d <= 3; d++) {
                 for (let m = 10; m <= 12; m++) {
                     for (let j = 1; j <= MONTHS[m]; j++) {
                         try {
