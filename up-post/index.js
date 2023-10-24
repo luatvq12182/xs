@@ -55,7 +55,7 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
     await page.evaluate(() => {
         document.querySelector("#set-post-thumbnail").click();
     });
-    await sleep(1000);
+    await sleep(2000);
     await page.type(
         "#media-search-input",
         `${DOMAINS[domain]}-${ngay}-${thang}`
@@ -65,6 +65,11 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
 
     await page.evaluate(() => {
         document.querySelector(".attachment").click();
+    });
+
+    await sleep(1000);
+
+    await page.evaluate(() => {
         document.querySelector(".media-button").click();
     });
 
@@ -244,7 +249,7 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
                     
                     Xem lại KQXS Miền Nam vào ${dayLabel} tuần trước Ngày ${ngayTuanTruocLabel}
                     
-                    [thong_ke_general domain="${domain}" ngay="${date}"]
+                    [ket_qua_xo_so domain="${domain}" ngay="${ngayTuanTruocLabel}"]
                     
                     Phương pháp cho số miền Nam thông qua việc phân tích kết quả, xác định con số xuất hiện nhằm đưa ra dự đoán chuẩn xác nhất. Soi Cầu 568 cung cấp các phương pháp như soi cầu đưa ra các kết quả giải tám, giải đặc biệt hoặc bao lô. Từ đó người chơi khi tham gia sẽ có được đa dạng sự lựa chọn.
                     
@@ -344,24 +349,25 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
         day
     );
 
-    await sleep(2000);
+    await sleep(1000);
 
     await page.evaluate(
         async (ngay, thang) => {
             document.querySelector(".edit-timestamp").click();
             document.querySelector("#jj").value = ngay;
             document.querySelector("#mm").value = thang;
+            document.querySelector("#hh").value = "01";
+            document.querySelector("#mn").value = "00";
             document.querySelector(".save-timestamp").click();
         },
         ngay,
         thang
     );
 
-    await sleep(1000);
+    await sleep(4000);
     await page.click("#publish");
-    await sleep(3000);
-
-    // await page.waitForNavigation();
+    await sleep(1000);
+    await page.waitForNavigation();
 };
 
 const main = async () => {
@@ -387,7 +393,7 @@ const main = async () => {
             await loginToWordpress(page, web);
             await page.waitForNavigation();
 
-            for (let d = 1; d <= 3; d++) {
+            for (let d = 3; d <= 3; d++) {
                 for (let m = 10; m <= 12; m++) {
                     for (let j = 1; j <= MONTHS[m]; j++) {
                         try {
