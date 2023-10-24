@@ -3,7 +3,7 @@ const { Constants } = require("../app/constants");
 
 const WEBS = [
     {
-        DOMAIN: "https://soicau6666.info",
+        DOMAIN: "https://soicautot.mobi",
         USERNAME: "admin",
         PASSWORD: "Abc!@#123",
     },
@@ -118,7 +118,7 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
                 while (nums.length < amount) {
                     const num = genRandomNumber();
 
-                    if (!nums.includes(num)) {
+                    if (!nums.includes(renderNum(num))) {
                         nums.push(renderNum(num));
                     }
                 }
@@ -148,13 +148,15 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
 
             if (+domain === 1) {
                 postContent = `
-                Thay mặt các chuyên gia tại Soi Cầu 6666 hôm nay Chung sẽ chia sẻ tới các Anh Em miền Bắc những con số may mắn nhất. Hi vọng rằng với những con số may mắn này sẽ giúp các bạn có 1 ngày tài lộc tiền vào như nước. Tất nhiên mọi thông tin được chúng tôi đưa ra hãy chỉ mang tính chất tham khảo còn quyết định sẽ nằm ở các bạn.
+                Soi Cầu Tốt nhận định Kết Quả Xổ Số Miền Bắc ngày ${date}. Chúc Anh Em nhận được những con số may mắn từ chúng tôi và ăn đậm trong hôm nay.
                 
-                [caption id="attachment_551" align="alignnone" width="1200"]<img class="size-full wp-image-551" src="https://soicau6666.info/wp-content/uploads/2023/10/XSMB-${ngay}-${thang}.png" alt="Hình ảnh Soi Cầu 6666 Nhận Định KQXS MB Hôm Nay ${date}" width="1200" height="628" /> Hình ảnh Soi Cầu 6666 Nhận Định KQXS MB Hôm Nay ${date}[/caption]
+                [caption id="attachment_564" align="alignnone" width="1200"]<img class="size-full wp-image-564" src="https://soicautot.mobi/wp-content/uploads/2023/10/XSMB-${ngay}-${thang}.png" alt="Hình ảnh Soi Cầu Dự Đoán KQXS Miền Bắc Ngày ${date}" width="1200" height="628" /> Hình ảnh Soi Cầu Dự Đoán KQXS Miền Bắc Ngày ${date}[/caption]
                 
                 Xem lại KQXS Miền Bắc hôm qua Ngày ${ngayTuanTruocLabel}
                 
                 [ket_qua_xo_so domain="${domain}" ngay="${ngayTuanTruocLabel}"]
+
+                Dưới đây là Dự Đoán KQXS Miền Bắc từ Soi Cầu Tốt. Anh Em có thể tham khảo để đưa ra cho mình những con số may mắn. Lưu ý chúng tôi không khuyến khích Anh Em đánh lô, đề... tiền là trong túi mọi người nên hãy đưa ra những quyết định sáng suốt.
                 
                 <div class="table_dudoan_wrapper">
                 <h3>✅ Soi cầu Lô dự đoán XSMB ngày ${date}</h3>
@@ -234,22 +236,22 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
                 </table>
                 </div>
                 
-                Dưới đây là những thống kê đến từ Soi Cầu 6666. Những người Anh Em chơi lô đề đã lâu chắc chắn sẽ rất thích những bảng thông kê mang lại những số liệu hữu ích cho Anh Em.
+                Ngoài ra để có thể bắt được những con đề đẹp, lô đẹp bạn cũng có thể tham khảo hệ thống thống kê của Soi Cầu Tốt. Những bảng thống kê của chúng tôi cập nhật liên tục giúp Anh Em có thể theo dõi đưa ra những nhận định của riêng bản thân mình.
 
                 [thong_ke_general domain="${domain}" ngay="${date}"]
                 </div>                
                 `;
             } else if (+domain === 3) {
                 postContent = `
-                    Với những Dự đoán KQXS Miền Nam giúp cho rất nhiều các Anh Em về bờ. Hôm nay các chuyên gia tại Soi Cầu 6666 tiếp tục cập nhật cho các bạn những con số may mắn để giúp Anh Em ăn đậm 3 đài TP. HCM, Đồng Tháp, Cà Mau. Hi vọng rằng với những đóng góp không ngừng và chia sẻ hoàn toàn miễn phí sẽ giúp mọi người có một cuộc sống sung túc đầy đủ hơn.
+                    Chào mừng Anh Em đã đến với những Dự đoán Kết Quả Xổ Số Miền Nam ngày ${date}. Tại Soi Cầu Tốt những chuyên gia của chúng tôi luôn cố gắng nỗ lực đưa ra những phương pháp Soi Cầu chính xác nhất. Từ đó mang đến cho những người Anh Em đam mê lô đề miền Nam có được những con số đẹp nhất.
 
-                    [caption id="attachment_573" align="alignnone" width="1200"]<img class="size-full wp-image-573" src="https://soicau6666.info/wp-content/uploads/2023/10/XSMN-${ngay}-${thang}.png" alt="Hình ảnh Soi Cầu 6666 Dự Đoán KQXS Miền Nam Ngày ${date}" width="1200" height="628" /> Hình ảnh Soi Cầu 6666 Dự Đoán KQXS Miền Nam Ngày ${date}[/caption]
+                    [caption id="attachment_573" align="alignnone" width="1200"]<img class="size-full wp-image-573" src="https://soicautot.mobi/wp-content/uploads/2023/10/XSMN-${ngay}-${thang}.png" alt="Hình ảnh Soi Cầu Tốt Dự Đoán KQXS Miền Nam Ngày ${date}" width="1200" height="628" /> Hình ảnh Soi Cầu Tốt Dự Đoán KQXS Miền Nam Ngày ${date}[/caption]
                     
                     Xem lại KQXS Miền Nam vào ${dayLabel} tuần trước Ngày ${ngayTuanTruocLabel}
                     
                     [ket_qua_xo_so domain="${domain}" ngay="${ngayTuanTruocLabel}"]
                     
-                    Dưới đây là những Dự đoán của chúng tôi, người chơi có thể tham khảo.
+                    Với những thông tin về kết quả xổ số ${dayLabel} tuần trước của ${provinces.join(', ')} hi vọng các Anh Em sẽ có những nhận định riêng cho mình. Dưới đây sẽ là những dự đoán của Soi Cầu Tốt gửi tới các Anh Em.
 
                     ${provinces
                         .map((prv) => {
@@ -280,15 +282,15 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
                         })
                         .join("")}                
                     
-                    Những con số Thống kê chắc chắn sẽ giúp cho những người Anh Em có thêm tính toàn và tự tin vào sự lựa chọn của mình. Cùng tra lại các Bảng Thống kê dưới đây để nắm chắc phần thắng trong tay mình nhé.
+                    Để chắc chắn hơn các bạn cũng có thể kiểm tra lại bằng cách xem các bảng thống kê của chúng tôi.
                     
                     [thong_ke_general domain="${domain}" ngay="${date}"]         
                     `;
             } else {
                 postContent = `
-                Tiếp tục với những con số may mắn dành cho những người Anh Em nghiện chơi lô đề tại Miền Trung. Hôm nay các chuyên gia tại Soi Cầu 6666 sẽ tiếp tục Dự đoán KQXS của đài ${provinces.join(', ')} ngày ${date}.
+                Theo nhận định từ chúng tôi về kết quả xổ số của đài ${provinces.join(', ')} ngày hôm nay ${date} cho thấy tỉ lệ trúng khá cao. Những phỏng đoán qua các phương pháp Soi Cầu bách phát bách trúng có thể giúp các Anh Em miền Trung hôm nay dễ dàng về bờ.
 
-                [caption id="attachment_546" align="alignnone" width="1200"]<img src="https://soicau6666.info/wp-content/uploads/2023/10/XSMT-${ngay}-${thang}.png" alt="Hình ảnh Soi Cầu 6666 Dự Đoán KQXS Miền Trung Ngày ${date}" width="1200" height="628" class="size-full wp-image-546" /> Hình ảnh Soi Cầu 6666 Dự Đoán KQXS Miền Trung Ngày ${date}[/caption]                
+                [caption id="attachment_546" align="alignnone" width="1200"]<img src="https://soicautot.mobi/wp-content/uploads/2023/10/XSMT-${ngay}-${thang}.png" alt="Hình ảnh Soi Cầu Tốt Dự Đoán KQXS Miền Trung Ngày ${date}" width="1200" height="628" class="size-full wp-image-546" /> Hình ảnh Soi Cầu Tốt Dự Đoán KQXS Miền Trung Ngày ${date}[/caption]                
                 
                 Xem lại KQXS Miền Trung vào ${dayLabel} tuần trước Ngày ${ngayTuanTruocLabel}
                 
@@ -325,7 +327,7 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
                     })
                     .join("")}                
                 
-                Ngoài việc tham khảo những con số đẹp ngày hôm nay các bạn cũng có thể xem thêm các Bảng Thống Kê của Soi Cầu 6666. Chúng tôi luôn khuyến khích các Anh Em tự soi các con số thống kê để rút kinh nghiệm cho bản thân mình và đưa ra các phương án chơi hợp lý.
+                Để phục vụ thêm Anh Em tại <strong><a href="https://soicautot.mobi/">Soi Cầu Tốt</a></strong> đã cập nhật các bảng thống kê theo Kết Quả Xổ Số Miền Trung. Mọi người có thể giựa vào các thống kê của chúng tôi để đưa ra những con số may mắn cho mình trong ngày hôm nay.
                 
                 [thong_ke_general domain="${domain}" ngay="${date}"]
                 `;
@@ -333,9 +335,9 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
 
             document.querySelector(
                 "#title"
-            ).value = `Soi Cầu 6666 Nhận Định KQXS ${
-                domain == 1 ? "MB" : domain == 2 ? "MT" : "MN"
-            } Hôm Nay ${date}`;
+            ).value = `Soi Cầu Tốt Dự Đoán KQXS Miền ${
+                domain == 1 ? "Bắc" : domain == 2 ? "Trung" : "Nam"
+            } Ngày ${date}`;
             document.querySelector("#content").value = postContent;
         },
         ngay,
