@@ -3,7 +3,7 @@ const { Constants } = require("../app/constants");
 
 const WEBS = [
     {
-        DOMAIN: "https://soicau568.us",
+        DOMAIN: "https://soicauvip888.info",
         USERNAME: "admin",
         PASSWORD: "Abc!@#123",
     },
@@ -148,18 +148,18 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
 
             if (+domain === 1) {
                 postContent = `
-                Bằng những kinh nghiệm cũng như công cụ thống kê, phân tích bảng kết quả xổ số trước đó <strong>Soi Cầu 568</strong> có thể tạo ra cặp số may mắn, chuẩn xác cho các Anh Em miền Bắc tham khảo.
+                Soi Cầu VIP 888 thông qua một số phương pháp thống kê, phân tích, soi cầu giúp anh em có được những cặp số chuẩn xác áp dụng nhiều cách chơi khác nhau với mục đích tăng khả năng chiến thắng.
 
-                [caption id="attachment_536" align="alignnone" width="1200"]<img class="size-full wp-image-536" src="https://soicau568.us/wp-content/uploads/2023/10/XSMB-${ngay}-${thang}.png" alt="Hình ảnh Soi Cầu 9999 Dự Đoán KQXS MB Hôm Nay ${date}" width="1200" height="628" /> Hình ảnh Soi Cầu 9999 Dự Đoán KQXS MB Hôm Nay ${date}[/caption]
+                Theo cách chuyên gia từ Soi Cầu VIP 888 mỗi con số xuất hiện trong bảng kết quả xổ số sẽ có một quy luật riêng. Đội ngũ chuyên gia với thời gian hoạt động lâu năm tại hệ thống liên tục cập nhật, nghiên cứu để đưa ra được quy luật cũng như cách soi cầu, dự đoán con số may mắn, chuẩn xác nhất.
+
+                [caption id="attachment_564" align="alignnone" width="1200"]<img class="size-full wp-image-564" src="https://soicauvip888.info/wp-content/uploads/2023/10/XSMB-${ngay}-${thang}.png" alt="Hình ảnh Soi Cầu VIP 888 Dự Đoán KQXS Miền Bắc Ngày ${ngay}-${thang}-${nam}" width="1200" height="628" /> Hình ảnh Soi Cầu VIP 888 Dự Đoán KQXS Miền Bắc Ngày ${date}[/caption]
                 
-                Xem lại KQXS Miền Bắc ${dayLabel} tuần trước Ngày ${ngayTuanTruocLabel}
+                Xem lại KQXS Miền Bắc hôm qua Ngày ${ngayTuanTruocLabel}
                 
                 [ket_qua_xo_so domain="${domain}" ngay="${ngayTuanTruocLabel}"]
                 
-                Đối với những chuyên gia trong lĩnh vực xổ số có nhiều kinh nghiệm họ thường áp dụng các phương pháp, tính toán xác suất thống kê. Từ đó đưa ra quy luật thông qua bảng kết quả của kỳ trước với mục đích chọn ra cặp số lô có tỷ lệ trúng cao nhất trong ngày hôm nay.
+                Cầu lô xổ số miền Bắc là sự kết hợp giữa các vị trí bất kỳ trong bảng trả thưởng. Chính vì thế cách soi cầu lô chính là cách kiểm tra, xem xét diễn biến việc ghép nối chính xác. Thông qua bảng kết quả xổ số hàng ngày được lưu trữ, thống kê kết hợp thêm các thuật toán xác suất Soi Cầu VIP 888 đã phân tích ra những con số may mắn. Đặc biệt tất cả kết quả dự đoán tại hệ thống đều miễn phí giúp người chơi tham khảo dễ dàng.
                 
-                Theo cách soi cầu, phân tích từ Soi Cầu 568 người chơi có thể tham khảo các cầu kèo dưới đây:
-
                 <div class="table_dudoan_wrapper">
                 <h3>✅ Soi cầu Lô dự đoán XSMB ngày ${date}</h3>
                 <table class="table_dudoan">
@@ -237,22 +237,25 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
                 </tbody>
                 </table>
                 </div>
-                Cách soi cầu xổ số miền Bắc dựa trên cách phân tích, nhận định cũng như áp dụng chiến thuật để tăng khả năng chiến thắng. Ngoài các phương pháp soi cầu được đúc rút kinh nghiệm qua các năm thì chúng tôi còn giựa vào các bảng thống kê để lựa chọn các con số có tỉ lệ trúng cao.
+                Người chơi khi tham gia xổ số miền Bắc cần phải theo dõi, tìm hiểu bảng kết quả trong những kỳ gần nhất. Bên cạnh đó áp dụng những phương pháp soi cầu, nhận định, thống kê để có dự đoán nhanh chóng về cặp số lô tài lộc.
                 [thong_ke_general domain="${domain}" ngay="${date}"]
+                Soi Cầu VIP 888 sở hữu đội ngũ chuyên gia, công cụ phân tích hiệu quả chắc chắn sẽ là điểm đến lý tưởng giúp anh em lựa chọn được những con số tăng khả năng về bờ nhanh chóng.
                 </div>                
                 `;
             } else if (+domain === 3) {
                 postContent = `
-                    Với những bí kíp soi cầu chuẩn từ các chuyên gia của <strong>Soi Cầu 568</strong>, Anh Em có thể dễ dàng tìm kiếm và lựa chọn cho mình những cặp số may mắn giải miền Nam. Hệ thống sở hữu công cụ phân tích cộng thêm đội ngũ chuyên gia giàu kinh nghiệm hứa hẹn mang đến may mắn tài lộc cho bạn.
+                    Các bạn đã từng chơi Lô Đề giải Miền Nam mà chưa bao giờ trúng liền 3 - 7 hoặc 10 ngày liên tiếp. Vậy thì hãy tham khảo các con số của chúng tôi, Soi Cầu VIP 888 dựa các phương pháp Soi Cầu độc để phân tích để tìm ra những con số đẹp và may mắn mang lại cơ hội chiến thắng cao cho các bạn.
 
-                    [caption id="attachment_543" align="alignnone" width="1200"]<img class="size-full wp-image-543" src="https://soicau568.us/wp-content/uploads/2023/10/XSMN-${ngay}-${thang}.png" alt="Hình ảnh Soi Cầu 9999 Dự Đoán KQXS MN Hôm Nay ${date}" width="1200" height="628" /> Hình ảnh Soi Cầu 9999 Dự Đoán KQXS MN Hôm Nay ${ngay}-${thang}-2023[/caption]
+                    [caption id="attachment_573" align="alignnone" width="1200"]<img class="size-full wp-image-573" src="https://soicauvip888.info/wp-content/uploads/2023/10/XSMN-${ngay}-${thang}.png" alt="Hình ảnh Soi Cầu VIP 888 Dự Đoán KQXS Miền Nam Ngày ${date}" width="1200" height="628" /> Hình ảnh Soi Cầu VIP 888 Dự Đoán KQXS Miền Nam Ngày ${date}[/caption]
                     
                     Xem lại KQXS Miền Nam vào ${dayLabel} tuần trước Ngày ${ngayTuanTruocLabel}
                     
                     [ket_qua_xo_so domain="${domain}" ngay="${ngayTuanTruocLabel}"]
                     
-                    Phương pháp cho số miền Nam thông qua việc phân tích kết quả, xác định con số xuất hiện nhằm đưa ra dự đoán chuẩn xác nhất. Soi Cầu 568 cung cấp các phương pháp như soi cầu đưa ra các kết quả giải tám, giải đặc biệt hoặc bao lô. Từ đó người chơi khi tham gia sẽ có được đa dạng sự lựa chọn.
+                    Trong bảng kết quả xổ số miền Nam có rất nhiều con số xuất hiện theo một quy luật. Nếu tìm hiểu kỹ càng cộng thêm công cụ, phần mềm được sử dụng tại Soi Cầu VIP 888 anh em sẽ có được con số sử dụng nuôi trong những ngày tiếp theo phù hợp nhất.
                     
+                    Khi nắm bắt được quy luật anh em có thể dự đoán dễ dàng kết quả xổ số miền Nam chính xác nhất. Hệ thống Soi Cầu VIP 888 mang đến người chơi những bí kíp, chia sẻ bởi chuyên gia hàng đầu giúp bạn có được những con số tài lộc. Cùng xem dự đoán của chúng tôi hôm nay nhé.
+
                     ${provinces
                         .map((prv) => {
                             return `
@@ -282,21 +285,23 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
                         })
                         .join("")}                
                     
-                    Soi Cầu 568 sở hữu hệ thống chuyên gia chuyên soi cầu, dự đoán kết quả xổ số miền Nam. Tất cả mang đến người chơi lợi ích giá trị dựa vào kết quả bảng trả thưởng trong nhiều lần quay. Đồng thời tổng hợp các dữ liệu với các bảng thống kê chính xác.
-
-                    Để đưa ra quyết định lựa chọn con số lô đẹp người chơi cần tham khảo bảng quay thưởng của những kỳ gần nhất. Bên cạnh đó so sánh, thống kê các con số may mắn đồng thời nuôi trong các kỳ tiếp theo để có thể vào bờ ngay lập tức.
+                    Nếu muốn tăng cao phần trăm chiến thắng anh em có thể theo dõi các Bảng thống kê của chúng tôi. Đồng thời phân tích, soi cầu con số có xác suất trả về ở những kỳ quay tiếp theo hiệu quả tuyệt đối.
                     
                     [thong_ke_general domain="${domain}" ngay="${date}"]         
                     `;
             } else {
                 postContent = `
-                Soi Cầu 568 chia sẻ miễn phí đến thành viên bảng soi cầu lô đề miền Trung từng ngày. Anh em khi truy cập vào website soicau568.us có thể tham khảo, dự đoán con số lô đẹp ${date} từ chuyên gia lâu năm. Chắc chắn với những công cụ, phương pháp soi cầu bạn sẽ có được cơ hội ăn lô, ăn đề cao nhất.
+                Soi Cầu VIP 888 thực hiện quá trình soi cầu giúp người chơi chọn ra được con số đẹp tăng cao cơ hội chiến thắng. Đây là bước vô cùng cần thiết, quan trọng được đội ngũ chuyên gia quan tâm với mục đích tạo ra các cặp số may mắn nhất trong ngày gửi tới các Anh Em.
 
-                [caption id="attachment_576" align="alignnone" width="1200"]<img class="size-full wp-image-576" src="https://soicau568.us/wp-content/uploads/2023/10/XSMT-${ngay}-${thang}.png" alt="Hình ảnh Soi Cầu 9999 Dự Đoán KQXS MT Hôm Nay ${date}" width="1200" height="628" /> Hình ảnh Soi Cầu 9999 Dự Đoán KQXS MT Hôm Nay ${ngay}-${thang}-2023[/caption]
+                [caption id="attachment_546" align="alignnone" width="1200"]<img src="https://soicauvip888.info/wp-content/uploads/2023/10/XSMT-${ngay}-${thang}.png" alt="Hình ảnh Soi Cầu VIP 888 Dự Đoán KQXS Miền Trung Ngày ${date}" width="1200" height="628" class="size-full wp-image-546" /> Hình ảnh Soi Cầu VIP 888 Dự Đoán KQXS Miền Trung Ngày ${date}[/caption]                
                 
                 Xem lại KQXS Miền Trung vào ${dayLabel} tuần trước Ngày ${ngayTuanTruocLabel}
                 
                 [ket_qua_xo_so domain="${domain}" ngay="${ngayTuanTruocLabel}"]
+
+                Để có thể dự đoán cặp số khả năng trả về cao nhất bạn cần theo dõi bảng kết quả miền Trung trong khoảng 30 ngày liên tiếp. Đồng thời thống kê, phân tích giải đặc biệt theo các ngày trong tuần để tạo con số đẹp. Kết hợp thêm kinh nghiệm soi cầu từ chuyên gia Soi Cầu VIP 888 chắc chắn bạn sẽ có được dàn số xác suất trả về cao để thử sức.
+
+                Chúng tôi sở hữu đội ngũ chuyên gia liên tục nghiên cứu, tổng hợp các con số cho người chơi tham khảo. Kết quả tại hệ thống cũng được đánh giá về tính hiệu quả và độ chính xác. Anh em có thể tin tưởng lựa chọn các cặp số dưới đây để có vể về bờ nhanh chóng nhất.                
                 
                 ${provinces
                     .map((prv) => {
@@ -327,9 +332,7 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
                     })
                     .join("")}                
                 
-                Vai trò của cho số miền Trung vô cùng quan trọng ảnh hưởng đến chiến thắng của bạn nên việc soi cầu, dự đoán con số lô là vô cùng cần thiết. Soi Cầu 568 chính là đơn vị uy tín cho người chơi tham khảo nhận định, soi cầu, dự đoán KQXS MT chuẩn. Chúng tôi tập hợp các chuyên gia giàu kinh nghiệm có kiến thức chuyên sâu về lĩnh vực lô đề.
-
-                <strong>Soi Cầu 568</strong> hiện đang là kênh soi cầu hoàn toàn miễn phí dành cho tín đồ đam mê số học. Anh em khi lựa chọn có thể đối chiếu với bảng thống kê của chúng tôi để quyết định xuống tiền con số nào.
+                Đặc biệt các kỳ quay của xổ số miền Trung được chia thành các tỉnh thành theo các ngày, tuy hơi khó nhưng các chuyên gia vẫn có thể tính được. Các phương pháp Soi cầu được áp dụng cộng thêm công cụ, phần mềm hiện đại chính là mang lại chiến thắng cho mọi người. Ngoài ra đối chiếu với những Bảng thống kê bên dưới cùng giúp chúng ta loại bỏ đi những con số ít có khả năng về trong ngày hôm nay.
                 
                 [thong_ke_general domain="${domain}" ngay="${date}"]
                 `;
@@ -337,7 +340,9 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
 
             document.querySelector(
                 "#title"
-            ).value = `Soi Cầu 568 Dự Đoán Kết Quả ${domainLabel} Ngày ${date}`;
+            ).value = `Soi Cầu VIP 888 Dự Đoán KQXS Miền ${
+                domain == 1 ? "Bắc" : domain == 2 ? "Trung" : "Nam"
+            } Ngày ${date}`;
             document.querySelector("#content").value = postContent;
         },
         ngay,
@@ -367,7 +372,6 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
     await sleep(4000);
     await page.click("#publish");
     await sleep(1000);
-    await page.waitForNavigation();
 };
 
 const main = async () => {
@@ -393,7 +397,7 @@ const main = async () => {
             await loginToWordpress(page, web);
             await page.waitForNavigation();
 
-            for (let d = 3; d <= 3; d++) {
+            for (let d = 1; d < 3; d++) {
                 for (let m = 10; m <= 12; m++) {
                     for (let j = 1; j <= MONTHS[m]; j++) {
                         try {
@@ -411,6 +415,7 @@ const main = async () => {
                                 month,
                                 year
                             );
+                            await page.waitForNavigation();
 
                             console.log("Done: " + `${date}-${month}-${year}`);
                         } catch (error) {
