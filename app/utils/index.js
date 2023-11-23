@@ -28,8 +28,44 @@ function lay10SoBeNhat(obj) {
     return top10;
 }
 
+const cvNum = (num) => {
+    return num >= 10 ? num : `0${num}`;
+};
+
+const cvDateToYYYYMMDD = (ngay) => {
+    const [d, m, y] = ngay.split("-");
+
+    return `${y}${cvNum(m)}${cvNum(d)}`;
+};
+
+const require_query_params = (params) => {
+    return (req, res, next) => {
+        let isValid = true;
+        const missing = [];
+
+        params.forEach((p) => {
+            if (!req.query[p]) {
+                isValid = false;
+                missing.push(p);
+            }
+        });
+
+        if (isValid) {
+            next();
+        } else {
+            res.status(400).json({
+                msg: "Missing query params",
+                missing,
+            });
+        }
+    };
+};
+
 module.exports = {
     generateRandomString,
     lay10SoLonNhat,
     lay10SoBeNhat,
+    cvNum,
+    cvDateToYYYYMMDD,
+    require_query_params,
 };

@@ -1,6 +1,26 @@
+const KQXS_CACHE = require("../../config/cache");
 const { Constants } = require("../constants");
 const KQXSModel = require("../models/kqxs.model");
-const { getInitials } = require("../utils");
+const { cvToHtml } = require("../templateHtmls/kqxs");
+const { cvDateToYYYYMMDD } = require("../utils");
+
+const gResult = (req, res) => {
+    const { ngay, domain, province, cvHtml } = req.query;
+
+    const cvDate = cvDateToYYYYMMDD(ngay);
+
+    let kqxs = KQXS_CACHE.get()[domain][cvDate];
+
+    if (province) {
+        kqxs = kqxs[province];
+    }
+
+    if (domain != Constants.Domain.MienBac && !province) {
+        kqxs = Object.values(kqxs);
+    }
+
+    res.json(cvHtml ? cvToHtml(domain, ngay, kqxs) : kqxs);
+};
 
 const getResult = async (req, res) => {
     try {
@@ -358,4 +378,5 @@ const createResult = async (req, res) => {
 module.exports = {
     getResult,
     createResult,
+    gResult,
 };
