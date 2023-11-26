@@ -276,6 +276,42 @@ const xs = async (domain, type, page) => {
     }
 };
 
+const result = async (domain) => {
+    let date = new Date();
+
+    if (
+        (domain == Constants.Domain.MienBac && date.getHours() < 18) ||
+        (domain == Constants.Domain.MienTrung && date.getHours() < 17) ||
+        (domain == Constants.Domain.MienNam && date.getHours() < 16)
+    ) {
+        date.setDate(date.getDate() - 1);
+    }
+
+    let kqxs =
+        KQXS_CACHE.get()[domain][
+            cvDateToYYYYMMDD(
+                `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`
+            )
+        ];
+
+    kqxs = domain == Constants.Domain.MienBac ? kqxs : Object.values(kqxs);
+
+    return {
+        ngay:
+            "" +
+            date.getFullYear() +
+            cvNumber(date.getMonth() + 1) +
+            cvNumber(date.getDate()),
+        day: date.getDay(),
+        html: cvToHtml(
+            domain,
+            `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`,
+            kqxs
+        ),
+    };
+};
+
 module.exports = {
     xs,
+    result,
 };
