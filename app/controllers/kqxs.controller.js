@@ -33,7 +33,28 @@ const createResult = async (req, res) => {
     }
 };
 
+const updateResult = async (req, res) => {
+    const { domain, ngay, province } = req.query;
+    const payload = req.body;
+    const cvDate = cvDateToYYYYMMDD(ngay);
+
+    let kqxs = KQXS_CACHE.get()[domain][cvDate];
+
+    if (province) {
+        kqxs = kqxs[province];
+    }
+
+    try {
+        await KQXSModel.findByIdAndUpdate(kqxs._id, payload);
+
+        res.status(200).json(kqxs);
+    } catch (error) {
+        res.status(500).json({ error: "Error creating" });
+    }
+};
+
 module.exports = {
     createResult,
     gResult,
+    updateResult,
 };

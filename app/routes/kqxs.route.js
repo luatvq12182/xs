@@ -9,5 +9,6 @@ router.get(
     kqxsController.gResult
 );
 router.post("/", kqxsController.createResult);
+router.put("/", kqxsController.updateResult);
 
 module.exports = router;
