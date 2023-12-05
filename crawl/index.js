@@ -36,6 +36,17 @@ const crawKQXSMB = async (page, date, month, year) => {
 
     if (isExist) {
         console.log(`Đã cào KQXSMB ngày: ${date}-${month}-${year}`);
+        // await axios.put(
+        //     `http://localhost:6262/api/kqxs?ngay=${date}&domain=1`,
+        //     {
+        //         domain: MIEN_BAC,
+        //         ketqua,
+        //         thongke,
+        //         ngay: new Date(`${month}-${date}-${year}`),
+        //     }
+        // );
+        console.log(`Update KQXSMB ngày: ${date}-${month}-${year}`);
+
         return;
     }
 
@@ -170,6 +181,19 @@ const crawKQXSMN = async (page, date, month, year) => {
             console.log(
                 `Đã cào KQXSMN ngày: ${date}-${month}-${year} tỉnh ${province}`
             );
+            // await axios.put(
+            //     `http://localhost:6262/api/kqxs?ngay=${date}&domain=3&province=${province}`,
+            //     {
+            //         domain: MIEN_NAM,
+            //         ketqua,
+            //         thongke,
+            //         province,
+            //         ngay: new Date(`${month}-${date}-${year}`),
+            //     }
+            // );
+            console.log(
+                `Update KQXSMN ngày: ${date}-${month}-${year} tỉnh ${province}`
+            );
             continue;
         }
 
@@ -244,6 +268,19 @@ const crawKQXSMT = async (page, date, month, year) => {
             console.log(
                 `Đã cào KQXSMN ngày: ${date}-${month}-${year} tỉnh ${province}`
             );
+            // await axios.put(
+            //     `http://localhost:6262/api/kqxs?ngay=${date}&domain=3&province=${province}`,
+            //     {
+            //         domain: MIEN_TRUNG,
+            //         ketqua,
+            //         thongke,
+            //         province,
+            //         ngay: new Date(`${month}-${date}-${year}`),
+            //     }
+            // );
+            console.log(
+                `Update KQXSMT ngày: ${date}-${month}-${year} tỉnh ${province}`
+            );
             continue;
         }
 
@@ -303,7 +340,7 @@ const main = async () => {
         const page = await browser.newPage();
 
         // await crawKQXSHomNay(page);
-        await crawKQXS(page, 23, 10, 2023);
+        await crawKQXS(page, 4, 12, 2023);
 
         // for (let i = 4; i <= 4; i++) { // dang cao den thang 5
         //     for (let j = 1; j <= MONTHS[i]; j++) {
