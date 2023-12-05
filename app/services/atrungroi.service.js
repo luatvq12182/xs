@@ -89,7 +89,7 @@ const xs = async (domain, type, page) => {
         ];
     }
 
-    if (["today", "live"].includes(type)) {
+    if (["live"].includes(type)) {
         const date = new Date();
 
         let kqxs =
@@ -120,6 +120,73 @@ const xs = async (domain, type, page) => {
             },
         ];
     }
+
+    if (type === "today") {
+        if (domain == Constants.Domain.MienBac) {
+            let data = Object.values(KQXS_CACHE.get()[domain]);
+
+            return data
+                .slice(-7)
+                .reverse()
+                .map((kqxs) => {
+                    const crDate = new Date(kqxs.ngay);
+
+                    return {
+                        ngay:
+                            "" +
+                            crDate.getFullYear() +
+                            cvNumber(crDate.getMonth() + 1) +
+                            cvNumber(crDate.getDate()),
+                        html: cvToHtml(
+                            domain,
+                            `${crDate.getDate()}-${
+                                crDate.getMonth() + 1
+                            }-${crDate.getFullYear()}`,
+                            kqxs
+                        ),
+                    };
+                });
+        } else {
+            const hashMap = {};
+
+            for (let i = 0; i <= 7; i++) {
+                const date = new Date();
+                date.setDate(date.getDate() - i);
+
+                const kqxs =
+                    KQXS_CACHE.get()[domain][
+                        `${date.getFullYear()}${cvNumber(
+                            date.getMonth() + 1
+                        )}${cvNumber(date.getDate())}`
+                    ];
+
+                if (kqxs && Object.values(hashMap).length <= 7) {
+                    hashMap[i] = Object.values(kqxs);
+                }
+            }
+
+            return Object.values(hashMap)
+                .slice((page - 1) * 5, (page - 1) * 5 + 5)
+                .map((kqxs) => {
+                    const crDate = new Date(kqxs[0].ngay);
+
+                    return {
+                        ngay:
+                            "" +
+                            crDate.getFullYear() +
+                            cvNumber(crDate.getMonth() + 1) +
+                            cvNumber(crDate.getDate()),
+                        html: cvToHtml(
+                            domain,
+                            `${crDate.getDate()}-${
+                                crDate.getMonth() + 1
+                            }-${crDate.getFullYear()}`,
+                            kqxs
+                        ),
+                    };
+                });
+        }
+    }    
 
     if (type === "30days") {
         if (domain == Constants.Domain.MienBac) {
