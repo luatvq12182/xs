@@ -116,10 +116,10 @@ const cvToHtml = (domain, ngay, kqxs) => {
                             .map((e, index) => {
                                 return `
                             <tr>
-                                <td>${index}</td>
-                                <td>${e.join(", ")}</td>
-                                <td>${duoi[index].join(", ")}</td>
-                                <td>${index}</td>
+                                <td class="text-center">${index}</td>
+                                <td class="text-center">${e.join(", ")}</td>
+                                <td class="text-center">${duoi[index].join(", ")}</td>
+                                <td class="text-center">${index}</td>
                             </tr>
                             `;
                             })
@@ -229,10 +229,10 @@ const cvToHtml = (domain, ngay, kqxs) => {
                     <table>
                         <thead>
                             <tr>
-                                <th>Đầu</th>
+                                <th class="text-center">Đầu</th>
                                 ${provinces
                                     .map((e) => {
-                                        return `<th>${e}</th>`;
+                                        return `<th class="text-center">${e}</th>`;
                                     })
                                     .join("")}
                             </tr>
@@ -242,11 +242,11 @@ const cvToHtml = (domain, ngay, kqxs) => {
                                 .map((e) => {
                                     return `
                                         <tr>
-                                            <td>${e}</td>
+                                            <td class="text-center">${e}</td>
                                             ${thongkes
                                                 .map((tk) => {
                                                     return `
-                                                    <td>${Object.values(
+                                                    <td class="text-center">${Object.values(
                                                         tk.dau[e]
                                                     ).join(", ")}</td>
                                                 `;
@@ -331,8 +331,8 @@ const cvToHtml = (domain, ngay, kqxs) => {
 
                             return `
                                 <tr>
-                                <td>${e}</td>
-                                <td>
+                                <td class="text-center">${e}</td>
+                                <td class="text-center">
                                     <div class="${genClass[index]}">
                                         ${Object.values(ketqua)
                                             [index].map((num) => {
@@ -394,10 +394,10 @@ const cvToHtml = (domain, ngay, kqxs) => {
                 <table>
                     <thead>
                         <tr>
-                            <th>Đầu</th>
-                            <th>Đuôi</th>
-                            <th>Đầu</th>
-                            <th>Đuôi</th>
+                            <th class="text-center">Đầu</th>
+                            <th class="text-center">Đuôi</th>
+                            <th class="text-center">Đầu</th>
+                            <th class="text-center">Đuôi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -405,10 +405,10 @@ const cvToHtml = (domain, ngay, kqxs) => {
                             .map((e, index) => {
                                 return `
                             <tr>
-                                <td>${index}</td>
-                                <td>${e.join(", ")}</td>
-                                <td>${duoi[index].join(", ")}</td>
-                                <td>${index}</td>
+                                <td class="text-center">${index}</td>
+                                <td class="text-center">${e.join(", ")}</td>
+                                <td class="text-center">${duoi[index].join(", ")}</td>
+                                <td class="text-center">${index}</td>
                             </tr>
                             `;
                             })
