@@ -186,7 +186,7 @@ const xs = async (domain, type, page) => {
                     };
                 });
         }
-    }    
+    }
 
     if (type === "30days") {
         if (domain == Constants.Domain.MienBac) {
@@ -317,7 +317,7 @@ const xs = async (domain, type, page) => {
                     };
                 });
         } else {
-            const data = KQXS_CACHE.get()[domain][alias[type]];
+            const data = Object.values(KQXS_CACHE.get()[domain][alias[type]]);
 
             return data
                 .slice((page - 1) * 5, (page - 1) * 5 + 5)

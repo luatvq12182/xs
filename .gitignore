@@ -45,3 +45,6 @@ config/local.js
 *.njsproj
 *.sln
 *.sw??
+
+up-post/
+crawl/

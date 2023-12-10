@@ -41,6 +41,7 @@ app.post("/api/test", (req, res) => {
         msg: "Hello world",
     });
 });
+
 app.get("/api/kqxs-cache", (req, res) => {
     const { domain, ngay, day, province } = req.query;
 

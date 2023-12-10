@@ -6,6 +6,8 @@
     "scripts": {
         "start:prod": "node app",
         "start": "nodemon app",
+        "crawl": "node crawl",
+        "up-post": "node up-post/soicau888",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [],

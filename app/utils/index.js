@@ -38,6 +38,85 @@ const cvDateToYYYYMMDD = (ngay) => {
     return `${y}${cvNum(m)}${cvNum(d)}`;
 };
 
+function generateDateArray(inputDate, numberOfDays) {
+    const dateArray = [];
+
+    const [day, month, year] = inputDate.split("-");
+    const formattedDate = `${year}-${month}-${day}`;
+
+    let currentDate = new Date(formattedDate);
+
+    for (let i = 0; i < numberOfDays; i++) {
+        if (i > 0) currentDate.setDate(currentDate.getDate() - 1);
+        const yyyy = currentDate.getFullYear();
+        const mm = String(currentDate.getMonth() + 1).padStart(2, "0");
+        const dd = String(currentDate.getDate()).padStart(2, "0");
+        const formattedResult = `${yyyy}${mm}${dd}`;
+        dateArray.push(formattedResult);
+    }
+
+    return dateArray;
+}
+
+function generateDateArrayByYearAndMonth(year, month) {
+    const dateArray = [];
+
+    // Tạo ngày đầu tiên của tháng
+    const firstDayOfMonth = new Date(year, month - 1, 1);
+
+    // Lặp qua từng ngày của tháng và thêm vào mảng
+    for (let i = 0; i < new Date(year, month, 0).getDate(); i++) {
+        const currentDate = new Date(firstDayOfMonth);
+        currentDate.setDate(firstDayOfMonth.getDate() + i);
+
+        const yyyy = currentDate.getFullYear();
+        const mm = String(currentDate.getMonth() + 1).padStart(2, "0");
+        const dd = String(currentDate.getDate()).padStart(2, "0");
+
+        const formattedResult = `${yyyy}${mm}${dd}`;
+        dateArray.push(formattedResult);
+    }
+
+    return dateArray;
+}
+
+function generateDateArrayByStartDateEndDate(startDate, endDate) {
+    const dateArray = [];
+
+    const [startDay, startMonth, startYear] = startDate.split("-");
+    const formattedStartDate = `${startYear}-${startMonth}-${startDay}`;
+
+    const [endDay, endMonth, endYear] = endDate.split("-");
+    const formattedEndDate = `${endYear}-${endMonth}-${endDay}`;
+
+    let currentDate = new Date(formattedStartDate);
+    const finalDate = new Date(formattedEndDate);
+
+    while (currentDate <= finalDate) {
+        const yyyy = currentDate.getFullYear();
+        const mm = String(currentDate.getMonth() + 1).padStart(2, "0");
+        const dd = String(currentDate.getDate()).padStart(2, "0");
+        const formattedResult = `${yyyy}${mm}${dd}`;
+        dateArray.push(formattedResult);
+
+        currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    return dateArray;
+}
+
+function countOccurrences(character, array) {
+    // Sử dụng hàm reduce để đếm số lần xuất hiện của kí tự
+    const occurrences = array.reduce((count, element) => {
+        if (element == character) {
+            return count + 1;
+        }
+        return count;
+    }, 0);
+
+    return occurrences;
+}
+
 const require_query_params = (params) => {
     return (req, res, next) => {
         let isValid = true;
@@ -68,4 +147,8 @@ module.exports = {
     cvNum,
     cvDateToYYYYMMDD,
     require_query_params,
+    generateDateArray,
+    generateDateArrayByYearAndMonth,
+    generateDateArrayByStartDateEndDate,
+    countOccurrences,
 };
