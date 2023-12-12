@@ -505,7 +505,7 @@ const bangDacBietTuan = async (req, res) => {
 
         const response = {};
 
-        kqxs.forEach((kq) => {
+        kqxs.reverse().forEach((kq) => {
             const crDate = new Date(kq.ngay);
 
             response[
