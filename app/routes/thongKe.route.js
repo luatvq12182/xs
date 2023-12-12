@@ -2,14 +2,14 @@ const express = require("express");
 const router = express.Router();
 const thongKeController = require("../controllers/thongke.controller");
 
-router.get("/xuat-hien-nhieu-nhat", thongKeController.layKetQua ,thongKeController.xuatHienNhieuNhat);
-router.get("/xuat-hien-it-nhat", thongKeController.layKetQua ,thongKeController.xuatHienItNhat);
-router.get("/lau-xuat-hien-nhat", thongKeController.layKetQua ,thongKeController.lauXuatHienNhat);
-router.get("/chua-xuat-hien", thongKeController.layKetQua ,thongKeController.chuaXuatHien); // chi tinh giai dac biet
-router.get("/ra-lien-tiep", thongKeController.layKetQua ,thongKeController.raLienTiep);
-router.get("/giai-dac-biet", thongKeController.layKetQua ,thongKeController.giaiDacBiet);
-router.get("/dau-duoi", thongKeController.layKetQua ,thongKeController.dauDuoi);
-router.get("/general", thongKeController.layKetQua ,thongKeController.general);
+router.get("/xuat-hien-nhieu-nhat", thongKeController.layKetQua, thongKeController.xuatHienNhieuNhat);
+router.get("/xuat-hien-it-nhat", thongKeController.layKetQua, thongKeController.xuatHienItNhat);
+router.get("/lau-xuat-hien-nhat", thongKeController.layKetQua, thongKeController.lauXuatHienNhat);
+router.get("/chua-xuat-hien", thongKeController.layKetQua, thongKeController.chuaXuatHien); // chi tinh giai dac biet
+router.get("/ra-lien-tiep", thongKeController.layKetQua, thongKeController.raLienTiep);
+router.get("/giai-dac-biet", thongKeController.layKetQua, thongKeController.giaiDacBiet);
+router.get("/dau-duoi", thongKeController.layKetQua, thongKeController.dauDuoi);
+router.get("/general", thongKeController.layKetQua, thongKeController.general);
 
 router.get("/tan-suat-loto", thongKeController.tanSuatLoto);
 router.get("/tan-suat-cap-lo", thongKeController.tanSuatCapLo);

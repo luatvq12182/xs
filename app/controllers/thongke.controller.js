@@ -8,6 +8,7 @@ const {
     countOccurrences,
     generateDateArrayByYearAndMonth,
     generateDateArrayByStartDateEndDate,
+    genNumsByTotal,
 } = require("../utils");
 const KQXS_CACHE = require("../../config/cache");
 
@@ -383,6 +384,10 @@ const tanSuatLoto = async (req, res) => {
                     }
                 });
 
+            if (province == 1) {
+                nums = nums.slice(1);
+            }
+
             numbersWantToSee.forEach((numWTS) => {
                 if (!response[numWTS]) {
                     response[numWTS] = [0];
@@ -441,6 +446,10 @@ const tanSuatCapLo = async (req, res) => {
                         return e.slice(-2);
                     }
                 });
+
+            if (province == 1) {
+                nums = nums.slice(1);
+            }
 
             setOfNumbers.forEach((setOfNum) => {
                 if (!response[setOfNum]) {
@@ -568,11 +577,376 @@ const bangDacBietNam = async (req, res) => {
 };
 
 const chuKyDacBiet = async (req, res) => {
-    res.json("OK");
+    try {
+        const { province } = req.query;
+        let date = new Date();
+        date.setDate(date.getDate() + 1);
+
+        let kqxs = KQXS_CACHE.get();
+        let count = 30;
+
+        if (province == 1) {
+            kqxs = kqxs[1];
+        } else {
+            kqxs =
+                kqxs[2][province] ||
+                kqxs[3][province === "Hồ Chí Minh" ? "TPHCM" : province];
+        }
+
+        const response = {
+            head: {
+                0: {
+                    lastReturn: "",
+                    gap: 0,
+                },
+                1: {
+                    lastReturn: "",
+                    gap: 0,
+                },
+                2: {
+                    lastReturn: "",
+                    gap: 0,
+                },
+                3: {
+                    lastReturn: "",
+                    gap: 0,
+                },
+                4: {
+                    lastReturn: "",
+                    gap: 0,
+                },
+                5: {
+                    lastReturn: "",
+                    gap: 0,
+                },
+                6: {
+                    lastReturn: "",
+                    gap: 0,
+                },
+                7: {
+                    lastReturn: "",
+                    gap: 0,
+                },
+                8: {
+                    lastReturn: "",
+                    gap: 0,
+                },
+                9: {
+                    lastReturn: "",
+                    gap: 0,
+                },
+            },
+            tail: {
+                0: {
+                    lastReturn: "",
+                    gap: 0,
+                },
+                1: {
+                    lastReturn: "",
+                    gap: 0,
+                },
+                2: {
+                    lastReturn: "",
+                    gap: 0,
+                },
+                3: {
+                    lastReturn: "",
+                    gap: 0,
+                },
+                4: {
+                    lastReturn: "",
+                    gap: 0,
+                },
+                5: {
+                    lastReturn: "",
+                    gap: 0,
+                },
+                6: {
+                    lastReturn: "",
+                    gap: 0,
+                },
+                7: {
+                    lastReturn: "",
+                    gap: 0,
+                },
+                8: {
+                    lastReturn: "",
+                    gap: 0,
+                },
+                9: {
+                    lastReturn: "",
+                    gap: 0,
+                },
+            },
+            total: {
+                0: {
+                    lastReturn: "",
+                    gap: 0,
+                },
+                1: {
+                    lastReturn: "",
+                    gap: 0,
+                },
+                2: {
+                    lastReturn: "",
+                    gap: 0,
+                },
+                3: {
+                    lastReturn: "",
+                    gap: 0,
+                },
+                4: {
+                    lastReturn: "",
+                    gap: 0,
+                },
+                5: {
+                    lastReturn: "",
+                    gap: 0,
+                },
+                6: {
+                    lastReturn: "",
+                    gap: 0,
+                },
+                7: {
+                    lastReturn: "",
+                    gap: 0,
+                },
+                8: {
+                    lastReturn: "",
+                    gap: 0,
+                },
+                9: {
+                    lastReturn: "",
+                    gap: 0,
+                },
+            },
+        };
+
+        for (let i = 0; i < 300; i++) {
+            if (count == 0) break;
+
+            date.setDate(date.getDate() - 1);
+
+            const kq =
+                kqxs[
+                    cvDateToYYYYMMDD(
+                        `${date.getDate()}-${
+                            date.getMonth() + 1
+                        }-${date.getFullYear()}`
+                    )
+                ];
+
+            if (kq) {
+                const giaidacbiet = kq.ketqua.giaidacbiet[0];
+                const total2Num =
+                    +giaidacbiet.slice(-2)[0] + +giaidacbiet.slice(-2)[1];
+
+                const headNum = giaidacbiet.slice(-2)[0];
+                const tailNum = giaidacbiet.slice(-2)[1];
+                const totalNum = total2Num > 9 ? total2Num - 10 : total2Num;
+
+                if (!response.head[headNum].lastReturn) {
+                    response.head[headNum] = {
+                        lastReturn: `${date.getDate()}-${
+                            date.getMonth() + 1
+                        }-${date.getFullYear()}`,
+                        gap: i,
+                        max: Constants.MaxGan[province].head[headNum],
+                    };
+
+                    count = count - 1;
+                }
+
+                if (!response.tail[tailNum].lastReturn) {
+                    response.tail[tailNum] = {
+                        lastReturn: `${date.getDate()}-${
+                            date.getMonth() + 1
+                        }-${date.getFullYear()}`,
+                        gap: i,
+                        max: Constants.MaxGan[province].tail[tailNum],
+                    };
+
+                    count = count - 1;
+                }
+
+                if (!response.total[totalNum].lastReturn) {
+                    response.total[totalNum] = {
+                        lastReturn: `${date.getDate()}-${
+                            date.getMonth() + 1
+                        }-${date.getFullYear()}`,
+                        gap: i,
+                        max: Constants.MaxGan[province].total[totalNum],
+                    };
+
+                    count = count - 1;
+                }
+            }
+        }
+
+        res.json(response);
+    } catch (error) {
+        console.log(error);
+        res.status(400).json("Error");
+    }
 };
 
 const giaiDacBietGan = async (req, res) => {
-    res.json("OK");
+    try {
+        const { type } = req.query;
+        let date = new Date();
+        date.setDate(date.getDate() + 1);
+
+        let kqxs = KQXS_CACHE.get()[1];
+
+        let response = {};
+        let count = 0;
+
+        switch (type) {
+            case "1":
+                count = 100;
+                for (let i = 0; i < 100; i++) {
+                    response[i.toString().padStart(2, "0")] = {
+                        lastReturn: "",
+                        gap: 0,
+                    };
+                }
+
+                for (let i = 0; i < 500; i++) {
+                    if (count == 0) break;
+                    date.setDate(date.getDate() - 1);
+                    const kq =
+                        kqxs[
+                            cvDateToYYYYMMDD(
+                                `${date.getDate()}-${
+                                    date.getMonth() + 1
+                                }-${date.getFullYear()}`
+                            )
+                        ];
+
+                    if (kq) {
+                        const giaidacbiet = kq.ketqua.giaidacbiet[0];
+                        let num = giaidacbiet.slice(-2);
+
+                        if (!response[num].lastReturn) {
+                            response[num] = {
+                                lastReturn: `${date.getDate()}-${
+                                    date.getMonth() + 1
+                                }-${date.getFullYear()}`,
+                                gap: i,
+                                max: Constants.MaxGan[1].last2Numbers[num],
+                            };
+
+                            count = count - 1;
+                        }
+                    }
+                }
+                break;
+
+            case "2":
+            case "3":
+            case "4":
+                count = 10;
+                response = {
+                    0: {
+                        lastReturn: "",
+                        gap: 0,
+                    },
+                    1: {
+                        lastReturn: "",
+                        gap: 0,
+                    },
+                    2: {
+                        lastReturn: "",
+                        gap: 0,
+                    },
+                    3: {
+                        lastReturn: "",
+                        gap: 0,
+                    },
+                    4: {
+                        lastReturn: "",
+                        gap: 0,
+                    },
+                    5: {
+                        lastReturn: "",
+                        gap: 0,
+                    },
+                    6: {
+                        lastReturn: "",
+                        gap: 0,
+                    },
+                    7: {
+                        lastReturn: "",
+                        gap: 0,
+                    },
+                    8: {
+                        lastReturn: "",
+                        gap: 0,
+                    },
+                    9: {
+                        lastReturn: "",
+                        gap: 0,
+                    },
+                };
+
+                for (let i = 0; i < 300; i++) {
+                    if (count == 0) break;
+
+                    date.setDate(date.getDate() - 1);
+
+                    const kq =
+                        kqxs[
+                            cvDateToYYYYMMDD(
+                                `${date.getDate()}-${
+                                    date.getMonth() + 1
+                                }-${date.getFullYear()}`
+                            )
+                        ];
+
+                    if (kq) {
+                        const giaidacbiet = kq.ketqua.giaidacbiet[0];
+                        const total2Num =
+                            +giaidacbiet.slice(-2)[0] +
+                            +giaidacbiet.slice(-2)[1];
+
+                        let num;
+                        if (type == "2") num = giaidacbiet.slice(-2)[0];
+                        if (type == "3") num = giaidacbiet.slice(-2)[1];
+                        if (type == "4")
+                            num = total2Num > 9 ? total2Num - 10 : total2Num;
+
+                        if (!response[num].lastReturn) {
+                            response[num] = {
+                                lastReturn: `${date.getDate()}-${
+                                    date.getMonth() + 1
+                                }-${date.getFullYear()}`,
+                                gap: i,
+                                max: Constants.MaxGan[1][
+                                    `${
+                                        type == "2"
+                                            ? "head"
+                                            : type == "3"
+                                            ? "tail"
+                                            : "total"
+                                    }`
+                                ][num],
+                            };
+
+                            count = count - 1;
+                        }
+                    }
+                }
+                break;
+
+            default:
+                break;
+        }
+
+        res.json(response);
+    } catch (error) {
+        console.log(error);
+        res.status(400).json("Error");
+    }
 };
 
 const thongKeDauDuoiLoto = async (req, res) => {
@@ -638,6 +1012,10 @@ const thongKeDauDuoiLoto = async (req, res) => {
                     }
                 });
 
+            if (province == 1) {
+                nums = nums.slice(1);
+            }
+
             response.head.dates.push(cvDate);
             response.tail.dates.push(cvDate);
 
@@ -669,7 +1047,73 @@ const chuKyMaxDanCungVe = async (req, res) => {
 };
 
 const theoTong = async (req, res) => {
-    res.json("OK");
+    try {
+        const { province, startDate, endDate, total, type } = req.query;
+        // type: 1 => tất cả giải, 2 => giải đặc biêt
+
+        let kqxs = KQXS_CACHE.get();
+
+        if (province == 1) {
+            kqxs = kqxs[1];
+        } else {
+            kqxs =
+                kqxs[2][province] ||
+                kqxs[3][province === "Hồ Chí Minh" ? "TPHCM" : province];
+        }
+
+        kqxs = generateDateArrayByStartDateEndDate(startDate, endDate)
+            .map((e) => {
+                return kqxs[e];
+            })
+            .filter(Boolean);
+
+        const response = genNumsByTotal(+total);
+        kqxs.reverse();
+
+        kqxs.forEach((kq, index) => {
+            const crDate = new Date(kq.ngay);
+            let nums =
+                type == 1
+                    ? Object.values(kq.ketqua)
+                          .flat()
+                          .map((e) => {
+                              if (e) {
+                                  return e.slice(-2);
+                              }
+                          })
+                    : kq.ketqua.giaidacbiet.map((e) => {
+                          if (e) {
+                              return e.slice(-2);
+                          }
+                      });
+
+            if (province == 1 && type != 2) {
+                nums = nums.slice(1);
+            }
+
+            nums.forEach((num) => {
+                if (response[num]) {
+                    if (!response[num].lastReturn) {
+                        response[num] = {
+                            lastReturn: `${crDate.getDate()}-${
+                                crDate.getMonth() + 1
+                            }-${crDate.getFullYear()}`,
+                            totalNumberOfOccurrences: 1,
+                            gap: index,
+                        };
+                    } else {
+                        response[num].totalNumberOfOccurrences =
+                            response[num].totalNumberOfOccurrences + 1;
+                    }
+                }
+            });
+        });
+
+        res.json(response);
+    } catch (error) {
+        console.log(error);
+        res.status(400).json("Error");
+    }
 };
 
 const tongHop = async (req, res) => {
@@ -690,6 +1134,7 @@ const lanXuatHien = async (req, res) => {
 
 const nhanh = async (req, res) => {
     try {
+        // type: 1 => tất cả giải, 2 => giải đặc biệt
         let { startDate, endDate, province, numbersWantToSee, type } =
             req.query;
         numbersWantToSee = numbersWantToSee.split(",");
@@ -734,6 +1179,10 @@ const nhanh = async (req, res) => {
                                   return e.slice(-2);
                               }
                           });
+
+            if (province == 1 && type != 2) {
+                nums = nums.slice(1);
+            }
 
             nums.forEach((num) => {
                 numbersWantToSee.forEach((numWTS) => {
@@ -833,6 +1282,10 @@ const loKep = async (req, res) => {
                         return e.slice(-2);
                     }
                 });
+
+            if (province == 1) {
+                nums = nums.slice(1);
+            }
 
             nums.forEach((num) => {
                 if (response[num]) {

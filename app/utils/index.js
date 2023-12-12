@@ -140,6 +140,25 @@ const require_query_params = (params) => {
     };
 };
 
+const genNumsByTotal = (total) => {
+    const data = {};
+
+    for (let i = 0; i < 100; i++) {
+        if (i < 10 && i == total) {
+            data[i.toString().padStart(2, "0")] = {};
+        } else {
+            const nums = i.toString();
+            const totalNum = +nums[0] + +nums[1];
+
+            if (totalNum == total || totalNum - 10 == total) {
+                data[i.toString().padStart(2, "0")] = {};
+            }
+        }
+    }
+
+    return data;
+};
+
 module.exports = {
     generateRandomString,
     lay10SoLonNhat,
@@ -151,4 +170,5 @@ module.exports = {
     generateDateArrayByYearAndMonth,
     generateDateArrayByStartDateEndDate,
     countOccurrences,
+    genNumsByTotal,
 };
