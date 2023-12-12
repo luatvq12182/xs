@@ -375,7 +375,7 @@ const tanSuatLoto = async (req, res) => {
 
         kqxs.forEach((kq, index) => {
             const crDate = new Date(kq.ngay);
-            const nums = Object.values(kq.ketqua)
+            let nums = Object.values(kq.ketqua)
                 .flat()
                 .slice(1)
                 .map((e) => {
@@ -438,7 +438,7 @@ const tanSuatCapLo = async (req, res) => {
 
         kqxs.forEach((kq, index) => {
             const crDate = new Date(kq.ngay);
-            const nums = Object.values(kq.ketqua)
+            let nums = Object.values(kq.ketqua)
                 .flat()
                 .slice(1)
                 .map((e) => {
@@ -1003,7 +1003,7 @@ const thongKeDauDuoiLoto = async (req, res) => {
             const cvDate = `${crDate.getDate()}-${
                 crDate.getMonth() + 1
             }-${crDate.getFullYear()}`;
-            const nums = Object.values(kq.ketqua)
+            let nums = Object.values(kq.ketqua)
                 .flat()
                 .slice(1)
                 .map((e) => {
@@ -1162,7 +1162,7 @@ const nhanh = async (req, res) => {
             const cvDate = `${crDate.getDate()}-${
                 crDate.getMonth() + 1
             }-${crDate.getFullYear()}`;
-            const nums =
+            let nums =
                 type == 0
                     ? Object.values(kq.ketqua)
                           .flat()
@@ -1274,7 +1274,7 @@ const loKep = async (req, res) => {
             const cvDate = `${crDate.getDate()}-${
                 crDate.getMonth() + 1
             }-${crDate.getFullYear()}`;
-            const nums = Object.values(kq.ketqua)
+            let nums = Object.values(kq.ketqua)
                 .flat()
                 .slice(1)
                 .map((e) => {
