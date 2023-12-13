@@ -535,8 +535,11 @@ const bangDacBietThang = async (req, res) => {
                 .map((e) => {
                     return kqxs[e];
                 })
-                .filter(Boolean)
+                // .filter(Boolean)
                 .map((e) => {
+                    if (!e) {
+                        return "Tết";
+                    }
                     return e.ketqua.giaidacbiet;
                 })
                 .flat();
@@ -562,8 +565,11 @@ const bangDacBietNam = async (req, res) => {
                 .map((e) => {
                     return kqxs[e];
                 })
-                .filter(Boolean)
+                // .filter(Boolean)
                 .map((e) => {
+                    if (!e) {
+                        return "Tết";
+                    }
                     return e.ketqua.giaidacbiet;
                 })
                 .flat();
@@ -1449,7 +1455,23 @@ const tongHop = async (req, res) => {
 };
 
 const quanTrong = async (req, res) => {
-    res.json("OK");
+    try {
+        const { type, province } = req.query;
+
+        let kqxs = KQXS_CACHE.get();
+
+        if (province == 1) {
+            kqxs = kqxs[1];
+        } else {
+            kqxs =
+                kqxs[2][province] ||
+                kqxs[3][province === "Hồ Chí Minh" ? "TPHCM" : province];
+        }
+
+        res.json("OK");
+    } catch (error) {
+        res.status(400).json("Error");
+    }
 };
 
 const lotoKep = async (req, res) => {

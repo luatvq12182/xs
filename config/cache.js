@@ -92,7 +92,7 @@ const KQXS_CACHE = (() => {
                 .sort({
                     ngay: -1,
                 })
-                .limit(5000);
+                // .limit(2000);
             console.timeEnd("Time to query");
 
             console.time("Time to set cache");
