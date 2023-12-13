@@ -538,7 +538,7 @@ const bangDacBietThang = async (req, res) => {
                 // .filter(Boolean)
                 .map((e) => {
                     if (!e) {
-                        return "Tết";
+                        return "";
                     }
                     return e.ketqua.giaidacbiet;
                 })
@@ -568,7 +568,7 @@ const bangDacBietNam = async (req, res) => {
                 // .filter(Boolean)
                 .map((e) => {
                     if (!e) {
-                        return "Tết";
+                        return "";
                     }
                     return e.ketqua.giaidacbiet;
                 })
