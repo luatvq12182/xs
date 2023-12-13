@@ -728,7 +728,7 @@ const chuKyDacBiet = async (req, res) => {
             },
         };
 
-        for (let i = 0; i < 300; i++) {
+        for (let i = 0; i < 1500; i++) {
             if (count == 0) break;
 
             date.setDate(date.getDate() - 1);
