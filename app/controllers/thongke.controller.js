@@ -1117,7 +1117,335 @@ const theoTong = async (req, res) => {
 };
 
 const tongHop = async (req, res) => {
-    res.json("OK");
+    try {
+        // mode => 1 => tất cả giải 2 => giải đặc biệt
+        const { type, province, startDate, endDate, mode } = req.query;
+
+        // 1 => "Thống kê tổng chẵn",
+        // 2 => "Thống kê tổng lẻ",
+        // 3 => "Thống kê bộ chẵn chẵn",
+        // 4 => "Thống kê bộ lẻ lẻ",
+        // 5 => "Thống kê bộ chẵn lẻ",
+        // 6 => "Thống kê bộ lẻ chẵn",
+        // 7 => "Thống kê bộ kép",
+        // 8 => "Thống kê bộ sát kép",
+        // 9 => "Thống kê theo đầu số",
+        // 10 => "Thống kê theo đít số",
+        // 11 => "Thống kê 15 số về nhiều nhất",
+        // 12 => "Thống kê 15 số về ít nhất"
+
+        let kqxs = KQXS_CACHE.get();
+
+        if (province == 1) {
+            kqxs = kqxs[1];
+        } else {
+            kqxs =
+                kqxs[2][province] ||
+                kqxs[3][province === "Hồ Chí Minh" ? "TPHCM" : province];
+        }
+
+        kqxs = generateDateArrayByStartDateEndDate(startDate, endDate)
+            .map((e) => {
+                return kqxs[e];
+            })
+            .filter(Boolean);
+
+        let response = {};
+
+        if (
+            ["1", "2", "3", "4", "5", "6", "7", "8", "11", "12"].includes(type)
+        ) {
+            switch (type) {
+                case "1":
+                    for (let i = 0; i <= 99; i++) {
+                        if (i < 10 && i % 2 == 0) {
+                            response[i.toString().padStart(2, "0")] = {};
+                        } else {
+                            const cvToStr = i.toString();
+
+                            if ((+cvToStr[0] + +cvToStr[1]) % 2 == 0) {
+                                response[i] = {};
+                            }
+                        }
+                    }
+                    break;
+                case "2":
+                    for (let i = 0; i <= 99; i++) {
+                        if (i < 10 && i % 2 == 0) {
+                            response[i.toString().padStart(2, "0")] = {};
+                        } else {
+                            const cvToStr = i.toString();
+
+                            if ((+cvToStr[0] + +cvToStr[1]) % 2 == 1) {
+                                response[i] = {};
+                            }
+                        }
+                    }
+                    break;
+                case "3":
+                    for (let i = 0; i <= 99; i++) {
+                        if (i < 10 && i % 2 == 0) {
+                            response[i.toString().padStart(2, "0")] = {};
+                        } else {
+                            const cvToStr = i.toString();
+
+                            if (+cvToStr[0] % 2 == 0 && +cvToStr[1] % 2 == 0) {
+                                response[i] = {};
+                            }
+                        }
+                    }
+                    break;
+                case "4":
+                    for (let i = 0; i <= 99; i++) {
+                        if (i < 10 && i % 2 == 1) {
+                            response[i.toString().padStart(2, "0")] = {};
+                        } else {
+                            const cvToStr = i.toString();
+
+                            if (+cvToStr[0] % 2 == 1 && +cvToStr[1] % 2 == 1) {
+                                response[i] = {};
+                            }
+                        }
+                    }
+                    break;
+                case "5":
+                    for (let i = 0; i <= 99; i++) {
+                        if (i < 10 && i % 2 == 1) {
+                            response[i.toString().padStart(2, "0")] = {};
+                        } else {
+                            const cvToStr = i.toString();
+
+                            if (+cvToStr[0] % 2 == 0 && +cvToStr[1] % 2 == 1) {
+                                response[i] = {};
+                            }
+                        }
+                    }
+                    break;
+                case "6":
+                    for (let i = 10; i <= 99; i++) {
+                        const cvToStr = i.toString();
+
+                        if (+cvToStr[0] % 2 == 1 && +cvToStr[1] % 2 == 0) {
+                            response[i] = {};
+                        }
+                    }
+                    break;
+                case "7":
+                    response["00"] = {};
+                    for (let i = 10; i <= 99; i++) {
+                        if (i % 11 == 0) {
+                            response[i] = {};
+                        }
+                    }
+                    break;
+                case "8":
+                    response["01"] = {};
+                    for (let i = 10; i <= 99; i++) {
+                        if (i % 11 == 1 || i % 11 == 10) {
+                            response[i] = {};
+                        }
+                    }
+                    break;
+                case "11":
+                    for (let i = 0; i <= 99; i++) {
+                        response[i.toString().padStart(2, "0")] = {};
+                    }
+                    break;
+                case "12":
+                    for (let i = 0; i <= 99; i++) {
+                        response[i.toString().padStart(2, "0")] = {};
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            kqxs.reverse();
+
+            kqxs.forEach((kq, index) => {
+                const crDate = new Date(kq.ngay);
+                let nums =
+                    mode == 1
+                        ? Object.values(kq.ketqua)
+                              .flat()
+                              .map((e) => {
+                                  if (e) {
+                                      return e.slice(-2);
+                                  }
+                              })
+                        : kq.ketqua.giaidacbiet.map((e) => {
+                              if (e) {
+                                  return e.slice(-2);
+                              }
+                          });
+
+                if (province == 1 && mode != 2) {
+                    nums = nums.slice(1);
+                }
+
+                nums.forEach((num) => {
+                    if (response[num]) {
+                        if (!response[num].lastReturn) {
+                            response[num] = {
+                                lastReturn: `${crDate.getDate()}-${
+                                    crDate.getMonth() + 1
+                                }-${crDate.getFullYear()}`,
+                                totalNumberOfOccurrences: 1,
+                                gap: index,
+                            };
+                        } else {
+                            response[num].totalNumberOfOccurrences =
+                                response[num].totalNumberOfOccurrences + 1;
+                        }
+                    }
+                });
+            });
+
+            if (type == "11") {
+                const keyValueArray = Object.entries(response);
+                const sortedArray = keyValueArray.sort(
+                    (a, b) =>
+                        b[1].totalNumberOfOccurrences -
+                        a[1].totalNumberOfOccurrences
+                );
+                response = sortedArray.slice(0, 15).map((e) => {
+                    return {
+                        number: e[0],
+                        ...e[1],
+                    };
+                });
+            } else if (type == "12") {
+                const keyValueArray = Object.entries(response);
+                const sortedArray = keyValueArray.sort(
+                    (a, b) =>
+                        a[1].totalNumberOfOccurrences -
+                        b[1].totalNumberOfOccurrences
+                );
+                response = sortedArray.slice(0, 15).map((e) => {
+                    return {
+                        number: e[0],
+                        ...e[1],
+                    };
+                });
+            } else {
+                response = Object.entries(response).map((e) => {
+                    return {
+                        number: e[0],
+                        ...e[1],
+                    };
+                });
+            }
+        } else {
+            switch (type) {
+                case "9":
+                    kqxs.reverse();
+
+                    kqxs.forEach((kq, index) => {
+                        const crDate = new Date(kq.ngay);
+                        let nums =
+                            mode == 1
+                                ? Object.values(kq.ketqua)
+                                      .flat()
+                                      .map((e) => {
+                                          if (e) {
+                                              return e.slice(-2);
+                                          }
+                                      })
+                                : kq.ketqua.giaidacbiet.map((e) => {
+                                      if (e) {
+                                          return e.slice(-2);
+                                      }
+                                  });
+
+                        if (province == 1 && mode != 2) {
+                            nums = nums.slice(1);
+                        }
+
+                        nums.forEach((num) => {
+                            const headNum = num[0];
+
+                            if (!response[headNum]) response[headNum] = {};
+
+                            if (!response[headNum].lastReturn) {
+                                response[headNum] = {
+                                    lastReturn: `${crDate.getDate()}-${
+                                        crDate.getMonth() + 1
+                                    }-${crDate.getFullYear()}`,
+                                    totalNumberOfOccurrences: 1,
+                                    gap: index,
+                                };
+                            } else {
+                                response[headNum].totalNumberOfOccurrences =
+                                    response[headNum].totalNumberOfOccurrences +
+                                    1;
+                            }
+                        });
+                    });
+                    break;
+
+                case "10":
+                    kqxs.reverse();
+
+                    kqxs.forEach((kq, index) => {
+                        const crDate = new Date(kq.ngay);
+                        let nums =
+                            mode == 1
+                                ? Object.values(kq.ketqua)
+                                      .flat()
+                                      .map((e) => {
+                                          if (e) {
+                                              return e.slice(-2);
+                                          }
+                                      })
+                                : kq.ketqua.giaidacbiet.map((e) => {
+                                      if (e) {
+                                          return e.slice(-2);
+                                      }
+                                  });
+
+                        if (province == 1 && mode != 2) {
+                            nums = nums.slice(1);
+                        }
+
+                        nums.forEach((num) => {
+                            const tailNum = num[1];
+
+                            if (!response[tailNum]) response[tailNum] = {};
+
+                            if (!response[tailNum].lastReturn) {
+                                response[tailNum] = {
+                                    lastReturn: `${crDate.getDate()}-${
+                                        crDate.getMonth() + 1
+                                    }-${crDate.getFullYear()}`,
+                                    totalNumberOfOccurrences: 1,
+                                    gap: index,
+                                };
+                            } else {
+                                response[tailNum].totalNumberOfOccurrences =
+                                    response[tailNum].totalNumberOfOccurrences +
+                                    1;
+                            }
+                        });
+                    });
+                    break;
+
+                default:
+                    break;
+            }
+
+            response = Object.entries(response).map((e) => {
+                return {
+                    number: e[0],
+                    ...e[1],
+                };
+            });
+        }
+
+        res.json(response);
+    } catch (error) {
+        console.log(error);
+        res.status(400).json("Error");
+    }
 };
 
 const quanTrong = async (req, res) => {
