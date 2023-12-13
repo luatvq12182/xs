@@ -758,6 +758,7 @@ const chuKyDacBiet = async (req, res) => {
                         }-${date.getFullYear()}`,
                         gap: i,
                         max: Constants.MaxGan[province].head[headNum],
+                        result: giaidacbiet,
                     };
 
                     count = count - 1;
@@ -770,6 +771,7 @@ const chuKyDacBiet = async (req, res) => {
                         }-${date.getFullYear()}`,
                         gap: i,
                         max: Constants.MaxGan[province].tail[tailNum],
+                        result: giaidacbiet,
                     };
 
                     count = count - 1;
@@ -782,6 +784,7 @@ const chuKyDacBiet = async (req, res) => {
                         }-${date.getFullYear()}`,
                         gap: i,
                         max: Constants.MaxGan[province].total[totalNum],
+                        result: giaidacbiet,
                     };
 
                     count = count - 1;
@@ -1457,6 +1460,8 @@ const tongHop = async (req, res) => {
 const quanTrong = async (req, res) => {
     try {
         const { type, province } = req.query;
+        const date = new Date();
+        date.setDate(date.getDate() - 1);
 
         let kqxs = KQXS_CACHE.get();
 
@@ -1468,8 +1473,58 @@ const quanTrong = async (req, res) => {
                 kqxs[3][province === "Hồ Chí Minh" ? "TPHCM" : province];
         }
 
-        res.json("OK");
+        let response = {};
+
+        kqxs = Object.values(kqxs).slice(-30);
+        kqxs.reverse();
+        kqxs.forEach((kq) => {
+            let nums = Object.values(kq.ketqua)
+                .flat()
+                .slice(1)
+                .map((e) => {
+                    if (e) {
+                        return e.slice(-2);
+                    }
+                });
+            const date = new Date(kq.ngay);
+
+            if (province == 1) {
+                nums = nums.slice(1);
+            }
+
+            nums.forEach((num) => {
+                if (!response[num]) response[num] = {};
+
+                if (!response[num].lastReturn) {
+                    response[num] = {
+                        lastReturn: `${date.getDate()}-${
+                            date.getMonth() + 1
+                        }-${date.getFullYear()}`,
+                        totalNumberOfOccurrences: 1,
+                        // gap: i,
+                    };
+                } else {
+                    response[num].totalNumberOfOccurrences =
+                        response[num].totalNumberOfOccurrences + 1;
+                }
+            });
+        });
+
+        const keyValueArray = Object.entries(response);
+        const sortedArray = keyValueArray.sort(
+            (a, b) =>
+                b[1].totalNumberOfOccurrences - a[1].totalNumberOfOccurrences
+        );
+        response = sortedArray.slice(0, 27).map((e) => {
+            return {
+                number: e[0],
+                ...e[1],
+            };
+        });
+
+        res.json(response);
     } catch (error) {
+        console.log(error);
         res.status(400).json("Error");
     }
 };
