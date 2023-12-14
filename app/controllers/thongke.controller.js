@@ -1669,7 +1669,7 @@ const nhanh = async (req, res) => {
                 crDate.getMonth() + 1
             }-${crDate.getFullYear()}`;
             let nums =
-                type == 0
+                type == 1
                     ? Object.values(kq.ketqua)
                           .flat()
                           .slice(1)
@@ -1686,7 +1686,7 @@ const nhanh = async (req, res) => {
                               }
                           });
 
-            if (province == 1 && type != 2) {
+            if (province == 1 && type == 1) {
                 nums = nums.slice(1);
             }
 
