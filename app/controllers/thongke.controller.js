@@ -1811,7 +1811,55 @@ const loKep = async (req, res) => {
 };
 
 const loRoi = async (req, res) => {
-    res.json("OK");
+    try {
+        const { numberOfDays } = req.query;
+
+        let kqxs = KQXS_CACHE.get()[1];
+
+        kqxs = Object.values(kqxs).slice(-numberOfDays);
+
+        const response = [];
+
+        for (let i = 0; i < kqxs.length - 1; i++) {
+            const kqCrDay = kqxs[i];
+            const kqNextDay = kqxs[i + 1];
+
+            const crDay = new Date(kqxs[i].ngay);
+            const nextDay = new Date(kqxs[i + 1].ngay);
+
+            const cvDay = `${crDay.getDate()}-${
+                crDay.getMonth() + 1
+            }-${crDay.getFullYear()}`;
+            const cvNextDay = `${nextDay.getDate()}-${
+                nextDay.getMonth() + 1
+            }-${nextDay.getFullYear()}`;
+
+            let giaidacbiet = kqCrDay.ketqua.giaidacbiet[0].slice(-2);
+            let nums = Object.values(kqNextDay.ketqua)
+                .flat()
+                .slice(1)
+                .map((e) => {
+                    if (e) {
+                        return e.slice(-2);
+                    }
+                })
+                .slice(1);
+
+            if (nums.includes(giaidacbiet)) {
+                response.push({
+                    returnDay: cvDay,
+                    nextDay: cvNextDay,
+                    numberReturn: giaidacbiet,
+                    resultOfNextDay: nums,
+                });
+            }
+        }
+
+        res.json(response);
+    } catch (error) {
+        console.log(error);
+        res.status(400).json("Error");
+    }
 };
 
 const loXien = async (req, res) => {
