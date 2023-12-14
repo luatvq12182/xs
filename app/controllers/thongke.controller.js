@@ -1180,7 +1180,7 @@ const tongHop = async (req, res) => {
                     break;
                 case "2":
                     for (let i = 0; i <= 99; i++) {
-                        if (i < 10 && i % 2 == 0) {
+                        if (i < 10 && i % 2 == 1) {
                             response[i.toString().padStart(2, "0")] = {};
                         } else {
                             const cvToStr = i.toString();
