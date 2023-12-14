@@ -1476,51 +1476,152 @@ const quanTrong = async (req, res) => {
         let response = {};
 
         kqxs = Object.values(kqxs).slice(-30);
-        kqxs.reverse();
-        kqxs.forEach((kq) => {
-            let nums = Object.values(kq.ketqua)
-                .flat()
-                .slice(1)
-                .map((e) => {
-                    if (e) {
-                        return e.slice(-2);
+
+        if (["1", "2", "3"].includes(type)) {
+            kqxs.reverse();
+            kqxs.forEach((kq, i) => {
+                let nums = Object.values(kq.ketqua)
+                    .flat()
+                    .slice(1)
+                    .map((e) => {
+                        if (e) {
+                            return e.slice(-2);
+                        }
+                    });
+                const date = new Date(kq.ngay);
+
+                if (province == 1) {
+                    nums = nums.slice(1);
+                }
+
+                nums.forEach((num) => {
+                    if (!response[num]) response[num] = {};
+
+                    if (!response[num].lastReturn) {
+                        response[num] = {
+                            lastReturn: `${date.getDate()}-${
+                                date.getMonth() + 1
+                            }-${date.getFullYear()}`,
+                            totalNumberOfOccurrences: 1,
+                            gap: i,
+                        };
+                    } else {
+                        response[num].totalNumberOfOccurrences =
+                            response[num].totalNumberOfOccurrences + 1;
                     }
                 });
-            const date = new Date(kq.ngay);
+            });
 
-            if (province == 1) {
-                nums = nums.slice(1);
+            if (type == "1") {
+                const keyValueArray = Object.entries(response);
+                const sortedArray = keyValueArray.sort(
+                    (a, b) =>
+                        b[1].totalNumberOfOccurrences -
+                        a[1].totalNumberOfOccurrences
+                );
+                response = sortedArray.slice(0, 27).map((e) => {
+                    return {
+                        number: e[0],
+                        ...e[1],
+                    };
+                });
             }
 
-            nums.forEach((num) => {
-                if (!response[num]) response[num] = {};
-
-                if (!response[num].lastReturn) {
-                    response[num] = {
-                        lastReturn: `${date.getDate()}-${
-                            date.getMonth() + 1
-                        }-${date.getFullYear()}`,
-                        totalNumberOfOccurrences: 1,
-                        // gap: i,
+            if (type == "2") {
+                const keyValueArray = Object.entries(response);
+                const arr = keyValueArray
+                    .sort((a, b) => b[1].gap - a[1].gap)
+                    .filter((e) => e[1].gap >= 10);
+                response = arr.slice(0, 10).map((e) => {
+                    return {
+                        number: e[0],
+                        ...e[1],
                     };
-                } else {
+                });
+            }
+
+            if (type == "3") {
+                const keyValueArray = Object.entries(response);
+                const sortedArray = keyValueArray.sort(
+                    (a, b) =>
+                        a[1].totalNumberOfOccurrences -
+                        b[1].totalNumberOfOccurrences
+                );
+                response = sortedArray.slice(0, 10).map((e) => {
+                    return {
+                        number: e[0],
+                        ...e[1],
+                    };
+                });
+            }
+        } else {
+            kqxs.forEach((kq, i) => {
+                let preNums = Object.values(kqxs[i - 1]?.ketqua || {})
+                    .flat()
+                    .slice(1)
+                    .map((e) => {
+                        if (e) {
+                            return e.slice(-2);
+                        }
+                    });
+                let nums = Object.values(kq.ketqua)
+                    .flat()
+                    .slice(1)
+                    .map((e) => {
+                        if (e) {
+                            return e.slice(-2);
+                        }
+                    });
+                const date = new Date(kq.ngay);
+
+                if (province == 1) {
+                    nums = nums.slice(1);
+                    preNums = preNums.slice(1);
+                }
+
+                nums.forEach((num) => {
+                    if (!response[num]) {
+                        response[num] = {
+                            totalNumberOfOccurrences: 1,
+                        };
+                    }
+
+                    response[num].lastReturn = `${date.getDate()}-${
+                        date.getMonth() + 1
+                    }-${date.getFullYear()}`;
                     response[num].totalNumberOfOccurrences =
                         response[num].totalNumberOfOccurrences + 1;
-                }
-            });
-        });
+                });
 
-        const keyValueArray = Object.entries(response);
-        const sortedArray = keyValueArray.sort(
-            (a, b) =>
-                b[1].totalNumberOfOccurrences - a[1].totalNumberOfOccurrences
-        );
-        response = sortedArray.slice(0, 27).map((e) => {
-            return {
-                number: e[0],
-                ...e[1],
-            };
-        });
+                Object.keys(response).forEach((key) => {
+                    if (nums.includes(key) && preNums.includes(key)) {
+                        response[key].numberOfConsecutiveReturnDays =
+                            response[key].numberOfConsecutiveReturnDays + 1;
+                    } else if (nums.includes(key)) {
+                        response[key].numberOfConsecutiveReturnDays = 1;
+                    } else {
+                        response[key].numberOfConsecutiveReturnDays = 0;
+                    }
+                });
+            });
+
+            const keyValueArray = Object.entries(response);
+            const sortedArray = keyValueArray
+                .sort(
+                    (a, b) =>
+                        b[1].numberOfConsecutiveReturnDays -
+                        a[1].numberOfConsecutiveReturnDays
+                )
+                .filter((e) => {
+                    return e[1].numberOfConsecutiveReturnDays > 1;
+                });
+            response = sortedArray.map((e) => {
+                return {
+                    number: e[0],
+                    ...e[1],
+                };
+            });
+        }
 
         res.json(response);
     } catch (error) {
