@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 // const passport = require("passport");
 const tokenRouter = require("./app/routes/token.route");
 const kqxsRouter = require("./app/routes/kqxs.route");
@@ -16,6 +17,7 @@ KQXS_CACHE.invalid();
 
 app.use(express.json()); // Parse JSON request bodies
 app.use(express.static("public"));
+app.use(cors());
 
 // app.use(
 //     "/api",
