@@ -10,7 +10,7 @@ const {
     generateDateArrayByStartDateEndDate,
     genNumsByTotal,
 } = require("../utils");
-const KQXS_CACHE = require("../../config/cache");
+const CACHE = require("../../config/cache");
 
 const layKetQua = async (req, res, next) => {
     const { domain, ngay = new Date(), range = 30 } = req.query;
@@ -353,7 +353,7 @@ const tanSuatLoto = async (req, res) => {
             });
         }
 
-        let kqxs = KQXS_CACHE.get();
+        let kqxs = CACHE.get('KQXS');
 
         if (province == 1) {
             kqxs = kqxs[1];
@@ -416,7 +416,7 @@ const tanSuatCapLo = async (req, res) => {
 
         setOfNumbers = setOfNumbers.split(",");
 
-        let kqxs = KQXS_CACHE.get();
+        let kqxs = CACHE.get('KQXS');
 
         if (province == 1) {
             kqxs = kqxs[1];
@@ -487,7 +487,7 @@ const bangDacBietTuan = async (req, res) => {
     try {
         let { date, numberOfDays, province } = req.query;
 
-        let kqxs = KQXS_CACHE.get();
+        let kqxs = CACHE.get('KQXS');
 
         if (province == 1) {
             kqxs = kqxs[1];
@@ -526,7 +526,7 @@ const bangDacBietThang = async (req, res) => {
     try {
         let { startYear, month } = req.query;
 
-        let kqxs = KQXS_CACHE.get()[1];
+        let kqxs = CACHE.get('KQXS')[1];
 
         const rs = {};
 
@@ -556,7 +556,7 @@ const bangDacBietNam = async (req, res) => {
     try {
         let { year } = req.query;
 
-        let kqxs = KQXS_CACHE.get()[1];
+        let kqxs = CACHE.get('KQXS')[1];
 
         const rs = {};
 
@@ -588,7 +588,7 @@ const chuKyDacBiet = async (req, res) => {
         let date = new Date();
         date.setDate(date.getDate() + 1);
 
-        let kqxs = KQXS_CACHE.get();
+        let kqxs = CACHE.get('KQXS');
         let count = 30;
 
         if (province == 1) {
@@ -805,7 +805,7 @@ const giaiDacBietGan = async (req, res) => {
         let date = new Date();
         date.setDate(date.getDate() + 1);
 
-        let kqxs = KQXS_CACHE.get()[1];
+        let kqxs = CACHE.get('KQXS')[1];
 
         let response = {};
         let count = 0;
@@ -962,7 +962,7 @@ const thongKeDauDuoiLoto = async (req, res) => {
     try {
         const { startDate, endDate, province } = req.query;
 
-        let kqxs = KQXS_CACHE.get();
+        let kqxs = CACHE.get('KQXS');
 
         if (province == 1) {
             kqxs = kqxs[1];
@@ -1060,7 +1060,7 @@ const theoTong = async (req, res) => {
         const { province, startDate, endDate, total, type } = req.query;
         // type: 1 => tất cả giải, 2 => giải đặc biêt
 
-        let kqxs = KQXS_CACHE.get();
+        let kqxs = CACHE.get('KQXS');
 
         if (province == 1) {
             kqxs = kqxs[1];
@@ -1143,7 +1143,7 @@ const tongHop = async (req, res) => {
         // 11 => "Thống kê 15 số về nhiều nhất",
         // 12 => "Thống kê 15 số về ít nhất"
 
-        let kqxs = KQXS_CACHE.get();
+        let kqxs = CACHE.get('KQXS');
 
         if (province == 1) {
             kqxs = kqxs[1];
@@ -1463,7 +1463,7 @@ const quanTrong = async (req, res) => {
         const date = new Date();
         date.setDate(date.getDate() - 1);
 
-        let kqxs = KQXS_CACHE.get();
+        let kqxs = CACHE.get('KQXS');
 
         if (province == 1) {
             kqxs = kqxs[1];
@@ -1645,7 +1645,7 @@ const nhanh = async (req, res) => {
             req.query;
         numbersWantToSee = numbersWantToSee.split(",");
 
-        let kqxs = KQXS_CACHE.get();
+        let kqxs = CACHE.get('KQXS');
 
         if (province == 1) {
             kqxs = kqxs[1];
@@ -1721,7 +1721,7 @@ const loKep = async (req, res) => {
     try {
         const { numberOfSpins, province } = req.query;
 
-        let kqxs = KQXS_CACHE.get();
+        let kqxs = CACHE.get('KQXS');
 
         if (province == 1) {
             kqxs = kqxs[1];
@@ -1815,7 +1815,7 @@ const loRoi = async (req, res) => {
     try {
         const { numberOfDays } = req.query;
 
-        let kqxs = KQXS_CACHE.get()[1];
+        let kqxs = CACHE.get('KQXS')[1];
 
         kqxs = Object.values(kqxs).slice(-numberOfDays);
 
@@ -1868,7 +1868,16 @@ const loXien = async (req, res) => {
         // type '1' => lô xiên 2 | '2' => lô xiên 3
         const { numberOfSpins, province, type } = req.query;
 
-        let kqxs = KQXS_CACHE.get();
+        const cacheData = CACHE.get(
+            `loxien${numberOfSpins}${province}${type}`
+        );
+
+        if (cacheData) {
+            res.json(cacheData);
+            return;
+        }
+
+        let kqxs = CACHE.get('KQXS');
 
         if (province == 1) {
             kqxs = kqxs[1];
@@ -1881,12 +1890,6 @@ const loXien = async (req, res) => {
         kqxs = Object.values(kqxs).reverse();
 
         let response = {};
-
-        // {
-        //     numbers: string,
-        //     numberOfDays: number,
-        //     dates: string[]
-        // }
 
         const setOfNumbers = {};
 
@@ -1988,6 +1991,11 @@ const loXien = async (req, res) => {
             });
 
         res.json(response);
+
+        CACHE.set(
+            `loxien${numberOfSpins}${province}${type}`,
+            response
+        );
     } catch (error) {
         console.log(error);
         res.status(400).json("Error");

@@ -5,14 +5,14 @@ const tokenRouter = require("./app/routes/token.route");
 const kqxsRouter = require("./app/routes/kqxs.route");
 const thongKeRouter = require("./app/routes/thongKe.route");
 const aTrungRoiRouter = require("./app/routes/atrungroi.route");
-const KQXS_CACHE = require("./config/cache");
+const CACHE = require("./config/cache");
 const { cvNum } = require("./app/utils");
 require("dotenv").config();
 require("./config/database");
 require("./config/passport");
 
 const app = express();
-KQXS_CACHE.invalid();
+CACHE.invalid();
 // Middleware setup
 
 app.use(express.json()); // Parse JSON request bodies
@@ -47,7 +47,7 @@ app.post("/api/test", (req, res) => {
 app.get("/api/kqxs-cache", (req, res) => {
     const { domain, ngay, day, province } = req.query;
 
-    const cache = KQXS_CACHE.get();
+    const cache = CACHE.get('KQXS');
 
     let response = cache;
 
@@ -73,7 +73,7 @@ app.get("/api/kqxs-cache", (req, res) => {
 });
 
 app.post("/api/invalid-cache", async (req, res) => {
-    await KQXS_CACHE.invalid();
+    await CACHE.invalid();
 
     res.json("OK");
 });

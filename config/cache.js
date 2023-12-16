@@ -75,15 +75,19 @@ const DEFAULT_CACHE = () => {
     };
 };
 
-const KQXS_CACHE = (() => {
+const CACHE = (() => {
     let data = DEFAULT_CACHE();
 
     return {
-        set: (newCacheData) => {
-            data = newCacheData;
+        set: (key, dateOfKey) => {
+            data[key] = dateOfKey;
         },
-        get: () => {
-            return data;
+        get: (key) => {
+            if (!key) {
+                return data;
+            } else {
+                return data[key];
+            }
         },
         invalid: async () => {
             console.time("Time to query");
@@ -124,7 +128,7 @@ const KQXS_CACHE = (() => {
                 cacheData[cvKqToObj.domain][date.getDay()].push(cvKqToObj);
             });
 
-            KQXS_CACHE.set(cacheData);
+            CACHE.set("KQXS", cacheData);
 
             console.timeEnd("Time to set cache");
 
@@ -133,4 +137,4 @@ const KQXS_CACHE = (() => {
     };
 })();
 
-module.exports = KQXS_CACHE;
+module.exports = CACHE;

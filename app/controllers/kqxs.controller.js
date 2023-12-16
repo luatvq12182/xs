@@ -1,4 +1,4 @@
-const KQXS_CACHE = require("../../config/cache");
+const CACHE = require("../../config/cache");
 const { Constants } = require("../constants");
 const KQXSModel = require("../models/kqxs.model");
 const { cvToHtml } = require("../templateHtmls/kqxs");
@@ -9,7 +9,7 @@ const gResult = (req, res) => {
 
     const cvDate = cvDateToYYYYMMDD(ngay);
 
-    let kqxs = KQXS_CACHE.get()[domain][cvDate];
+    let kqxs = CACHE.get('KQXS')[domain][cvDate];
 
     if (province) {
         kqxs = kqxs[province];
@@ -38,7 +38,7 @@ const updateResult = async (req, res) => {
     const payload = req.body;
     const cvDate = cvDateToYYYYMMDD(ngay);
 
-    let kqxs = KQXS_CACHE.get()[domain][cvDate];
+    let kqxs = CACHE.get('KQXS')[domain][cvDate];
 
     if (province) {
         kqxs = kqxs[province];

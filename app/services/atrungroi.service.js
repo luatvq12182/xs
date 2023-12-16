@@ -1,4 +1,4 @@
-const KQXS_CACHE = require("../../config/cache");
+const CACHE = require("../../config/cache");
 const { Constants } = require("../constants");
 const { cvToHtml } = require("../templateHtmls/kqxs");
 const { cvDateToYYYYMMDD } = require("../utils");
@@ -61,7 +61,7 @@ const xs = async (domain, type, page) => {
         yesterday.setDate(yesterday.getDate() - 1);
 
         let kqxs =
-            KQXS_CACHE.get()[domain][
+            CACHE.get('KQXS')[domain][
                 cvDateToYYYYMMDD(
                     `${yesterday.getDate()}-${
                         yesterday.getMonth() + 1
@@ -93,7 +93,7 @@ const xs = async (domain, type, page) => {
         const date = new Date();
 
         let kqxs =
-            KQXS_CACHE.get()[domain][
+            CACHE.get('KQXS')[domain][
                 cvDateToYYYYMMDD(
                     `${date.getDate()}-${
                         date.getMonth() + 1
@@ -123,7 +123,7 @@ const xs = async (domain, type, page) => {
 
     if (type === "today") {
         if (domain == Constants.Domain.MienBac) {
-            let data = Object.values(KQXS_CACHE.get()[domain]);
+            let data = Object.values(CACHE.get('KQXS')[domain]);
 
             return data
                 .slice(-7)
@@ -154,7 +154,7 @@ const xs = async (domain, type, page) => {
                 date.setDate(date.getDate() - i);
 
                 const kqxs =
-                    KQXS_CACHE.get()[domain][
+                    CACHE.get('KQXS')[domain][
                         `${date.getFullYear()}${cvNumber(
                             date.getMonth() + 1
                         )}${cvNumber(date.getDate())}`
@@ -190,7 +190,7 @@ const xs = async (domain, type, page) => {
 
     if (type === "30days") {
         if (domain == Constants.Domain.MienBac) {
-            let data = Object.values(KQXS_CACHE.get()[domain]);
+            let data = Object.values(CACHE.get('KQXS')[domain]);
 
             return data
                 .slice(-30)
@@ -221,7 +221,7 @@ const xs = async (domain, type, page) => {
                 date.setDate(date.getDate() - i);
 
                 const kqxs =
-                    KQXS_CACHE.get()[domain][
+                    CACHE.get('KQXS')[domain][
                         `${date.getFullYear()}${cvNumber(
                             date.getMonth() + 1
                         )}${cvNumber(date.getDate())}`
@@ -257,7 +257,7 @@ const xs = async (domain, type, page) => {
 
     if (domain == Constants.Domain.MienBac) {
         const kqxs =
-            KQXS_CACHE.get()[Constants.Domain.MienBac][DisplayType[type]];
+            CACHE.get('KQXS')[Constants.Domain.MienBac][DisplayType[type]];
 
         const data = kqxs.filter((e) => {
             const date = new Date(e.ngay);
@@ -286,7 +286,7 @@ const xs = async (domain, type, page) => {
     } else {
         if (Object.keys(DisplayType).includes(type)) {
             const hashMap = {};
-            const kqxs = KQXS_CACHE.get()[domain][DisplayType[type]];
+            const kqxs = CACHE.get('KQXS')[domain][DisplayType[type]];
 
             kqxs.forEach((e) => {
                 if (hashMap[e.ngay]) {
@@ -317,7 +317,7 @@ const xs = async (domain, type, page) => {
                     };
                 });
         } else {
-            const data = Object.values(KQXS_CACHE.get()[domain][alias[type]]);
+            const data = Object.values(CACHE.get('KQXS')[domain][alias[type]]);
 
             return data
                 .slice((page - 1) * 5, (page - 1) * 5 + 5)
@@ -355,7 +355,7 @@ const result = async (domain) => {
     }
 
     let kqxs =
-        KQXS_CACHE.get()[domain][
+        CACHE.get('KQXS')[domain][
             cvDateToYYYYMMDD(
                 `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`
             )
