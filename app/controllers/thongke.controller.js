@@ -353,7 +353,7 @@ const tanSuatLoto = async (req, res) => {
             });
         }
 
-        let kqxs = CACHE.get('KQXS');
+        let kqxs = CACHE.get("KQXS");
 
         if (province == 1) {
             kqxs = kqxs[1];
@@ -377,7 +377,6 @@ const tanSuatLoto = async (req, res) => {
             const crDate = new Date(kq.ngay);
             let nums = Object.values(kq.ketqua)
                 .flat()
-                .slice(1)
                 .map((e) => {
                     if (e) {
                         return e.slice(-2);
@@ -416,7 +415,7 @@ const tanSuatCapLo = async (req, res) => {
 
         setOfNumbers = setOfNumbers.split(",");
 
-        let kqxs = CACHE.get('KQXS');
+        let kqxs = CACHE.get("KQXS");
 
         if (province == 1) {
             kqxs = kqxs[1];
@@ -440,7 +439,6 @@ const tanSuatCapLo = async (req, res) => {
             const crDate = new Date(kq.ngay);
             let nums = Object.values(kq.ketqua)
                 .flat()
-                .slice(1)
                 .map((e) => {
                     if (e) {
                         return e.slice(-2);
@@ -487,7 +485,7 @@ const bangDacBietTuan = async (req, res) => {
     try {
         let { date, numberOfDays, province } = req.query;
 
-        let kqxs = CACHE.get('KQXS');
+        let kqxs = CACHE.get("KQXS");
 
         if (province == 1) {
             kqxs = kqxs[1];
@@ -526,7 +524,7 @@ const bangDacBietThang = async (req, res) => {
     try {
         let { startYear, month } = req.query;
 
-        let kqxs = CACHE.get('KQXS')[1];
+        let kqxs = CACHE.get("KQXS")[1];
 
         const rs = {};
 
@@ -556,7 +554,7 @@ const bangDacBietNam = async (req, res) => {
     try {
         let { year } = req.query;
 
-        let kqxs = CACHE.get('KQXS')[1];
+        let kqxs = CACHE.get("KQXS")[1];
 
         const rs = {};
 
@@ -588,7 +586,7 @@ const chuKyDacBiet = async (req, res) => {
         let date = new Date();
         date.setDate(date.getDate() + 1);
 
-        let kqxs = CACHE.get('KQXS');
+        let kqxs = CACHE.get("KQXS");
         let count = 30;
 
         if (province == 1) {
@@ -805,7 +803,7 @@ const giaiDacBietGan = async (req, res) => {
         let date = new Date();
         date.setDate(date.getDate() + 1);
 
-        let kqxs = CACHE.get('KQXS')[1];
+        let kqxs = CACHE.get("KQXS")[1];
 
         let response = {};
         let count = 0;
@@ -962,7 +960,7 @@ const thongKeDauDuoiLoto = async (req, res) => {
     try {
         const { startDate, endDate, province } = req.query;
 
-        let kqxs = CACHE.get('KQXS');
+        let kqxs = CACHE.get("KQXS");
 
         if (province == 1) {
             kqxs = kqxs[1];
@@ -1014,7 +1012,6 @@ const thongKeDauDuoiLoto = async (req, res) => {
             }-${crDate.getFullYear()}`;
             let nums = Object.values(kq.ketqua)
                 .flat()
-                .slice(1)
                 .map((e) => {
                     if (e) {
                         return e.slice(-2);
@@ -1060,7 +1057,7 @@ const theoTong = async (req, res) => {
         const { province, startDate, endDate, total, type } = req.query;
         // type: 1 => tất cả giải, 2 => giải đặc biêt
 
-        let kqxs = CACHE.get('KQXS');
+        let kqxs = CACHE.get("KQXS");
 
         if (province == 1) {
             kqxs = kqxs[1];
@@ -1143,7 +1140,7 @@ const tongHop = async (req, res) => {
         // 11 => "Thống kê 15 số về nhiều nhất",
         // 12 => "Thống kê 15 số về ít nhất"
 
-        let kqxs = CACHE.get('KQXS');
+        let kqxs = CACHE.get("KQXS");
 
         if (province == 1) {
             kqxs = kqxs[1];
@@ -1463,7 +1460,7 @@ const quanTrong = async (req, res) => {
         const date = new Date();
         date.setDate(date.getDate() - 1);
 
-        let kqxs = CACHE.get('KQXS');
+        let kqxs = CACHE.get("KQXS");
 
         if (province == 1) {
             kqxs = kqxs[1];
@@ -1482,7 +1479,6 @@ const quanTrong = async (req, res) => {
             kqxs.forEach((kq, i) => {
                 let nums = Object.values(kq.ketqua)
                     .flat()
-                    .slice(1)
                     .map((e) => {
                         if (e) {
                             return e.slice(-2);
@@ -1558,7 +1554,6 @@ const quanTrong = async (req, res) => {
             kqxs.forEach((kq, i) => {
                 let preNums = Object.values(kqxs[i - 1]?.ketqua || {})
                     .flat()
-                    .slice(1)
                     .map((e) => {
                         if (e) {
                             return e.slice(-2);
@@ -1566,7 +1561,6 @@ const quanTrong = async (req, res) => {
                     });
                 let nums = Object.values(kq.ketqua)
                     .flat()
-                    .slice(1)
                     .map((e) => {
                         if (e) {
                             return e.slice(-2);
@@ -1645,7 +1639,7 @@ const nhanh = async (req, res) => {
             req.query;
         numbersWantToSee = numbersWantToSee.split(",");
 
-        let kqxs = CACHE.get('KQXS');
+        let kqxs = CACHE.get("KQXS");
 
         if (province == 1) {
             kqxs = kqxs[1];
@@ -1672,7 +1666,6 @@ const nhanh = async (req, res) => {
                 type == 1
                     ? Object.values(kq.ketqua)
                           .flat()
-                          .slice(1)
                           .map((e) => {
                               if (e) {
                                   return e.slice(-2);
@@ -1721,7 +1714,7 @@ const loKep = async (req, res) => {
     try {
         const { numberOfSpins, province } = req.query;
 
-        let kqxs = CACHE.get('KQXS');
+        let kqxs = CACHE.get("KQXS");
 
         if (province == 1) {
             kqxs = kqxs[1];
@@ -1783,7 +1776,6 @@ const loKep = async (req, res) => {
             }-${crDate.getFullYear()}`;
             let nums = Object.values(kq.ketqua)
                 .flat()
-                .slice(1)
                 .map((e) => {
                     if (e) {
                         return e.slice(-2);
@@ -1815,7 +1807,7 @@ const loRoi = async (req, res) => {
     try {
         const { numberOfDays } = req.query;
 
-        let kqxs = CACHE.get('KQXS')[1];
+        let kqxs = CACHE.get("KQXS")[1];
 
         kqxs = Object.values(kqxs).slice(-numberOfDays);
 
@@ -1838,7 +1830,6 @@ const loRoi = async (req, res) => {
             let giaidacbiet = kqCrDay.ketqua.giaidacbiet[0].slice(-2);
             let nums = Object.values(kqNextDay.ketqua)
                 .flat()
-                .slice(1)
                 .map((e) => {
                     if (e) {
                         return e.slice(-2);
@@ -1868,16 +1859,14 @@ const loXien = async (req, res) => {
         // type '1' => lô xiên 2 | '2' => lô xiên 3
         const { numberOfSpins, province, type } = req.query;
 
-        const cacheData = CACHE.get(
-            `loxien${numberOfSpins}${province}${type}`
-        );
+        const cacheData = CACHE.get(`loxien${numberOfSpins}${province}${type}`);
 
         if (cacheData) {
             res.json(cacheData);
             return;
         }
 
-        let kqxs = CACHE.get('KQXS');
+        let kqxs = CACHE.get("KQXS");
 
         if (province == 1) {
             kqxs = kqxs[1];
@@ -1992,14 +1981,84 @@ const loXien = async (req, res) => {
 
         res.json(response);
 
-        CACHE.set(
-            `loxien${numberOfSpins}${province}${type}`,
-            response
-        );
+        CACHE.set(`loxien${numberOfSpins}${province}${type}`, response);
     } catch (error) {
         console.log(error);
         res.status(400).json("Error");
     }
+};
+
+const de = async (req, res) => {
+    const { returnNumber } = req.query;
+
+    const kqxs = Object.values(
+        CACHE.get("KQXS")[Constants.Domain.MienBac]
+    ).slice(7);
+
+    const response = {
+        numbers: {},
+        head: {},
+        tail: {},
+        total: {},
+        nextDay: [],
+    };
+
+    for (let i = 0; i < kqxs.length - 1; i++) {
+        const kqCrDay = kqxs[i];
+        const kqNextDay = kqxs[i + 1];
+
+        const crDay = new Date(kqxs[i].ngay);
+        const nextDay = new Date(kqxs[i + 1].ngay);
+
+        const cvDay = `${crDay.getDate()}-${
+            crDay.getMonth() + 1
+        }-${crDay.getFullYear()}`;
+        const cvNextDay = `${nextDay.getDate()}-${
+            nextDay.getMonth() + 1
+        }-${nextDay.getFullYear()}`;
+
+        let crNums = Object.values(kqCrDay.ketqua)
+            .flat()
+            .slice(1)
+            .map((e) => {
+                if (e) {
+                    return e.slice(-2);
+                }
+            });
+        let nextNums = Object.values(kqNextDay.ketqua)
+            .flat()
+            .slice(1)
+            .map((e) => {
+                if (e) {
+                    return e.slice(-2);
+                }
+            });
+        let giaiDacBietReturnDay = kqCrDay.ketqua.giaidacbiet[0];
+        let giaiDacBietNextDay = kqNextDay.ketqua.giaidacbiet[0];
+
+        if (giaiDacBietReturnDay.slice(-2) == returnNumber) {
+            response.numbers[giaiDacBietNextDay.slice(-2)] =
+                (response.numbers[giaiDacBietNextDay.slice(-2)] || 0) + 1;
+            response.nextDay.push({
+                returnDay: cvDay,
+                nextDay: cvNextDay,
+                specialPrizeTheNextDay: giaiDacBietNextDay,
+                specialPrizeTheReturnDay: giaiDacBietReturnDay,
+                resultOfNextDay: nextNums,
+            });
+
+            crNums.forEach((num) => {
+                const total = +num[0] + +num[1];
+
+                response.head[num[0]] = (response.head[num[0]] || 0) + 1;
+                response.tail[num[1]] = (response.tail[num[1]] || 0) + 1;
+                response.total[total <= 9 ? total : total - 10] =
+                    (response.total[total <= 9 ? total : total - 10] || 0) + 1;
+            });
+        }
+    }
+
+    res.json(response);
 };
 
 module.exports = {
@@ -2030,4 +2089,5 @@ module.exports = {
     loKep,
     loRoi,
     loXien,
+    de,
 };
