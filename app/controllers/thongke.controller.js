@@ -1663,7 +1663,7 @@ const nhanh = async (req, res) => {
 
         const response = {};
 
-        kqxs.forEach((kq) => {
+        kqxs.forEach((kq, i) => {
             const crDate = new Date(kq.ngay);
             const cvDate = `${crDate.getDate()}-${
                 crDate.getMonth() + 1
@@ -1703,6 +1703,7 @@ const nhanh = async (req, res) => {
                         response[numWTS] = {
                             lastDate: cvDate,
                             total: response[numWTS].total + 1,
+                            gap: kqxs.length - i,
                         };
                     }
                 });
@@ -1863,7 +1864,134 @@ const loRoi = async (req, res) => {
 };
 
 const loXien = async (req, res) => {
-    res.json("OK");
+    try {
+        // type '1' => lô xiên 2 | '2' => lô xiên 3
+        const { numberOfSpins, province, type } = req.query;
+
+        let kqxs = KQXS_CACHE.get();
+
+        if (province == 1) {
+            kqxs = kqxs[1];
+        } else {
+            kqxs =
+                kqxs[2][province] ||
+                kqxs[3][province === "Hồ Chí Minh" ? "TPHCM" : province];
+        }
+
+        kqxs = Object.values(kqxs).reverse();
+
+        let response = {};
+
+        // {
+        //     numbers: string,
+        //     numberOfDays: number,
+        //     dates: string[]
+        // }
+
+        const setOfNumbers = {};
+
+        for (let i = 0; i < numberOfSpins; i++) {
+            const kq = kqxs[i];
+            const crDate = new Date(kq.ngay);
+            const cvDate = `${crDate.getDate()}-${
+                crDate.getMonth() + 1
+            }-${crDate.getFullYear()}`;
+
+            let nums = Object.values(kq.ketqua)
+                .flat()
+                .map((e) => {
+                    if (e) {
+                        return e.slice(-2);
+                    }
+                });
+
+            if (province == 1) {
+                nums = nums.slice(1);
+            }
+
+            if (type == "1") {
+                for (let j = 0; j < nums.length - 1; j++) {
+                    for (let k = 1; k < nums.length; k++) {
+                        if (nums[j] == nums[k]) {
+                            continue;
+                        }
+
+                        const pair = [+nums[j], +nums[k]]
+                            .sort()
+                            .map((e) => {
+                                return e.toString().padStart(2, "0");
+                            })
+                            .join("-");
+
+                        if (!setOfNumbers[pair]?.dates?.includes(cvDate)) {
+                            setOfNumbers[pair] = {
+                                numbers: pair,
+                                numberOfDays:
+                                    (setOfNumbers[pair]?.numberOfDays || 0) + 1,
+                                dates: [
+                                    ...(setOfNumbers[pair]?.dates || []),
+                                    cvDate,
+                                ],
+                            };
+                        }
+                    }
+                }
+            }
+
+            if (type == "2") {
+                for (let j = 0; j < nums.length - 2; j++) {
+                    for (let k = 1; k < nums.length - 1; k++) {
+                        for (let l = 2; l < nums.length; l++) {
+                            if (
+                                nums[j] == nums[k] ||
+                                nums[k] == nums[l] ||
+                                nums[j] == nums[l]
+                            ) {
+                                continue;
+                            }
+
+                            const pair = [+nums[j], +nums[k], +nums[l]]
+                                .sort()
+                                .map((e) => {
+                                    return e.toString().padStart(2, "0");
+                                })
+                                .join("-");
+
+                            if (!setOfNumbers[pair]?.dates?.includes(cvDate)) {
+                                setOfNumbers[pair] = {
+                                    numbers: pair,
+                                    numberOfDays:
+                                        (setOfNumbers[pair]?.numberOfDays ||
+                                            0) + 1,
+                                    dates: [
+                                        ...(setOfNumbers[pair]?.dates || []),
+                                        cvDate,
+                                    ],
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        response = Object.entries(setOfNumbers)
+            .filter((e) => {
+                return e[1].numberOfDays > 1;
+            })
+            .sort((a, b) => {
+                return b[1].numberOfDays - a[1].numberOfDays;
+            })
+            .slice(0, 45)
+            .map((e) => {
+                return e[1];
+            });
+
+        res.json(response);
+    } catch (error) {
+        console.log(error);
+        res.status(400).json("Error");
+    }
 };
 
 module.exports = {
