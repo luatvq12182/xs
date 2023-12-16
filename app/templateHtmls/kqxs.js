@@ -175,7 +175,7 @@ const cvToHtml = (domain, ngay, kqxs) => {
                                             ["giai8", "giaidacbiet"].includes(
                                                 giai
                                             )
-                                                ? "big red"
+                                                ? (kqxs.length < 4 ? "big red" : "red")
                                                 : ""
                                         }" data-id-giai="${giai}" data-num="${num}">${num ? num : `<img class="orange-spinner" src="/wp-content/themes/xs/assets/images/orange-spinner.gif" alt="orange-spinner">`}</span>`;
                                     })
