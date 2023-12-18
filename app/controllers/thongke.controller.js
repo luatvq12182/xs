@@ -2061,6 +2061,71 @@ const de = async (req, res) => {
     res.json(response);
 };
 
+const tanSuatXuatHien = (req, res) => {
+    try {
+        const { province, numberOfSpins } = req.query;
+
+        let kqxs = CACHE.get("KQXS");
+
+        if (province == 1) {
+            kqxs = kqxs[1];
+        } else {
+            kqxs =
+                kqxs[2][province] ||
+                kqxs[3][province === "Hồ Chí Minh" ? "TPHCM" : province];
+        }
+
+        kqxs = Object.values(kqxs).slice(-numberOfSpins);
+
+        const dacbiet = {};
+        const loto = {};
+
+        kqxs.forEach((kq) => {
+            const giaidacbiet = kq.ketqua.giaidacbiet[0].slice(-2);
+            let nums = Object.values(kq.ketqua)
+                .flat()
+                .map((e) => {
+                    if (e) {
+                        return e.slice(-2);
+                    }
+                });
+
+            if (province == 1) {
+                nums = nums.slice(1);
+            }
+
+            dacbiet[giaidacbiet] = (dacbiet[giaidacbiet] || 0) + 1;
+
+            nums.forEach((num) => {
+                loto[num] = (loto[num] || 0) + 1;
+            });
+        });
+
+        const arrKetQua = Object.entries(dacbiet).sort((a, b) => {
+            return b[1] - a[1];
+        });
+        const arrLoto = Object.entries(loto).sort((a, b) => {
+            return b[1] - a[1];
+        });
+
+        let response = {
+            most: {
+                specialPrize: arrKetQua.slice(0, 10),
+                loto: arrLoto.slice(0, 10),
+            },
+            atLeast: {
+                specialPrize: arrKetQua.slice(-10),
+                loto: arrLoto.slice(-10),
+            },
+        };
+
+        res.json(response);
+    } catch (error) {
+        console.log(error);
+        res.status(400).json("Error");
+    }
+};
+
 module.exports = {
     layKetQua,
     lauXuatHienNhat,
@@ -2073,6 +2138,7 @@ module.exports = {
     general,
     tanSuatLoto,
     tanSuatCapLo,
+    tanSuatXuatHien,
     bangDacBietTuan,
     bangDacBietThang,
     bangDacBietNam,

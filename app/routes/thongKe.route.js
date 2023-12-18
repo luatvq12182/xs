@@ -37,6 +37,7 @@ router.get("/general", thongKeController.layKetQua, thongKeController.general);
 
 router.get("/tan-suat-loto", thongKeController.tanSuatLoto);
 router.get("/tan-suat-cap-lo", thongKeController.tanSuatCapLo);
+router.get("/tan-suat-xuat-hien", thongKeController.tanSuatXuatHien);
 router.get("/bang-dac-biet-tuan", thongKeController.bangDacBietTuan);
 router.get("/bang-dac-biet-thang", thongKeController.bangDacBietThang);
 router.get("/bang-dac-biet-nam", thongKeController.bangDacBietNam);
