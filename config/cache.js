@@ -96,7 +96,7 @@ const CACHE = (() => {
                 .sort({
                     ngay: -1,
                 })
-                .limit(15000);
+                .limit(16600);
             console.timeEnd("Time to query");
 
             console.time("Time to set cache");

@@ -2126,7 +2126,77 @@ const tanSuatXuatHien = (req, res) => {
     }
 };
 
+const cangLoto = (req, res) => {
+    try {
+        // type => kiểu soi | 1 => càng sau | 2 => càng dưới
+        // mode => kiểu càng | 1 => cuối | 2 => giữa | 3 => đầu
+        const { startDate, endDate, type, mode, numberWantToSee } = req.query;
+
+        let kqxs = CACHE.get("KQXS")[Constants.Domain.MienBac];
+
+        kqxs = generateDateArrayByStartDateEndDate(startDate, endDate)
+            .map((e) => {
+                return kqxs[e];
+            })
+            .filter(Boolean);
+
+        let response = [];
+
+        for (let i = 0; i < kqxs.length - (type == 1 ? 1 : 7); i++) {
+            const kq = kqxs[i];
+            const kqTiepTheo = type == 1 ? kqxs[i + 1] : kqxs[i + 7];
+            const crDate = new Date(kq.ngay);
+            const cvDate = `${crDate.getDate()}-${
+                crDate.getMonth() + 1
+            }-${crDate.getFullYear()}`;
+
+            const nextDate = new Date(kqTiepTheo.ngay);
+            const cvNextDate = `${nextDate.getDate()}-${
+                nextDate.getMonth() + 1
+            }-${nextDate.getFullYear()}`;
+
+            let cangMuonSoi;
+            let cangTiepTheo;
+
+            switch (mode) {
+                case "1":
+                    cangMuonSoi = kq.ketqua.giaidacbiet[0].slice(-3);
+                    cangTiepTheo = kqTiepTheo.ketqua.giaidacbiet[0].slice(-3);
+                    break;
+                case "2":
+                    cangMuonSoi = kq.ketqua.giaidacbiet[0].slice(1, 4);
+                    cangTiepTheo = kqTiepTheo.ketqua.giaidacbiet[0].slice(1, 4);
+                    break;
+                case "3":
+                    cangMuonSoi = kq.ketqua.giaidacbiet[0].slice(0, 3);
+                    cangTiepTheo = kqTiepTheo.ketqua.giaidacbiet[0].slice(0, 3);
+                    break;
+
+                default:
+                    break;
+            }
+
+            if (cangMuonSoi == numberWantToSee) {
+                response.push({
+                    returnDate: cvDate,
+                    specialPrizeReturnDate: kq.ketqua.giaidacbiet[0],
+                    nextDate: cvNextDate,
+                    specialPrizeNextDate: kqTiepTheo.ketqua.giaidacbiet[0],
+                });
+            } else {
+                continue;
+            }
+        }
+
+        res.json(response.reverse());
+    } catch (error) {
+        console.log(error);
+        res.status(400).json("Error");
+    }
+};
+
 module.exports = {
+    cangLoto,
     layKetQua,
     lauXuatHienNhat,
     xuatHienNhieuNhat,

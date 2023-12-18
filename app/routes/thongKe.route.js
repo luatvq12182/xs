@@ -35,6 +35,7 @@ router.get(
 router.get("/dau-duoi", thongKeController.layKetQua, thongKeController.dauDuoi);
 router.get("/general", thongKeController.layKetQua, thongKeController.general);
 
+router.get("/cang-loto", thongKeController.cangLoto);
 router.get("/tan-suat-loto", thongKeController.tanSuatLoto);
 router.get("/tan-suat-cap-lo", thongKeController.tanSuatCapLo);
 router.get("/tan-suat-xuat-hien", thongKeController.tanSuatXuatHien);
