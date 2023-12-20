@@ -3,7 +3,8 @@ const cors = require("cors");
 // const passport = require("passport");
 const tokenRouter = require("./app/routes/token.route");
 const kqxsRouter = require("./app/routes/kqxs.route");
-const thongKeRouter = require("./app/routes/thongKe.route");
+const thongKeRouter = require("./app/routes/thongke.route");
+const soiCauRouter = require("./app/routes/soicau.route");
 const aTrungRoiRouter = require("./app/routes/atrungroi.route");
 const CACHE = require("./config/cache");
 const { cvNum } = require("./app/utils");
@@ -32,22 +33,16 @@ app.use(cors());
 app.use("/", tokenRouter);
 app.use("/api/kqxs", kqxsRouter);
 app.use("/api/thong-ke", thongKeRouter);
+app.use("/api/soi-cau", soiCauRouter);
 app.use("/api/atrungroi", aTrungRoiRouter);
 app.get("/", (_req, res) => {
     res.sendFile("index.html");
 });
 
-// Other middleware and routes
-app.post("/api/test", (req, res) => {
-    res.json({
-        msg: "Hello world",
-    });
-});
-
 app.get("/api/kqxs-cache", (req, res) => {
     const { domain, ngay, day, province } = req.query;
 
-    const cache = CACHE.get('KQXS');
+    const cache = CACHE.get("KQXS");
 
     let response = cache;
 

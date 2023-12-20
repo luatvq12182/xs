@@ -2156,20 +2156,16 @@ const cangLoto = (req, res) => {
             }-${nextDate.getFullYear()}`;
 
             let cangMuonSoi;
-            let cangTiepTheo;
 
             switch (mode) {
                 case "1":
                     cangMuonSoi = kq.ketqua.giaidacbiet[0].slice(-3);
-                    cangTiepTheo = kqTiepTheo.ketqua.giaidacbiet[0].slice(-3);
                     break;
                 case "2":
                     cangMuonSoi = kq.ketqua.giaidacbiet[0].slice(1, 4);
-                    cangTiepTheo = kqTiepTheo.ketqua.giaidacbiet[0].slice(1, 4);
                     break;
                 case "3":
                     cangMuonSoi = kq.ketqua.giaidacbiet[0].slice(0, 3);
-                    cangTiepTheo = kqTiepTheo.ketqua.giaidacbiet[0].slice(0, 3);
                     break;
 
                 default:
