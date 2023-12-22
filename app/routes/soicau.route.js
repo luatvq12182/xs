@@ -4,5 +4,6 @@ const soiCauController = require("../controllers/soicau.controller");
 
 router.get("/loto", soiCauController.loto);
 router.get("/loto-theo-thu", soiCauController.lotoTheoThu);
+router.get("/loto-2-nhay", soiCauController.lotoHaiNhay);
 
 module.exports = router;
