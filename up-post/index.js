@@ -3,7 +3,7 @@ const { Constants } = require("../app/constants");
 
 const WEBS = [
     {
-        DOMAIN: "https://rongbachkim777.me",
+        DOMAIN: "https://soicau366.org",
         USERNAME: "admin",
         PASSWORD: "Abc!@#123",
     },
@@ -58,10 +58,10 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
     await sleep(2000);
     await page.type(
         "#media-search-input",
-        `${DOMAINS[domain]}-${ngay}-${thang}`
+        `${DOMAINS[domain]}-${ngay}-${thang}-2024`
     );
 
-    await sleep(6000);
+    await sleep(9000);
 
     await page.evaluate(() => {
         document.querySelector(".attachment").click();
@@ -148,17 +148,20 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
 
             if (+domain === 1) {
                 postContent = `
-                RBK 777 là một phương pháp soi cầu Miền Bắc dành cho việc thống kê và phân tích kết quả xổ số hôm nay ngày ${date}, giúp bạn tìm ra những con số may mắn với khả năng trúng thưởng cao nhất. Với nhiều năm soi cầu chuyên nghiệp, đội ngũ chuyên gia của <strong><a href="https://rongbachkim777.me/">Rồng Bạch Kim 777</a></strong> hứa hẹn sẽ mang đến cho anh chị em những dàn cầu lô đề đẹp và chính xác nhất và hoàn toàn miễn phí.
+                Soi Cầu 366 - nơi cung cấp những con số lô đề đẹp nhất cho xổ số miền Bắc (XSMB) hôm nay ngày ${date}. Được các chuyên gia nhiều năm kinh nghiệm của chúng tôi phân tích và soi cầu, đem lại những con số chính xác có khả năng về cao nhất cho anh chị em tham khảo, được rất nhiều anh chị em tin tưởng và sử dụng hàng ngày.
                 
-                [caption id="attachment_531" align="alignnone" width="1200"]<img class="size-full wp-image-531" src="https://rongbachkim777.me/wp-content/uploads/2023/10/XSMB-${ngay}-${thang}.png" alt="Hình ảnh Rồng Bạch Kim Dự Đoán KQXS Miền Bắc ${date}" width="1200" height="628" /> Hình ảnh Rồng Bạch Kim 777 Dự Đoán KQXS Miền Bắc ${date}[/caption]
+                <img class="alignnone size-full wp-image-538" src="https://soicau366.org/wp-content/uploads/2023/${thang == 12 ? 10 : 12}/XSMB-${ngay}-${thang}${thang == 12 ? "" : `-2024`}.png" alt="" width="1200" height="628" />
                 
-                <h2>Cùng xem lại kết quả XSMB Thứ 2 tuần rồi ngày ${ngayTuanTruocLabel}</h2>
-                Trong phương pháp soi cầu Rồng Bạch Kim 777 này, người chơi cần sử dụng kết quả xổ số của ngày trước đó làm căn cứ để tiến hành phân tích và dự đoán con số có thể xuất hiện trong kết quả xổ số ngày tiếp theo. Để soi cầu KQXS hôm nay ngày ${date} chúng ta cùng xem lại bảng kết quả xổ số Miền Bắc thứ 2 tuần vừa rồi:
+                <h2>Tham khảo thống kê KQXS Miền Bắc của Soi Cầu 366</h2>
+                Hãy cùng Soi Cầu 366 xem lại kết quả xổ số miền Bắc từ kỳ quay trước để phát hiện những cặp số đẹp và may mắn sẽ xuất hiện trong ngày hôm nay.
+                <h2>Cùng xem lại kết quả XSMB ${dayLabel} tuần rồi ngày ${date}</h2>
                 
                 [ket_qua_xo_so domain="${domain}" ngay="${ngayTuanTruocLabel}"]
 
-                <h2>✅ Rồng Bạch Kim 777 soi cầu dự đoán XSMB ngày ${date}</h2>
-                Dựa vào bảng thống kê KQXS kỳ quay trước, đội ngũ chuyên gia chúng tôi đã dày công nghiên cứu để đưa ra các cầu số lô đề đẹp dưới đây cho anh chị em tham khảo:
+                [thong_ke_general domain="${domain}" ngay="${date}"]
+                
+                <h2>Soi cầu 366 chốt số miễn phí Miền Bắc hôm nay ngày ${date}</h2>
+                Dự đoán soi cầu 366 XSMB hôm nay ngày ${date} dựa trên các thuật toán và công cụ phân tích, mang đến cho bạn những cầu bạch thủ và cầu đặc biệt số vô cùng đẹp, với xác suất về cao nhất nên anh chị em hoàn toàn tự tin tham khảo.
 
                 <div class="table_dudoan_wrapper">
                 <h3>✅ Soi cầu Lô dự đoán XSMB ngày ${date}</h3>
@@ -216,32 +219,31 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
                 </tr>
                 </tbody>
                 </table>
-                <strong>Chú ý:</strong> <span style="color: #ff0000;">Chúng tôi muốn lưu ý rằng phần chốt số từ các cao thủ hàng đầu ở đây được chia sẻ hoàn toàn miễn phí với mục tiêu hỗ trợ người chơi xổ số tối ưu hóa cơ hội trúng thưởng và không khuyến khích sử dụng để đánh lô đề. Chúng tôi chúc bạn may mắn và giành được những giải thưởng lớn nhất trong ngày hôm nay.</span>
                 </div>
 
-                <h2>Thống kê chi tiết KQXS Miền Bắc ngày ${date}</h2>
-                Để có những cầu số lô đề đẹp ngày ${date} mà Rồng Bạch Kim 777 đưa ra ở trên thì các chuyên gia chúng tôi phải bám sát vào các thống kê của những chu kỳ quay trước. Dưới đây là những thống kê mà mọi người có thể xem qua và đưa ra cho mình những kết quả chắc chắn hơn.
-
-                [thong_ke_general domain="${domain}" ngay="${date}"]
-
-                Cập nhật thống kê soi cầu XSMB ngày ${date} tại RBK 777 sẽ giúp bạn tìm ra những con số chính xác nhất để chơi. Dự đoán kết quả xổ số miền Bắc hôm nay đã được chuyên gia Rồng Bạch Kim 777 thực hiện bằng cách phân tích thống kê kết quả từ nhiều kỳ trước, cùng với việc áp dụng những phương pháp soi cầu độc đáo. Chúng tôi rất vui khi chia sẻ thông tin này và cung cấp số miễn phí để tăng khả năng thắng cuộc đến với mọi người. Chúc các bạn có một trải nghiệm chơi thú vị và gặt hái những phần thưởng lớn!                
+                <h2>Soi cầu 366 XSMB chính xác hôm nay ${date}</h2>
+                Có không ít anh em đã thay đổi cuộc đời và đi cùng Soi Cầu 366 trong suốt thời gian qua. Vì thế, chỉ cần anh em giữ niềm tin và kiên nhẫn, vận may sẽ chắc chắn đến với họ. Những con số mà soicau366 cung cấp chỉ mang tính chất tham khảo, nhằm giúp anh em có thêm thông tin để phân tích và lựa chọn tốt nhất khi tham gia chơi. Chúc anh em may mắn!                             
                 `;
             } else if (+domain === 3) {
                 postContent = `
-                    Nếu bạn đang tìm kiếm con số may mắn cho hôm nay ngày ${date}, hãy tham khảo bài viết dưới đây để đảm bảo sự chắc chắn hơn. Bằng những kinh nghiệm quý báu từ đội ngũ soi cầu Miền Nam của Rồng Bạch Kim 777 chúng tôi sẽ gợi ý cho các bạn những cầu số đẹp nhất.
+                    Soi cầu dự đoán xổ số miền Nam hôm nay ngày ${date} siêu chính xác. Soi Cầu 366 cung cấp thông tin soi cầu xổ số, dự đoán KQXS MN, thống kê và kết quả XSMN một cách nhanh chóng và hoàn toàn miễn phí. Chúng tôi áp dụng các phương pháp phân tích thống kê và soi cầu thông minh để tạo ra những cặp số có khả năng về cao nhất trong ngày. Hãy cập nhật hàng ngày để nhận ngay những cặp số đẹp nhất!
 
-                    Đối với các người chơi mới, phương pháp dự đoán xổ số Miền Nam này có thể là một khám phá đầy thú vị. Tuy nhiên, khi bạn cố gắng nghiên cứu sâu hơn sẽ nhận ra rằng nó thực sự rất đơn giản và rất chính xác.
+                    <img class="alignnone size-full wp-image-538" src="https://soicau366.org/wp-content/uploads/2023/${thang == 12 ? 10 : 12}/XSMN-${ngay}-${thang}${thang == 12 ? "" : `-2024`}.png" alt="" width="1200" height="628" />
+                    
+                    <h2>Tham khảo thống kê KQXS Miền Nam ${dayLabel} tuần trước của Soi Cầu 366</h2>
 
-                    [caption id="attachment_566" align="alignnone" width="1200"]<img class="size-full wp-image-566" src="https://rongbachkim777.me/wp-content/uploads/2023/10/XSMN-${ngay}-${thang}.png" alt="Hình ảnh RBK 777 Dự Đoán KQXS Miền Nam ${date}" width="1200" height="628" /> Hình ảnh RBK 777 Dự Đoán KQXS Miền Nam ${date}[/caption]
+                    [ket_qua_xo_so domain="3" ngay="${date}"]
+
+                    Hi vọng rằng thông qua việc phân tích dữ liệu và những dự đoán chốt số, soi cầu XSMN hôm nay từ các chuyên gia ở đây sẽ giúp anh em tìm ra những con số đẹp và chuẩn xác nhất cho ngày hôm nay.
                     
-                    <h2>Cùng Rồng Bạch Kim 777 lại kết quả XSMN ${dayLabel} tuần rồi ngày ${ngayTuanTruocLabel}</h2>
+                    [thong_ke_general domain="${domain}" ngay="${date}"]    
                     
-                    [ket_qua_xo_so domain="${domain}" ngay="${ngayTuanTruocLabel}"]
+                    Soi cầu 366 miễn phí là một công cụ được nhiều người tin dùng. Tuy nhiên, việc tìm ra cặp số ưng ý có khả năng về cao không hề dễ dàng. Phương pháp soi cầu 366 XSMN của chúng tôi dựa trên công nghệ thống kê thông minh để tạo ra những cặp số đẹp nhất. Đội ngũ chuyên gia có nhiều kinh nghiệm cùng với các công cụ hiện đại sẽ đưa ra những cặp số có xác suất cao vào ngày hôm nay.
 
                     ${provinces
                         .map((prv) => {
                             return `
-                            <h3>✅ Rồng Bạch Kim 777 soi cầu kết quả xổ số ${prv} ngày ${date}</h3>
+                            <h3>✅ Soi cầu 366 chốt số KQXS ${prv} ngày ${date}</h3>
                             <div class="table_dudoan_wrapper">
                             <table class="table_dudoan">
                             <tbody>
@@ -267,31 +269,32 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
                         })
                         .join("")}    
                         
-                    <strong>**Xin lưu ý:</strong> Các cặp số đẹp ngày ${date} (${dayLabel}) trên trang <strong><a href="https://rongbachkim777.me/">Rồng Bạch Kim 777</a></strong> dự đoán chỉ được cung cấp cho mục đích tham khảo. Chúng tôi khuyến cáo mọi người xem xét kỹ trước khi chơi và không nên tham gia đánh lô đề vì việc này là bất hợp pháp. Thay vào đó, chúng ta nên tham gia Loto do nhà nước phát hành để vừa giải trí vừa góp phần vào lợi ích quốc gia và cộng đồng.
-                    
-                    Hơn nữa, các bạn cũng có thể tìm hiểu thêm thông tin và các thống kê kết quả XSMN từ chúng tôi để tăng cơ hội chiến thắng:
-                    
-                    [thong_ke_general domain="${domain}" ngay="${date}"]    
-                    
-                    Bài viết này là một tài liệu tham khảo hoàn toàn miễn phí để người chơi có thể dự đoán kết quả xổ số Miền Nam hôm nay, đặc biệt là những con số may mắn trong bảng kết quả XSMN ${dayLabel} ngày ${date}. Bằng việc sử dụng thống kê về dự đoán kết quả cầu lô và thống kê kết quả XS Miền Nam trong ngày hôm nay, chúng tôi hy vọng rằng các bạn sẽ tìm được những con số chính xác nhất. Chúc các bạn may mắn!                    
+                    <h2>Soi cầu 366 dự đoán XSMN chính xác hôm nay</h2>
+
+                    Hi vọng rằng soi cầu 366 sẽ hỗ trợ anh em trong việc dự đoán các con số XSMN hôm nay, giúp tìm ra những con số may mắn nhất cho mình. Tất cả các con số mà chúng tôi cung cấp đều chỉ mang tính chất tham khảo. Anh em hãy cân nhắc kỹ trước khi áp dụng các dự đoán này. Chúc anh em may mắn!
                     `;
             } else {
                 postContent = `
-                Dự đoán kết quả xổ số miền Trung miễn phí hôm nay ${date} là sự lựa chọn hoàn hảo cho những người yêu thích lĩnh vực "số học," nhưng không có đủ thời gian hoặc phương pháp nghiên cứu. Chúng tôi cập nhật và phân tích dự đoán KQXS miền Trung với số liệu thống kê chi tiết từ nhiều góc độ khác nhau mỗi ngày. Dựa trên những thông tin này, các cao thủ soi cầu của chúng tôi sẽ gửi đến các bạn những cặp số may mắn có xác suất về cao nhất và hoàn toàn miễn phí để bạn tham khảo.
+                Soi cầu dự đoán KQXS Miền Trung hôm nay ngày ${date} tại Soi Cầu 366 là kết quả của việc lựa chọn những cặp số có tỷ lệ cao nhất dự kiến về trong ngày do nhiều chuyên gia chốt số chúng tôi phân tích. Để chọn những con số Soi cầu miền Trung chính xác nhất, mời anh em tham khảo nội dung dưới đây để chọn ra cho mình một kết quả tốt nhất.
 
-                [caption id="attachment_557" align="alignnone" width="1200"]<img class="size-full wp-image-557" src="https://rongbachkim777.me/wp-content/uploads/2023/10/XSMT-${ngay}-${thang}.png" alt="Hình ảnh RBK 777 Dự Đoán KQXS Miền Trung ${date}" width="1200" height="628" /> Hình ảnh RBK 777 Dự Đoán KQXS Miền Trung ${date}[/caption]
-                
-                <h2>Cùng xem lại kết quả XSMT ${dayLabel} kỳ quay trước:</h2>
-                
+                <img class="alignnone size-full wp-image-538" src="https://soicau366.org/wp-content/uploads/2023/${thang == 12 ? 10 : 12}/XSMT-${ngay}-${thang}${thang == 12 ? "" : `-2024`}.png" alt="" width="1200" height="628" />
+
+                <h2>Thống kê KQXS Miền Trung ${dayLabel} tuần trước của Soi Cầu 366</h2>
+
                 [ket_qua_xo_so domain="${domain}" ngay="${ngayTuanTruocLabel}"]
 
-                <h2>Chốt cầu đẹp Miền Trung chính xác hôm nay ngày ${date}</h2>
-                Dự đoán kết quả xổ số miền Trung ngày hôm nay ${date} của các cao thủ soi cầu <strong><a href="https://rongbachkim777.me/">Rồng Bạch Kim 777</a></strong> là kết quả chính xác được dựa trên số liệu thống kê của KQXSMT và những phân tích cẩn thận, phương pháp soi cầu độ chính xác cao giúp người chơi tham khảo các con số may mắn nhất mà chúng tôi đã chọn lọc
+                Chúng tôi cam kết cập nhật nhanh nhất kết quả XSMT để cung cấp thông tin thống kê về cầu lô và cầu đặc biệt cho anh em. Nhằm giúp anh em lựa chọn những con số phù hợp, chúng tôi mời anh em tham khảo kết quả thống kê từ <strong><a href="https://soicau366.org/">soi cầu 366</a></strong> miễn phí dưới đây.
+
+                [thong_ke_general domain="${domain}" ngay="${date}"]
+
+                <h2>Soi cầu 666 xổ số Miền Trung hôm nay ngày ${date}</h2>
+                
+                Hy vọng anh em sẽ tìm được con số ưng ý trong những cặp số mà soi cầu 366 đã cập nhật ở dưới và gặt hái được những phần thưởng lớn. Mặc dù các con số của chúng tôi có tỷ lệ cao, nhưng chỉ mang tính tương đối. Anh em hãy cân nhắc kỹ lưỡng trước khi sử dụng để tham gia quay thưởng nhé!                
 
                 ${provinces
                     .map((prv) => {
                         return `
-                        <h3>✅ Soi cầu dự đoán xổ số ${prv} ngày ${date}</h3>
+                        <h3>✅ Soi cầu 366 kết quả xổ số Miền Trung đài ${prv} ngày ${date}</h3>
                         <div class="table_dudoan_wrapper">
                         <table class="table_dudoan">
                         <tbody>
@@ -317,29 +320,21 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
                     })
                     .join("")}                
                 
-                Cần lưu ý rằng những cặp số này được chúng tôi chia sẻ hoàn toàn miễn phí hàng ngày. Chúng tôi cập nhật số Lô và Đề liên tục đều đặt hàng ngày, tuy nhiên mọi thông tin chỉ mang tính tham khảo. Các bạn cần đọc thêm <a href="https://rongbachkim777.me/dieu-khoan/" target="_blank" rel="noopener">Điều khoản</a> từ chúng tôi để có cái nhìn khách quan nhất.
-                
-                <h2>Tham khảo bảng thống kê XSMT của Rồng Bạch Kim 777</h2>
-                
-                Dựa vào bảng kết quả xổ số miền Trung của 30 ngày gần đây, chúng ta có thể dễ dàng nhận thấy sự biến động rõ rệt trong các con số, bao gồm những con lô thường xuyên về, những con lô có tần suất xuất hiện cao, và tất cả các cặp số.
-                Nếu bạn là người thường xuyên chơi bạch thủ hoặc song thủ lô, thì có lẽ nên loại trừ những con lô thường xuyên về hoặc chỉ xem xét những con lô về thường xuyên. Thay vào đó, hãy tập trung vào các con lô có tần suất về đều đặn, kết hợp với việc sử dụng các kinh nghiệm soi cầu chuẩn xác để đưa ra dự đoán về kết quả XSMT ngày ${date} cuối cùng với xác suất cao nhất.
-                
-                [thong_ke_general domain="${domain}" ngay="${date}"]
-
-                Việc tham khảo dự đoán số lô đề miền Trung hôm nay miễn phí giúp người chơi tiết kiệm thời gian và công sức trong việc tổng hợp và phân tích số liệu, đồng thời chọn ra được một dàn lô chuẩn xác. Tuy nhiên, cần lưu ý rằng việc soi cầu XSMT không thể đảm bảo độ chính xác tuyệt đối 100%. Do đó, việc tham khảo thông tin từ Rồng Bạch Kim 777 là một cách tốt để nắm bắt cầu lô nào đang hot và các bộ số mà nhiều người đang quan tâm.
+                    <h2>Soi cầu 366 dự đoán XSMT chính xác hôm nay ${date}</h2>
+                    Soi cầu 366 đã chia sẻ những con số đẹp nhất của XSMT hôm nay cùng hướng dẫn cách soi cầu chính xác, nhằm giúp mọi người có thêm kinh nghiệm trong việc chọn số. Hy vọng thông tin từ soi cầu 366 sẽ góp phần vào thành công của anh em trong các ngày sắp tới.
                 `;
             }
 
             if (domain == 1) {
-                document.querySelector("#title").value = `Rồng Bạch Kim 777 Soi Cầu Miền Bắc Hôm Nay Ngày ${date}`;
+                document.querySelector("#title").value = `Soi Cầu 366 – Dự Đoán KQXS Miền Bắc Miễn Phí Ngày ${date}`;
             }
 
             if (domain == 3) {
-                document.querySelector("#title").value = `Rồng Bạch Kim 777 chốt số Miền Nam chuẩn xác ngày ${date}`;
+                document.querySelector("#title").value = `Soi Cầu 366 – Dự Đoán KQXS Miền Nam Miễn Phí Ngày ${date}`;
             }
 
             if (domain == 2) {
-                document.querySelector("#title").value = `Rồng Bạch Kim 777 cầu đẹp Miền Trung chính xác ngày ${date}`;
+                document.querySelector("#title").value = `Soi Cầu 366 – Dự Đoán KQXS Miền Trung Miễn Phí Ngày ${date}`;
             }
 
             document.querySelector("#content").value = postContent;
@@ -358,6 +353,14 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
     await page.evaluate(
         async (ngay, thang) => {
             const MONTHS = {
+                1: 30,
+                2: 29,
+                3: 31,
+                4: 30,
+                5: 31,
+                6: 30,
+                7: 31,
+                8: 31,
                 9: 30,
                 10: 31,
                 11: 30,
@@ -365,8 +368,9 @@ const taoBaiVietSoiCau = async (DOMAIN, page, domain, ngay, thang, nam) => {
             };
 
             document.querySelector(".edit-timestamp").click();
-            document.querySelector("#jj").value = (+ngay > 1) ? (+ngay - 1) : MONTHS[+thang - 1];
-            document.querySelector("#mm").value = thang;
+            document.querySelector("#jj").value = (+ngay > 1) ? (+ngay - 1) : (MONTHS[(+thang - 1) || 12]);
+            document.querySelector("#mm").value = ((+ngay > 1) ? thang : ((+thang - 1) || 12)).toString().padStart(2, '0');
+            document.querySelector("#aa").value = 2024;
             document.querySelector("#hh").value = "19";
             document.querySelector("#mn").value = "00";
             document.querySelector(".save-timestamp").click();
@@ -392,7 +396,16 @@ const main = async () => {
         const page = await browser.newPage();
 
         const MONTHS = {
-            10: 31,
+            1: 30,
+            2: 29,
+            3: 31,
+            4: 30,
+            5: 31,
+            6: 30,
+            7: 31,
+            8: 31,
+            9: 30,
+            10: 20,
             11: 30,
             12: 31,
         };
@@ -404,14 +417,14 @@ const main = async () => {
             await page.waitForNavigation();
 
             for (let d = 1; d <= 3; d++) {
-                for (let m = (d > 1 ? 10 : 11); m <= 12; m++) {
+                for (let m = 1; m <= 10; m++) {
                     for (let j = 1; j <= MONTHS[m]; j++) {
                         try {
                             const DOMAIN = d;
 
                             const date = j;
                             const month = m;
-                            const year = 2023;
+                            const year = 2024;
 
                             await taoBaiVietSoiCau(
                                 web.DOMAIN,
@@ -425,7 +438,7 @@ const main = async () => {
 
                             console.log("Done: " + `${date}-${month}-${year}`);
                         } catch (error) {
-                            console.log("Error loop taoBaiViet", error);
+                            console.log("Error loop taoBaiViet in: ", `${Constants.Domain[d]}-${m}-${j}`);
                         }
                     }
                 }
