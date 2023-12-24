@@ -2238,7 +2238,7 @@ const loGan = (req, res) => {
     }
 };
 
-const thongKeDeKepLech = (req, res) => {
+const deKepLech = (req, res) => {
     try {
         const response = [];
 
@@ -2282,7 +2282,7 @@ const thongKeDeKepLech = (req, res) => {
     }
 };
 
-const thongKeDeKepAm = (req, res) => {
+const deKepAm = (req, res) => {
     try {
         const response = [];
 
@@ -2322,6 +2322,64 @@ const thongKeDeKepAm = (req, res) => {
         res.json(response);
     } catch (error) {
         console.log("Error: ", error.message);
+        res.status(400).json("Error");
+    }
+};
+
+const loLoTheoGiai = async (req, res) => {
+    try {
+        // prize -> 0 -> 27
+        let { startDate, endDate, prize } = req.query;
+
+        const numbersWantToSee = Array.from({ length: 100 }, (_, index) => {
+            return index.toString().padStart(2, "0");
+        });
+
+        let kqxs = CACHE.get("KQXS")[1];
+
+        kqxs = generateDateArrayByStartDateEndDate(startDate, endDate)
+            .map((e) => {
+                return kqxs[e];
+            })
+            .filter(Boolean);
+
+        const response = {
+            dates: [],
+        };
+
+        kqxs.reverse();
+
+        kqxs.forEach((kq, index) => {
+            const crDate = new Date(kq.ngay);
+            let nums = Object.values(kq.ketqua)
+                .flat()
+                .slice(1)
+                .map((e) => {
+                    if (e) {
+                        return e.slice(-2);
+                    }
+                });
+
+            nums = [nums[prize]];
+
+            numbersWantToSee.forEach((numWTS) => {
+                if (!response[numWTS]) {
+                    response[numWTS] = [0];
+                }
+
+                response[numWTS][index] = countOccurrences(numWTS, nums);
+            });
+
+            response.dates.push(
+                `${crDate.getDate()}-${
+                    crDate.getMonth() + 1
+                }-${crDate.getFullYear()}`
+            );
+        });
+
+        res.json(response);
+    } catch (error) {
+        console.log(error);
         res.status(400).json("Error");
     }
 };
@@ -2359,6 +2417,7 @@ module.exports = {
     de,
     thongKeHaiSoCuoiXoSoMienBac,
     loGan,
-    thongKeDeKepLech,
-    thongKeDeKepAm,
+    deKepLech,
+    deKepAm,
+    loLoTheoGiai,
 };
