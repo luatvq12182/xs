@@ -61,7 +61,7 @@ const xs = async (domain, type, page) => {
         yesterday.setDate(yesterday.getDate() - 1);
 
         let kqxs =
-            CACHE.get('KQXS')[domain][
+            CACHE.get("KQXS")[domain][
                 cvDateToYYYYMMDD(
                     `${yesterday.getDate()}-${
                         yesterday.getMonth() + 1
@@ -93,7 +93,7 @@ const xs = async (domain, type, page) => {
         const date = new Date();
 
         let kqxs =
-            CACHE.get('KQXS')[domain][
+            CACHE.get("KQXS")[domain][
                 cvDateToYYYYMMDD(
                     `${date.getDate()}-${
                         date.getMonth() + 1
@@ -123,7 +123,7 @@ const xs = async (domain, type, page) => {
 
     if (type === "today") {
         if (domain == Constants.Domain.MienBac) {
-            let data = Object.values(CACHE.get('KQXS')[domain]);
+            let data = Object.values(CACHE.get("KQXS")[domain]);
 
             return data
                 .slice(-7)
@@ -154,7 +154,7 @@ const xs = async (domain, type, page) => {
                 date.setDate(date.getDate() - i);
 
                 const kqxs =
-                    CACHE.get('KQXS')[domain][
+                    CACHE.get("KQXS")[domain][
                         `${date.getFullYear()}${cvNumber(
                             date.getMonth() + 1
                         )}${cvNumber(date.getDate())}`
@@ -190,7 +190,7 @@ const xs = async (domain, type, page) => {
 
     if (type === "30days") {
         if (domain == Constants.Domain.MienBac) {
-            let data = Object.values(CACHE.get('KQXS')[domain]);
+            let data = Object.values(CACHE.get("KQXS")[domain]);
 
             return data
                 .slice(-30)
@@ -221,7 +221,7 @@ const xs = async (domain, type, page) => {
                 date.setDate(date.getDate() - i);
 
                 const kqxs =
-                    CACHE.get('KQXS')[domain][
+                    CACHE.get("KQXS")[domain][
                         `${date.getFullYear()}${cvNumber(
                             date.getMonth() + 1
                         )}${cvNumber(date.getDate())}`
@@ -232,10 +232,36 @@ const xs = async (domain, type, page) => {
                 }
             }
 
-            return Object.values(hashMap)
-                .slice((page - 1) * 5, (page - 1) * 5 + 5)
+            return Object.values(hashMap).map((kqxs) => {
+                const crDate = new Date(kqxs[0].ngay);
+
+                return {
+                    ngay:
+                        "" +
+                        crDate.getFullYear() +
+                        cvNumber(crDate.getMonth() + 1) +
+                        cvNumber(crDate.getDate()),
+                    html: cvToHtml(
+                        domain,
+                        `${crDate.getDate()}-${
+                            crDate.getMonth() + 1
+                        }-${crDate.getFullYear()}`,
+                        kqxs
+                    ),
+                };
+            });
+        }
+    }
+
+    if (type === "90days") {
+        if (domain == Constants.Domain.MienBac) {
+            let data = Object.values(CACHE.get("KQXS")[domain]);
+
+            return data
+                .slice(-90)
+                .reverse()
                 .map((kqxs) => {
-                    const crDate = new Date(kqxs[0].ngay);
+                    const crDate = new Date(kqxs.ngay);
 
                     return {
                         ngay:
@@ -252,12 +278,244 @@ const xs = async (domain, type, page) => {
                         ),
                     };
                 });
+        } else {
+            const hashMap = {};
+
+            for (let i = 0; i <= 90; i++) {
+                const date = new Date();
+                date.setDate(date.getDate() - i);
+
+                const kqxs =
+                    CACHE.get("KQXS")[domain][
+                        `${date.getFullYear()}${cvNumber(
+                            date.getMonth() + 1
+                        )}${cvNumber(date.getDate())}`
+                    ];
+
+                if (kqxs && Object.values(hashMap).length <= 90) {
+                    hashMap[i] = Object.values(kqxs);
+                }
+            }
+
+            return Object.values(hashMap).map((kqxs) => {
+                const crDate = new Date(kqxs[0].ngay);
+
+                return {
+                    ngay:
+                        "" +
+                        crDate.getFullYear() +
+                        cvNumber(crDate.getMonth() + 1) +
+                        cvNumber(crDate.getDate()),
+                    html: cvToHtml(
+                        domain,
+                        `${crDate.getDate()}-${
+                            crDate.getMonth() + 1
+                        }-${crDate.getFullYear()}`,
+                        kqxs
+                    ),
+                };
+            });
+        }
+    }
+
+    if (type === "120days") {
+        if (domain == Constants.Domain.MienBac) {
+            let data = Object.values(CACHE.get("KQXS")[domain]);
+
+            return data
+                .slice(-120)
+                .reverse()
+                .map((kqxs) => {
+                    const crDate = new Date(kqxs.ngay);
+
+                    return {
+                        ngay:
+                            "" +
+                            crDate.getFullYear() +
+                            cvNumber(crDate.getMonth() + 1) +
+                            cvNumber(crDate.getDate()),
+                        html: cvToHtml(
+                            domain,
+                            `${crDate.getDate()}-${
+                                crDate.getMonth() + 1
+                            }-${crDate.getFullYear()}`,
+                            kqxs
+                        ),
+                    };
+                });
+        } else {
+            const hashMap = {};
+
+            for (let i = 0; i <= 120; i++) {
+                const date = new Date();
+                date.setDate(date.getDate() - i);
+
+                const kqxs =
+                    CACHE.get("KQXS")[domain][
+                        `${date.getFullYear()}${cvNumber(
+                            date.getMonth() + 1
+                        )}${cvNumber(date.getDate())}`
+                    ];
+
+                if (kqxs && Object.values(hashMap).length <= 120) {
+                    hashMap[i] = Object.values(kqxs);
+                }
+            }
+
+            return Object.values(hashMap).map((kqxs) => {
+                const crDate = new Date(kqxs[0].ngay);
+
+                return {
+                    ngay:
+                        "" +
+                        crDate.getFullYear() +
+                        cvNumber(crDate.getMonth() + 1) +
+                        cvNumber(crDate.getDate()),
+                    html: cvToHtml(
+                        domain,
+                        `${crDate.getDate()}-${
+                            crDate.getMonth() + 1
+                        }-${crDate.getFullYear()}`,
+                        kqxs
+                    ),
+                };
+            });
+        }
+    }
+
+    if (type === "200days") {
+        if (domain == Constants.Domain.MienBac) {
+            let data = Object.values(CACHE.get("KQXS")[domain]);
+
+            return data
+                .slice(-200)
+                .reverse()
+                .map((kqxs) => {
+                    const crDate = new Date(kqxs.ngay);
+
+                    return {
+                        ngay:
+                            "" +
+                            crDate.getFullYear() +
+                            cvNumber(crDate.getMonth() + 1) +
+                            cvNumber(crDate.getDate()),
+                        html: cvToHtml(
+                            domain,
+                            `${crDate.getDate()}-${
+                                crDate.getMonth() + 1
+                            }-${crDate.getFullYear()}`,
+                            kqxs
+                        ),
+                    };
+                });
+        } else {
+            const hashMap = {};
+
+            for (let i = 0; i <= 200; i++) {
+                const date = new Date();
+                date.setDate(date.getDate() - i);
+
+                const kqxs =
+                    CACHE.get("KQXS")[domain][
+                        `${date.getFullYear()}${cvNumber(
+                            date.getMonth() + 1
+                        )}${cvNumber(date.getDate())}`
+                    ];
+
+                if (kqxs && Object.values(hashMap).length <= 200) {
+                    hashMap[i] = Object.values(kqxs);
+                }
+            }
+
+            return Object.values(hashMap).map((kqxs) => {
+                const crDate = new Date(kqxs[0].ngay);
+
+                return {
+                    ngay:
+                        "" +
+                        crDate.getFullYear() +
+                        cvNumber(crDate.getMonth() + 1) +
+                        cvNumber(crDate.getDate()),
+                    html: cvToHtml(
+                        domain,
+                        `${crDate.getDate()}-${
+                            crDate.getMonth() + 1
+                        }-${crDate.getFullYear()}`,
+                        kqxs
+                    ),
+                };
+            });
+        }
+    }
+
+    if (type === "300days") {
+        if (domain == Constants.Domain.MienBac) {
+            let data = Object.values(CACHE.get("KQXS")[domain]);
+
+            return data
+                .slice(-300)
+                .reverse()
+                .map((kqxs) => {
+                    const crDate = new Date(kqxs.ngay);
+
+                    return {
+                        ngay:
+                            "" +
+                            crDate.getFullYear() +
+                            cvNumber(crDate.getMonth() + 1) +
+                            cvNumber(crDate.getDate()),
+                        html: cvToHtml(
+                            domain,
+                            `${crDate.getDate()}-${
+                                crDate.getMonth() + 1
+                            }-${crDate.getFullYear()}`,
+                            kqxs
+                        ),
+                    };
+                });
+        } else {
+            const hashMap = {};
+
+            for (let i = 0; i <= 300; i++) {
+                const date = new Date();
+                date.setDate(date.getDate() - i);
+
+                const kqxs =
+                    CACHE.get("KQXS")[domain][
+                        `${date.getFullYear()}${cvNumber(
+                            date.getMonth() + 1
+                        )}${cvNumber(date.getDate())}`
+                    ];
+
+                if (kqxs && Object.values(hashMap).length <= 300) {
+                    hashMap[i] = Object.values(kqxs);
+                }
+            }
+
+            return Object.values(hashMap).map((kqxs) => {
+                const crDate = new Date(kqxs[0].ngay);
+
+                return {
+                    ngay:
+                        "" +
+                        crDate.getFullYear() +
+                        cvNumber(crDate.getMonth() + 1) +
+                        cvNumber(crDate.getDate()),
+                    html: cvToHtml(
+                        domain,
+                        `${crDate.getDate()}-${
+                            crDate.getMonth() + 1
+                        }-${crDate.getFullYear()}`,
+                        kqxs
+                    ),
+                };
+            });
         }
     }
 
     if (domain == Constants.Domain.MienBac) {
         const kqxs =
-            CACHE.get('KQXS')[Constants.Domain.MienBac][DisplayType[type]];
+            CACHE.get("KQXS")[Constants.Domain.MienBac][DisplayType[type]];
 
         const data = kqxs.filter((e) => {
             const date = new Date(e.ngay);
@@ -286,7 +544,7 @@ const xs = async (domain, type, page) => {
     } else {
         if (Object.keys(DisplayType).includes(type)) {
             const hashMap = {};
-            const kqxs = CACHE.get('KQXS')[domain][DisplayType[type]];
+            const kqxs = CACHE.get("KQXS")[domain][DisplayType[type]];
 
             kqxs.forEach((e) => {
                 if (hashMap[e.ngay]) {
@@ -317,7 +575,7 @@ const xs = async (domain, type, page) => {
                     };
                 });
         } else {
-            const data = Object.values(CACHE.get('KQXS')[domain][alias[type]]);
+            const data = Object.values(CACHE.get("KQXS")[domain][alias[type]]);
 
             return data
                 .slice((page - 1) * 5, (page - 1) * 5 + 5)
@@ -355,7 +613,7 @@ const result = async (domain) => {
     }
 
     let kqxs =
-        CACHE.get('KQXS')[domain][
+        CACHE.get("KQXS")[domain][
             cvDateToYYYYMMDD(
                 `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`
             )
