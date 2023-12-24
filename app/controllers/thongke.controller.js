@@ -2191,6 +2191,53 @@ const cangLoto = (req, res) => {
     }
 };
 
+const thongKeHaiSoCuoiXoSoMienBac = (req, res) => {
+    try {
+        const { startDate, endDate, type, numberWantToSee } = req;
+
+        const response = {
+            special: {},
+            all: {},
+        };
+
+        res.json(response);
+    } catch (error) {
+        console.log("Error: ", error?.message);
+        res.status(400).json("Error");
+    }
+};
+
+const loGan = (req, res) => {
+    try {
+        const { province, numberOfDays } = req.query;
+
+        const response = {};
+
+        const random = (num = 100) => {
+            return Math.ceil(Math.random() * num)
+                .toString()
+                .padStart(2, "0");
+        };
+
+        for (let i = 0; i < 10; i++) {
+            const num = random();
+
+            if (!response[num]) {
+                response[num] = {
+                    returnDay: `${random(30)}-${random(12)}-2023`,
+                    numberOfDays: Math.ceil(Math.random() * 20),
+                    max: Constants.GanCucDai[num],
+                };
+            }
+        }
+
+        res.json(response);
+    } catch (error) {
+        console.log("Error: ", error.message);
+        res.status(400).json("Error");
+    }
+};
+
 module.exports = {
     cangLoto,
     layKetQua,
@@ -2222,4 +2269,6 @@ module.exports = {
     loRoi,
     loXien,
     de,
+    thongKeHaiSoCuoiXoSoMienBac,
+    loGan,
 };
