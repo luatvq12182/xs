@@ -2282,6 +2282,50 @@ const thongKeDeKepLech = (req, res) => {
     }
 };
 
+const thongKeDeKepAm = (req, res) => {
+    try {
+        const response = [];
+
+        const random = (num = 99) => {
+            return Math.ceil(Math.random() * num)
+                .toString()
+                .padStart(2, "0");
+        };
+
+        for (let i = 0; i < 20; i++) {
+            let de = random(10000);
+            let deHomSau = random(10000);
+
+            while (+de < 10000) {
+                de = random(99998);
+            }
+
+            while (+deHomSau < 10000) {
+                deHomSau = random(99998);
+            }
+
+            const loHomSau = [];
+
+            for (let i = 0; i < 27; i++) {
+                loHomSau.push(random());
+            }
+
+            response.push({
+                ngayVe: `${random(30)}-${random(12)}-2023`,
+                de: de,
+                deHomSau: deHomSau,
+                loHomSau: loHomSau,
+                homSau: `${random(30)}-${random(12)}-2023`,
+            });
+        }
+
+        res.json(response);
+    } catch (error) {
+        console.log("Error: ", error.message);
+        res.status(400).json("Error");
+    }
+};
+
 module.exports = {
     cangLoto,
     layKetQua,
@@ -2316,4 +2360,5 @@ module.exports = {
     thongKeHaiSoCuoiXoSoMienBac,
     loGan,
     thongKeDeKepLech,
+    thongKeDeKepAm,
 };
