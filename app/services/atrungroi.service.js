@@ -601,6 +601,25 @@ const xs = async (domain, type, page) => {
     }
 };
 
+const isLive = (domain) => {
+    const hour = new Date().getHours();
+    const minutes = new Date().getMinutes();
+
+    if (domain == MIEN_BAC && hour == 18 && minutes >= 15 && minutes <= 31) {
+        return true;
+    }
+
+    if (domain == MIEN_TRUNG && hour == 17 && minutes >= 15 && minutes <= 31) {
+        return true;
+    }
+
+    if (domain == MIEN_NAM && hour == 16 && minutes >= 15 && minutes <= 31) {
+        return true;
+    }
+
+    return false;
+};
+
 const result = async (domain, province, cvHtml = 1) => {
     let date = new Date();
     let kqxs;
@@ -621,7 +640,18 @@ const result = async (domain, province, cvHtml = 1) => {
                 )
             ];
     } else {
-        kqxs = CACHE.get("KQXS-TODAY")[domain];
+        if (isLive(domain)) {
+            kqxs = CACHE.get("KQXS-TODAY")[domain];
+        } else {
+            kqxs =
+                CACHE.get("KQXS")[domain][
+                    cvDateToYYYYMMDD(
+                        `${date.getDate()}-${
+                            date.getMonth() + 1
+                        }-${date.getFullYear()}`
+                    )
+                ];
+        }
     }
 
     kqxs = domain == Constants.Domain.MienBac ? kqxs : Object.values(kqxs);
