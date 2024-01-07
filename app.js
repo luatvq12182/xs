@@ -11,7 +11,7 @@ const { cvNum } = require("./app/utils");
 require("dotenv").config();
 require("./config/database");
 require("./config/passport");
-require("./config/schedule");
+// require("./config/schedule");
 
 const app = express();
 CACHE.invalid();
@@ -72,6 +72,16 @@ app.get("/api/kqxs-today-cache", (req, res) => {
     const cache = CACHE.get("KQXS-TODAY");
 
     res.json(cache);
+});
+
+app.post("/api/set-kqxs-today-cache", (req, res) => {
+    console.log(req.body);
+
+    CACHE.set('KQXS-TODAY', req.body);
+
+    // const cache = CACHE.get("KQXS-TODAY");
+
+    res.json('ok');
 });
 
 app.post("/api/invalid-cache", async (req, res) => {

@@ -17,9 +17,9 @@ const xs = async (req, res) => {
 
 const result = async (req, res) => {
     try {
-        const { domain } = req.query;
+        const { domain, cvHtml, province } = req.query;
 
-        const data = await ATrungRoiService.result(domain);
+        const data = await ATrungRoiService.result(domain, province, cvHtml);
 
         res.json(data);
     } catch (error) {

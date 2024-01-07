@@ -3,6 +3,7 @@
 
 const { Constants } = require("../app/constants");
 const kqxsModel = require("../app/models/kqxs.model");
+const { genPrizeToday } = require("../crawl/create-skeleton-kqxs");
 
 const cvNum = (num) => {
     return num >= 10 ? num : `0${num}`;
@@ -79,8 +80,8 @@ const CACHE = (() => {
     let data = DEFAULT_CACHE();
 
     return {
-        set: (key, dateOfKey) => {
-            data[key] = dateOfKey;
+        set: (key, dataOfKey) => {
+            data[key] = dataOfKey;
         },
         get: (key) => {
             if (!key) {
@@ -96,7 +97,8 @@ const CACHE = (() => {
                 .sort({
                     ngay: -1,
                 })
-                .limit(16600);
+                // .limit(1000);
+                .limit(10000);
             console.timeEnd("Time to query");
 
             console.time("Time to set cache");
@@ -129,6 +131,7 @@ const CACHE = (() => {
             });
 
             CACHE.set("KQXS", cacheData);
+            CACHE.set("KQXS-TODAY", genPrizeToday());
 
             console.timeEnd("Time to set cache");
 

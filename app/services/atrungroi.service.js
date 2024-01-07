@@ -601,8 +601,9 @@ const xs = async (domain, type, page) => {
     }
 };
 
-const result = async (domain) => {
+const result = async (domain, province, cvHtml = 1) => {
     let date = new Date();
+    let kqxs;
 
     if (
         (domain == Constants.Domain.MienBac && date.getHours() < 18) ||
@@ -610,30 +611,40 @@ const result = async (domain) => {
         (domain == Constants.Domain.MienNam && date.getHours() < 16)
     ) {
         date.setDate(date.getDate() - 1);
-    }
 
-    let kqxs =
-        CACHE.get("KQXS")[domain][
-            cvDateToYYYYMMDD(
-                `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`
-            )
-        ];
+        kqxs =
+            CACHE.get("KQXS")[domain][
+                cvDateToYYYYMMDD(
+                    `${date.getDate()}-${
+                        date.getMonth() + 1
+                    }-${date.getFullYear()}`
+                )
+            ];
+    } else {
+        kqxs = CACHE.get("KQXS-TODAY")[domain];
+    }
 
     kqxs = domain == Constants.Domain.MienBac ? kqxs : Object.values(kqxs);
 
-    return {
-        ngay:
-            "" +
-            date.getFullYear() +
-            cvNumber(date.getMonth() + 1) +
-            cvNumber(date.getDate()),
-        day: date.getDay(),
-        html: cvToHtml(
-            domain,
-            `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`,
-            kqxs
-        ),
-    };
+    if (+cvHtml) {
+        return {
+            ngay:
+                "" +
+                date.getFullYear() +
+                cvNumber(date.getMonth() + 1) +
+                cvNumber(date.getDate()),
+            day: date.getDay(),
+            html: cvToHtml(
+                domain,
+                `${date.getDate()}-${
+                    date.getMonth() + 1
+                }-${date.getFullYear()}`,
+                kqxs
+            ),
+        };
+    } else {
+        return kqxs;
+    }
 };
 
 module.exports = {
