@@ -605,15 +605,15 @@ const isLive = (domain) => {
     const hour = new Date().getHours();
     const minutes = new Date().getMinutes();
 
-    if (domain == 1 && hour == 18 && minutes >= 15 && minutes <= 31) {
+    if (domain == 1 && hour == 18 && minutes >= 15 && minutes <= 45) {
         return true;
     }
 
-    if (domain == 2 && hour == 17 && minutes >= 15 && minutes <= 31) {
+    if (domain == 2 && hour == 17 && minutes >= 15 && minutes <= 45) {
         return true;
     }
 
-    if (domain == 3 && hour == 16 && minutes >= 15 && minutes <= 31) {
+    if (domain == 3 && hour == 16 && minutes >= 15 && minutes <= 45) {
         return true;
     }
 
