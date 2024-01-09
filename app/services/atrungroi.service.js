@@ -601,25 +601,6 @@ const xs = async (domain, type, page) => {
     }
 };
 
-const isLive = (domain) => {
-    const hour = new Date().getHours();
-    const minutes = new Date().getMinutes();
-
-    if (domain == 1 && hour == 18 && minutes >= 15 && minutes <= 45) {
-        return true;
-    }
-
-    if (domain == 2 && hour == 17 && minutes >= 15 && minutes <= 45) {
-        return true;
-    }
-
-    if (domain == 3 && hour == 16 && minutes >= 15 && minutes <= 45) {
-        return true;
-    }
-
-    return false;
-};
-
 const result = async (domain, province, cvHtml = 1) => {
     let date = new Date();
     let kqxs;
@@ -630,31 +611,22 @@ const result = async (domain, province, cvHtml = 1) => {
         (domain == Constants.Domain.MienNam && date.getHours() < 16)
     ) {
         date.setDate(date.getDate() - 1);
-
-        kqxs =
-            CACHE.get("KQXS")[domain][
-                cvDateToYYYYMMDD(
-                    `${date.getDate()}-${
-                        date.getMonth() + 1
-                    }-${date.getFullYear()}`
-                )
-            ];
-    } else {
-        if (isLive(domain)) {
-            kqxs = CACHE.get("KQXS-TODAY")[domain];
-        } else {
-            kqxs =
-                CACHE.get("KQXS")[domain][
-                    cvDateToYYYYMMDD(
-                        `${date.getDate()}-${
-                            date.getMonth() + 1
-                        }-${date.getFullYear()}`
-                    )
-                ];
-        }
     }
 
-    kqxs = domain == Constants.Domain.MienBac ? kqxs : Object.values(kqxs);
+    kqxs =
+        CACHE.get("KQXS")[domain][
+            cvDateToYYYYMMDD(
+                `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`
+            )
+        ] || CACHE.get("KQXS-TODAY")[domain];
+
+    if (domain != Constants.Domain.MienBac) {
+        if (province) {
+            kqxs = kqxs[province];
+        } else {
+            kqxs = Object.values(kqxs);
+        }
+    }
 
     if (+cvHtml) {
         return {
