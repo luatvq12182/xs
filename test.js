@@ -307,10 +307,10 @@ const getKQXSMB = async () => {
                                 value = "";
                             }
 
-                            if (!payload[province].ketqua[key]) {
-                                payload[province].ketqua[key] = [value];
+                            if (!payload.ketqua[key]) {
+                                payload.ketqua[key] = [value];
                             } else {
-                                payload[province].ketqua[key].push(value);
+                                payload.ketqua[key].push(value);
                             }
                         });
                 });
