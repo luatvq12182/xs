@@ -11,7 +11,7 @@ const { cvNum } = require("./app/utils");
 require("dotenv").config();
 require("./config/database");
 require("./config/passport");
-// require("./config/schedule");
+require("./config/schedule");
 
 const app = express();
 CACHE.invalid();
