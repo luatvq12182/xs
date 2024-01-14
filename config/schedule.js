@@ -1,40 +1,19 @@
 const schedule = require("node-schedule");
-const { getKQXSMT, getKQXSMB } = require("../test");
+const { getKQXSMT, getKQXSMB, getKQXSMN } = require("../crawxsminhngoc");
 
-// Up bài KQXS vào mỗi 19h5m hàng ngày
-// schedule.scheduleJob("0 23 * * *", async function () {
-//     const today = new Date();
-//     const date = today.getDate();
-//     const month = today.getMonth() + 1;
-//     const year = today.getFullYear();
+schedule.scheduleJob("15 16 * * *", async function () {
+    console.log("Bắt đầu Crawl KQXS Miền Nam");
 
-//     await upBaiSoiCau888(+date, +month, +year);
-//     await upBaiVuaXoSo(+date, +month, +year);
-// });
+    getKQXSMN();
 
-// Cào kết quả xổ số và lưu vào DB mỗi 19h hàng ngày
-// schedule.scheduleJob("0 19 * * *", function () {
-//     console.log("Cào KQXS Hàng Ngày");
-// });
+    const timeID = setInterval(() => getKQXSMN(), 10000);
 
-// invalid cache vào 0h1m giờ sáng hàng ngày
-// schedule.scheduleJob("1 0 * * *", function () {
-//     CACHE.invalid();
-// });
+    setTimeout(() => {
+        clearInterval(timeID);
 
-// schedule.scheduleJob("15 16 * * *", async function () {
-//     console.log("Bắt đầu Crawl KQXS Miền Nam");
-
-//     crawlKqxs(3);
-
-//     const timeID = setInterval(() => crawlKqxs(3), 10000);
-
-//     setTimeout(() => {
-//         clearInterval(timeID);
-
-//         console.log("Done Crawl KQXS Miền Nam");
-//     }, 1000 * 60 * 25);
-// });
+        console.log("Done Crawl KQXS Miền Nam");
+    }, 1000 * 60 * 25);
+});
 
 schedule.scheduleJob("15 17 * * *", function () {
     console.log("Bắt đầu Crawl KQXS Miền Trung");

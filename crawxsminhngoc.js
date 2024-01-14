@@ -1,23 +1,12 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
 
-const getKQXSMN = () => {
+const getKQXSMN = async () => {
+    console.log("Cào xsmn...");
+
     const url = "https://www.xosominhngoc.com/xo-so-truc-tiep/mien-nam.html";
 
     const payload = {};
-
-    const tachSo = (str, num) => {
-        let inputString = str;
-        let segmentLength = Math.ceil(inputString.length / num); // Độ dài của mỗi đoạn
-
-        let resultArray = [];
-        for (let i = 0; i < inputString.length; i += segmentLength) {
-            let segment = inputString.substring(i, i + segmentLength);
-            resultArray.push(segment);
-        }
-
-        return resultArray.map((e) => e.trim());
-    };
 
     const today = new Date();
 
@@ -55,48 +44,45 @@ const getKQXSMN = () => {
                     ),
                 };
 
-                const Giai4 = $(el)
-                    .find(".giai4 div")
-                    .each((_, el) => {
-                        console.log($(el).text());
+                const giai8 = $(el).find(".giai8");
+                const giai7 = $(el).find(".giai7");
+                const giai6 = $(el).find(".giai6");
+                const giai5 = $(el).find(".giai5");
+                const giai4 = $(el).find(".giai4");
+                const giai3 = $(el).find(".giai3");
+                const giai2 = $(el).find(".giai2");
+                const giai1 = $(el).find(".giai1");
+                const giaidacbiet = $(el).find(".giaidb");
 
-                        // $(el)
-                        //     .find("span")
-                        //     .each((_, el) => {
-                        //         console.log(province, el.text());
-                        //     });
-                    });
+                [
+                    { el: giai8, key: "giai8" },
+                    { el: giai7, key: "giai7" },
+                    { el: giai6, key: "giai6" },
+                    { el: giai5, key: "giai5" },
+                    { el: giai4, key: "giai4" },
+                    { el: giai3, key: "giai3" },
+                    { el: giai2, key: "giai2" },
+                    { el: giai1, key: "giai1" },
+                    { el: giaidacbiet, key: "giaidacbiet" },
+                ].forEach(({ el, key }) => {
+                    $(el)
+                        .find("div")
+                        .each((_, el) => {
+                            let value;
 
-                // console.log($(el).find(".giai4 div span").length);
+                            if ($(el).find("span").length === 0) {
+                                value = $(el).text();
+                            } else {
+                                value = "";
+                            }
 
-                const giai8 = $(el).find(".giai8").text()?.trim();
-                const giai7 = $(el).find(".giai7").text()?.trim();
-                const giai6 = $(el).find(".giai6").text()?.trim();
-                const giai5 = $(el).find(".giai5").text()?.trim();
-                const giai4 = $(el).find(".giai4").text()?.trim();
-                const giai3 = $(el).find(".giai3").text()?.trim();
-                const giai2 = $(el).find(".giai2").text()?.trim();
-                const giai1 = $(el).find(".giai1").text()?.trim();
-                const giaidacbiet = $(el).find(".giaidb").text()?.trim();
-
-                payload[province].ketqua.giai8 = [giai8];
-                payload[province].ketqua.giai7 = [giai7];
-                payload[province].ketqua.giai6 = tachSo(
-                    giai6.padEnd(12, " "),
-                    3
-                );
-                payload[province].ketqua.giai5 = [giai5];
-                payload[province].ketqua.giai4 = tachSo(
-                    giai4.padEnd(35, " "),
-                    7
-                );
-                payload[province].ketqua.giai3 = tachSo(
-                    giai3.padEnd(10, " "),
-                    2
-                );
-                payload[province].ketqua.giai2 = [giai2];
-                payload[province].ketqua.giai1 = [giai1];
-                payload[province].ketqua.giaidacbiet = [giaidacbiet];
+                            if (!payload[province].ketqua[key]) {
+                                payload[province].ketqua[key] = [value];
+                            } else {
+                                payload[province].ketqua[key].push(value);
+                            }
+                        });
+                });
 
                 const nums = Object.values(payload[province].ketqua)
                     .flat()
@@ -108,6 +94,15 @@ const getKQXSMN = () => {
                     payload[province].thongke.dau[num[0]]?.push(num[1]);
                 });
             });
+
+            axios
+                .post("https://apixoso.com/api/set-kqxs-today-cache", {
+                    domain: 3,
+                    data: payload,
+                })
+                .then(() => {
+                    console.log("update done!");
+                });
         })
         .catch((error) => {
             console.error("Error fetching data:", error);
@@ -116,7 +111,6 @@ const getKQXSMN = () => {
 
 const getKQXSMT = async () => {
     console.log("Cào xsmt...");
-    const res = await axios("https://apixoso.com/api/kqxs-today-cache");
 
     const url = "https://www.xosominhngoc.com/xo-so-truc-tiep/mien-trung.html";
 
@@ -211,8 +205,8 @@ const getKQXSMT = async () => {
 
             axios
                 .post("https://apixoso.com/api/set-kqxs-today-cache", {
-                    ...res.data,
-                    2: payload,
+                    domain: 2,
+                    data: payload,
                 })
                 .then(() => {
                     console.log("update done!");
@@ -225,7 +219,6 @@ const getKQXSMT = async () => {
 
 const getKQXSMB = async () => {
     console.log("Cào xsmb...");
-    const res = await axios("https://apixoso.com/api/kqxs-today-cache");
 
     const url = "https://www.xosominhngoc.com/xo-so-truc-tiep/mien-bac.html";
 
@@ -243,7 +236,9 @@ const getKQXSMB = async () => {
             tableRs.each((_, el) => {
                 payload = {
                     domain: 1,
-                    ketqua: {},
+                    ketqua: {
+                        madacbiet: "",
+                    },
                     thongke: {
                         dau: {
                             0: [],
@@ -285,16 +280,17 @@ const getKQXSMB = async () => {
                 const giai2 = $(el).find(".giai2");
                 const giai1 = $(el).find(".giai1");
                 const giaidacbiet = $(el).find(".giaidb");
+                const madacbiet = $(el)?.find(".loai_ve span")?.first()?.text();
 
                 [
-                    { el: giai7, key: "giai7" },
-                    { el: giai6, key: "giai6" },
-                    { el: giai5, key: "giai5" },
-                    { el: giai4, key: "giai4" },
-                    { el: giai3, key: "giai3" },
-                    { el: giai2, key: "giai2" },
-                    { el: giai1, key: "giai1" },
                     { el: giaidacbiet, key: "giaidacbiet" },
+                    { el: giai1, key: "giai1" },
+                    { el: giai2, key: "giai2" },
+                    { el: giai3, key: "giai3" },
+                    { el: giai4, key: "giai4" },
+                    { el: giai5, key: "giai5" },
+                    { el: giai6, key: "giai6" },
+                    { el: giai7, key: "giai7" },
                 ].forEach(({ el, key }) => {
                     $(el)
                         .find("div")
@@ -315,7 +311,10 @@ const getKQXSMB = async () => {
                         });
                 });
 
+                payload.ketqua.madacbiet = madacbiet || "";
+
                 const nums = Object.values(payload.ketqua)
+                    .slice(1)
                     .flat()
                     .map((e) => {
                         return e?.slice(-2);
@@ -329,8 +328,8 @@ const getKQXSMB = async () => {
 
             axios
                 .post("https://apixoso.com/api/set-kqxs-today-cache", {
-                    ...res.data,
-                    1: payload,
+                    domain: 1,
+                    data: payload,
                 })
                 .then(() => {
                     console.log("update done!");
@@ -340,8 +339,6 @@ const getKQXSMB = async () => {
             console.error("Error fetching data:", error);
         });
 };
-
-getKQXSMT();
 
 module.exports = {
     getKQXSMB,

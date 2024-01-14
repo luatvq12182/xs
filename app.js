@@ -75,13 +75,20 @@ app.get("/api/kqxs-today-cache", (req, res) => {
 });
 
 app.post("/api/set-kqxs-today-cache", (req, res) => {
-    console.log(req.body);
+    const { domain, data } = req.body;
 
-    CACHE.set('KQXS-TODAY', req.body);
+    if (domain && data) {
+        const cache = CACHE.get("KQXS-TODAY");
 
-    // const cache = CACHE.get("KQXS-TODAY");
+        CACHE.set("KQXS-TODAY", {
+            ...cache,
+            [domain]: data,
+        });
+    } else {
+        CACHE.set("KQXS-TODAY", req.body);
+    }
 
-    res.json('ok');
+    res.json("ok");
 });
 
 app.post("/api/invalid-cache", async (req, res) => {
