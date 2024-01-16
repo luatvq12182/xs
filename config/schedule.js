@@ -1,44 +1,56 @@
 const schedule = require("node-schedule");
 const { getKQXSMT, getKQXSMB, getKQXSMN } = require("../crawxsminhngoc");
 
-schedule.scheduleJob("15 16 * * *", async function () {
+schedule.scheduleJob("10 16 * * *", async function () {
     console.log("Bắt đầu Crawl KQXS Miền Nam");
 
     getKQXSMN();
 
-    const timeID = setInterval(() => getKQXSMN(), 10000);
+    const timeID = setInterval(
+        () =>
+            getKQXSMN({
+                onFinish: () => {
+                    clearInterval(timeID);
 
-    setTimeout(() => {
-        clearInterval(timeID);
-
-        console.log("Done Crawl KQXS Miền Nam");
-    }, 1000 * 60 * 25);
+                    console.log("Done Crawl KQXS Miền Nam");
+                },
+            }),
+        10000
+    );
 });
 
-schedule.scheduleJob("15 17 * * *", function () {
+schedule.scheduleJob("10 17 * * *", function () {
     console.log("Bắt đầu Crawl KQXS Miền Trung");
 
     getKQXSMT();
 
-    const timeID = setInterval(() => getKQXSMT(), 10000);
+    const timeID = setInterval(
+        () =>
+            getKQXSMT({
+                onFinish: () => {
+                    clearInterval(timeID);
 
-    setTimeout(() => {
-        clearInterval(timeID);
-
-        console.log("Done Crawl KQXS Miền Trung");
-    }, 1000 * 60 * 25);
+                    console.log("Done Crawl KQXS Miền Trung");
+                },
+            }),
+        10000
+    );
 });
 
-schedule.scheduleJob("15 18 * * *", function () {
+schedule.scheduleJob("10 18 * * *", function () {
     console.log("Bắt đầu Crawl KQXS Miền Bắc");
 
     getKQXSMB();
 
-    const timeID = setInterval(() => getKQXSMB(), 10000);
+    const timeID = setInterval(
+        () =>
+            getKQXSMB({
+                onFinish: () => {
+                    clearInterval(timeID);
 
-    setTimeout(() => {
-        clearInterval(timeID);
-
-        console.log("Done Crawl KQXS Miền Bắc");
-    }, 1000 * 60 * 17);
+                    console.log("Done Crawl KQXS Miền Bắc");
+                },
+            }),
+        10000
+    );
 });

@@ -1,7 +1,15 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
 
-const getKQXSMN = async () => {
+const createKqxs = (payload) => {
+    return axios.post("https://apixoso.com/api/kqxs", payload);
+};
+
+const invalidCache = () => {
+    return axios.post("https://apixoso.com/api/invalid-cache");
+};
+
+const getKQXSMN = async ({ onFinish }) => {
     console.log("Cào xsmn...");
 
     const url = "https://www.xosominhngoc.com/xo-so-truc-tiep/mien-nam.html";
@@ -103,13 +111,35 @@ const getKQXSMN = async () => {
                 .then(() => {
                     console.log("update done!");
                 });
+
+            let isDone = true;
+
+            Object.values(payload).forEach((kq) => {
+                const nums = Object.values(kq.ketqua).flat().filter(Boolean);
+
+                if (nums.length < 18) {
+                    isDone = false;
+                }
+            });
+
+            if (isDone && onFinish) {
+                onFinish();
+
+                Promise.all(
+                    Object.values(payload).map((kq) => {
+                        return createKqxs(kq);
+                    })
+                ).then(() => {
+                    invalidCache();
+                });
+            }
         })
         .catch((error) => {
             console.error("Error fetching data:", error);
         });
 };
 
-const getKQXSMT = async () => {
+const getKQXSMT = async ({ onFinish }) => {
     console.log("Cào xsmt...");
 
     const url = "https://www.xosominhngoc.com/xo-so-truc-tiep/mien-trung.html";
@@ -211,13 +241,35 @@ const getKQXSMT = async () => {
                 .then(() => {
                     console.log("update done!");
                 });
+
+            let isDone = true;
+
+            Object.values(payload).forEach((kq) => {
+                const nums = Object.values(kq.ketqua).flat().filter(Boolean);
+
+                if (nums.length < 18) {
+                    isDone = false;
+                }
+            });
+
+            if (isDone && onFinish) {
+                onFinish();
+
+                Promise.all(
+                    Object.values(payload).map((kq) => {
+                        return createKqxs(kq);
+                    })
+                ).then(() => {
+                    invalidCache();
+                });
+            }
         })
         .catch((error) => {
             console.error("Error fetching data:", error);
         });
 };
 
-const getKQXSMB = async () => {
+const getKQXSMB = async ({ onFinish }) => {
     console.log("Cào xsmb...");
 
     const url = "https://www.xosominhngoc.com/xo-so-truc-tiep/mien-bac.html";
@@ -334,6 +386,16 @@ const getKQXSMB = async () => {
                 .then(() => {
                     console.log("update done!");
                 });
+
+            const nums = Object.values(payload.ketqua).flat().filter(Boolean);
+
+            if (nums.length === 28 && onFinish) {
+                onFinish();
+
+                createKqxs(payload).then(() => {
+                    invalidCache();
+                });
+            }
         })
         .catch((error) => {
             console.error("Error fetching data:", error);
