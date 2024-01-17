@@ -1,7 +1,7 @@
 const schedule = require("node-schedule");
 const { getKQXSMT, getKQXSMB, getKQXSMN } = require("../crawxsminhngoc");
 
-schedule.scheduleJob("23 16 * * *", async function () {
+schedule.scheduleJob("10 16 * * *", async function () {
     console.log("Bắt đầu Crawl KQXS Miền Nam");
 
     getKQXSMN({ onFinish: () => {} });
