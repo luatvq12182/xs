@@ -1,10 +1,10 @@
 const schedule = require("node-schedule");
 const { getKQXSMT, getKQXSMB, getKQXSMN } = require("../crawxsminhngoc");
 
-schedule.scheduleJob("10 16 * * *", async function () {
+schedule.scheduleJob("23 16 * * *", async function () {
     console.log("Bắt đầu Crawl KQXS Miền Nam");
 
-    getKQXSMN();
+    getKQXSMN({ onFinish: () => {} });
 
     const timeID = setInterval(
         () =>
@@ -22,7 +22,7 @@ schedule.scheduleJob("10 16 * * *", async function () {
 schedule.scheduleJob("10 17 * * *", function () {
     console.log("Bắt đầu Crawl KQXS Miền Trung");
 
-    getKQXSMT();
+    getKQXSMT({ onFinish: () => {} });
 
     const timeID = setInterval(
         () =>
@@ -40,7 +40,7 @@ schedule.scheduleJob("10 17 * * *", function () {
 schedule.scheduleJob("10 18 * * *", function () {
     console.log("Bắt đầu Crawl KQXS Miền Bắc");
 
-    getKQXSMB();
+    getKQXSMB({ onFinish: () => {} });
 
     const timeID = setInterval(
         () =>
