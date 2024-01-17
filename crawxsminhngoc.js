@@ -26,7 +26,12 @@ const getKQXSMN = async ({ onFinish }) => {
             const tableRs = $(".bkqmiennam table table");
 
             tableRs.each((_, el) => {
-                const province = $(el).find(".tinh").text()?.trim();
+                let province = $(el).find(".tinh").text()?.trim();
+
+                if (province === 'TP. HCM') {
+                    province = 'TPHCM';
+                }
+
                 payload[province] = {
                     province,
                     domain: 3,
@@ -156,7 +161,12 @@ const getKQXSMT = async ({ onFinish }) => {
             const tableRs = $(".bkqmiennam table table");
 
             tableRs.each((_, el) => {
-                const province = $(el).find(".tinh").text()?.trim();
+                let province = $(el).find(".tinh").text()?.trim();
+
+                if (province === 'Thừa T. Huế') {
+                    province = 'Huế';
+                }
+
                 payload[province] = {
                     province,
                     domain: 2,
