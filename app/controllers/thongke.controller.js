@@ -2436,8 +2436,6 @@ const xuatHienNhieuNhatV2 = (req, res) => {
         if (cvHtml) {
             let html = `
                 <div class="thong-ke-xuat-hien-nhieu-nhat">
-                    <p class="table-main-title text-uppercase">Các số về nhiều nhất</p>
-
                     <table>
                         <thead>
                             <tr>
@@ -2525,9 +2523,7 @@ const xuatHienItNhatV2 = (req, res) => {
 
         if (cvHtml) {
             let html = `
-                <div class="thong-ke-xuat-hien-nhieu-nhat">
-                    <p class="table-main-title text-uppercase">Các số về nhiều nhất</p>
-
+                <div class="thong-ke-xuat-hien-it-nhat">
                     <table>
                         <thead>
                             <tr>
