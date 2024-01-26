@@ -2384,6 +2384,186 @@ const loLoTheoGiai = async (req, res) => {
     }
 };
 
+const xuatHienNhieuNhatV2 = (req, res) => {
+    try {
+        // cvHtml = 0 | 1 (true or false)
+        const { domain, province, cvHtml } = req.query;
+
+        let kqxs = CACHE.get("KQXS")[domain][province];
+
+        kqxs = Object.values(kqxs).slice(-30);
+
+        const numbers = {};
+
+        kqxs.forEach((e) => {
+            const date = new Date(e.ngay);
+
+            const rs = Object.values(e.ketqua)
+                .filter(Array.isArray)
+                .flat()
+                .map((e) => {
+                    return e.slice(-2);
+                });
+
+            rs.forEach((e) => {
+                if (numbers[e]) {
+                    numbers[e] = {
+                        theNumberOfOccurrences:
+                            numbers[e].theNumberOfOccurrences + 1,
+                        lastReturnDate: `${date.getDate()}-${
+                            date.getMonth() + 1
+                        }-${date.getFullYear()}`,
+                    };
+                } else {
+                    numbers[e] = {
+                        theNumberOfOccurrences: 1,
+                        lastReturnDate: `${date.getDate()}-${
+                            date.getMonth() + 1
+                        }-${date.getFullYear()}`,
+                    };
+                }
+            });
+        });
+
+        const arr = Object.entries(numbers);
+
+        arr.sort(
+            (a, b) => b[1].theNumberOfOccurrences - a[1].theNumberOfOccurrences
+        );
+
+        const top10 = arr.slice(0, 10);
+
+        if (cvHtml) {
+            let html = `
+                <div class="thong-ke-xuat-hien-nhieu-nhat">
+                    <p class="table-main-title text-uppercase">Các số về nhiều nhất</p>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Loto</th>
+                                <th>Xuất hiện</th>
+                                <th>Ngày về gần nhất</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            ${top10
+                                .map((num) => {
+                                    return `
+                                <tr>
+                                    <td>${num[0]}</td>
+                                    <td>${num[1].theNumberOfOccurrences} lượt</td>
+                                    <td>${num[1].lastReturnDate}</td>
+                                </tr>
+                                `;
+                                })
+                                .join("")}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+
+            res.json(html);
+        } else {
+            res.json(top10);
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(400).json("Error");
+    }
+};
+
+const xuatHienItNhatV2 = (req, res) => {
+    try {
+        // cvHtml = 0 | 1 (true or false)
+        const { domain, province, cvHtml } = req.query;
+
+        let kqxs = CACHE.get("KQXS")[domain][province];
+
+        kqxs = Object.values(kqxs).slice(-30);
+
+        const numbers = {};
+
+        kqxs.forEach((e) => {
+            const date = new Date(e.ngay);
+
+            const rs = Object.values(e.ketqua)
+                .filter(Array.isArray)
+                .flat()
+                .map((e) => {
+                    return e.slice(-2);
+                });
+
+            rs.forEach((e) => {
+                if (numbers[e]) {
+                    numbers[e] = {
+                        theNumberOfOccurrences:
+                            numbers[e].theNumberOfOccurrences + 1,
+                        lastReturnDate: `${date.getDate()}-${
+                            date.getMonth() + 1
+                        }-${date.getFullYear()}`,
+                    };
+                } else {
+                    numbers[e] = {
+                        theNumberOfOccurrences: 1,
+                        lastReturnDate: `${date.getDate()}-${
+                            date.getMonth() + 1
+                        }-${date.getFullYear()}`,
+                    };
+                }
+            });
+        });
+
+        const arr = Object.entries(numbers);
+
+        arr.sort(
+            (a, b) => a[1].theNumberOfOccurrences - b[1].theNumberOfOccurrences
+        );
+
+        const top10 = arr.slice(0, 10);
+
+        if (cvHtml) {
+            let html = `
+                <div class="thong-ke-xuat-hien-nhieu-nhat">
+                    <p class="table-main-title text-uppercase">Các số về nhiều nhất</p>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Loto</th>
+                                <th>Xuất hiện</th>
+                                <th>Ngày về gần nhất</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            ${top10
+                                .map((num) => {
+                                    return `
+                                        <tr>
+                                            <td>${num[0]}</td>
+                                            <td>${num[1].theNumberOfOccurrences} lượt</td>
+                                            <td>${num[1].lastReturnDate}</td>
+                                        </tr>
+                                    `;
+                                })
+                                .join("")}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+
+            res.json(html);
+        } else {
+            res.json(top10);
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(400).json("Error");
+    }
+};
+
 module.exports = {
     cangLoto,
     layKetQua,
@@ -2420,4 +2600,6 @@ module.exports = {
     deKepLech,
     deKepAm,
     loLoTheoGiai,
+    xuatHienNhieuNhatV2,
+    xuatHienItNhatV2,
 };
