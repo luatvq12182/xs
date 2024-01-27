@@ -62,5 +62,7 @@ router.get("/de-kep-am", thongKeController.deKepAm);
 router.get("/loto-theo-giai", thongKeController.loLoTheoGiai);
 router.get("/v2/xuat-hien-nhieu-nhat", thongKeController.xuatHienNhieuNhatV2);
 router.get("/v2/xuat-hien-it-nhat", thongKeController.xuatHienItNhatV2);
+router.get("/v2/thong-ke-gan-giai-dac-biet", thongKeController.thongKeGanGiaiDacBiet);
+router.get("/v2/thong-ke-tong-giai-dac-biet", thongKeController.thongKeTongGiaiDacBiet);
 
 module.exports = router;

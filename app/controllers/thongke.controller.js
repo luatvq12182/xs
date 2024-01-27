@@ -1,3 +1,4 @@
+const moment = require("moment");
 const { Constants } = require("../constants");
 const ThongKeService = require("../services/thongke.service");
 const kqxsModel = require("../models/kqxs.model");
@@ -11,6 +12,12 @@ const {
     genNumsByTotal,
 } = require("../utils");
 const CACHE = require("../../config/cache");
+
+const calculateDateDiff = (date1, date2) => {
+    const momentDate1 = moment(date1);
+    const momentDate2 = moment(date2);
+    return momentDate2.diff(momentDate1, "days");
+};
 
 const layKetQua = async (req, res, next) => {
     const { domain, ngay = new Date(), range = 30 } = req.query;
@@ -2431,7 +2438,12 @@ const xuatHienNhieuNhatV2 = (req, res) => {
             (a, b) => b[1].theNumberOfOccurrences - a[1].theNumberOfOccurrences
         );
 
-        const top10 = arr.slice(0, 10);
+        const top10 = arr.slice(0, 10).map((e) => {
+            return {
+                num: e[0],
+                ...e[1],
+            };
+        });
 
         if (cvHtml) {
             let html = `
@@ -2447,15 +2459,21 @@ const xuatHienNhieuNhatV2 = (req, res) => {
 
                         <tbody>
                             ${top10
-                                .map((num) => {
-                                    return `
+                                .map(
+                                    ({
+                                        num,
+                                        theNumberOfOccurrences,
+                                        lastReturnDate,
+                                    }) => {
+                                        return `
                                 <tr>
-                                    <td>${num[0]}</td>
-                                    <td>${num[1].theNumberOfOccurrences} lượt</td>
-                                    <td>${num[1].lastReturnDate}</td>
+                                    <td>${num}</td>
+                                    <td>${theNumberOfOccurrences} lượt</td>
+                                    <td>${lastReturnDate}</td>
                                 </tr>
                                 `;
-                                })
+                                    }
+                                )
                                 .join("")}
                         </tbody>
                     </table>
@@ -2519,7 +2537,12 @@ const xuatHienItNhatV2 = (req, res) => {
             (a, b) => a[1].theNumberOfOccurrences - b[1].theNumberOfOccurrences
         );
 
-        const top10 = arr.slice(0, 10);
+        const top10 = arr.slice(0, 10).map((e) => {
+            return {
+                num: e[0],
+                ...e[1],
+            };
+        });
 
         if (cvHtml) {
             let html = `
@@ -2535,12 +2558,129 @@ const xuatHienItNhatV2 = (req, res) => {
 
                         <tbody>
                             ${top10
-                                .map((num) => {
+                                .map(
+                                    ({
+                                        num,
+                                        theNumberOfOccurrences,
+                                        lastReturnDate,
+                                    }) => {
+                                        return `
+                                        <tr>
+                                            <td>${num}</td>
+                                            <td>${theNumberOfOccurrences} lượt</td>
+                                            <td>${lastReturnDate}</td>
+                                        </tr>
+                                    `;
+                                    }
+                                )
+                                .join("")}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+
+            res.json(html);
+        } else {
+            res.json(top10);
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(400).json("Error");
+    }
+};
+
+const thongKeGanGiaiDacBiet = (req, res) => {
+    try {
+        const { domain, province, cvHtml } = req.query;
+
+        let kqxs = CACHE.get("KQXS")[domain][province];
+
+        kqxs = Object.values(kqxs);
+
+        const numbers = {};
+
+        kqxs.forEach((e) => {
+            const date = new Date(e.ngay);
+
+            const rs = e.ketqua.giaidacbiet.map((num) => {
+                return num.slice(-2);
+            });
+
+            rs.forEach((e) => {
+                if (numbers[e]) {
+                    numbers[e] = {
+                        lastReturnDate: `${date.getDate()}-${
+                            date.getMonth() + 1
+                        }-${date.getFullYear()}`,
+                        returnDates: [...numbers[e].returnDates, date],
+                        range:
+                            numbers[e].returnDates.length > 0
+                                ? [
+                                      ...numbers[e].range,
+                                      calculateDateDiff(
+                                          numbers[e].returnDates[
+                                              numbers[e].returnDates.length - 1
+                                          ],
+                                          date
+                                      ),
+                                  ]
+                                : [],
+                        times: calculateDateDiff(date, new Date()),
+                    };
+                } else {
+                    numbers[e] = {
+                        lastReturnDate: `${date.getDate()}-${
+                            date.getMonth() + 1
+                        }-${date.getFullYear()}`,
+                        returnDates: [date],
+                        range: [],
+                        times: calculateDateDiff(date, new Date()),
+                    };
+                }
+            });
+        });
+
+        const arr = Object.entries(numbers);
+
+        arr.sort((a, b) => b[1].times - a[1].times);
+
+        const top10 = arr
+            .slice(0, 10)
+            .map((e) => {
+                return {
+                    num: e[0],
+                    ...e[1],
+                };
+            })
+            .map((e) => {
+                return {
+                    ...e,
+                    max: e.range.length > 0 ? Math.max(...e.range) : e.times,
+                };
+            });
+
+        if (cvHtml) {
+            let html = `
+                <div class="thong-ke-xuat-hien-it-nhat">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Lô gan</th>
+                                <th>Lần chưa về</th>
+                                <th>Về gần nhất</th>
+                                <th>Lô gan cực đại</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            ${top10
+                                .map(({ num, times, lastReturnDate, max }) => {
                                     return `
                                         <tr>
-                                            <td>${num[0]}</td>
-                                            <td>${num[1].theNumberOfOccurrences} lượt</td>
-                                            <td>${num[1].lastReturnDate}</td>
+                                            <td>${num}</td>
+                                            <td>${times} lần</td>
+                                            <td>${lastReturnDate}</td>
+                                            <td>${max} lần</td>
                                         </tr>
                                     `;
                                 })
@@ -2553,6 +2693,129 @@ const xuatHienItNhatV2 = (req, res) => {
             res.json(html);
         } else {
             res.json(top10);
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(400).json("Error");
+    }
+};
+
+const thongKeTongGiaiDacBiet = (req, res) => {
+    try {
+        const { domain, province, cvHtml } = req.query;
+
+        let kqxs = CACHE.get("KQXS")[domain][province];
+
+        kqxs = Object.values(kqxs);
+
+        const numbers = {};
+
+        kqxs.forEach((e) => {
+            const date = new Date(e.ngay);
+
+            const rs = e.ketqua.giaidacbiet.map((num) => {
+                return num.slice(-2);
+            });
+
+            rs.forEach((e) => {
+                let total = +e[0] + +e[1];
+                total = total < 10 ? total : total - 10;
+
+                if (numbers[total]) {
+                    numbers[total] = {
+                        lastReturnDate: `${date.getDate()}-${
+                            date.getMonth() + 1
+                        }-${date.getFullYear()}`,
+                        returnDates: [...numbers[total].returnDates, date],
+                        range:
+                            numbers[total].returnDates.length > 0
+                                ? [
+                                      ...numbers[total].range,
+                                      calculateDateDiff(
+                                          numbers[total].returnDates[
+                                              numbers[total].returnDates
+                                                  .length - 1
+                                          ],
+                                          date
+                                      ),
+                                  ]
+                                : [],
+                        times: calculateDateDiff(date, new Date()),
+                    };
+                } else {
+                    numbers[total] = {
+                        lastReturnDate: `${date.getDate()}-${
+                            date.getMonth() + 1
+                        }-${date.getFullYear()}`,
+                        returnDates: [date],
+                        range: [],
+                        times: calculateDateDiff(date, new Date()),
+                    };
+                }
+            });
+        });
+
+        const arr = Object.entries(numbers);
+
+        arr.sort((a, b) => b[1].times - a[1].times);
+
+        const top10 = arr
+            .slice(0, 10)
+            .map((e) => {
+                return {
+                    num: e[0],
+                    ...e[1],
+                };
+            })
+            .map((e) => {
+                return {
+                    ...e,
+                    max: e.range.length > 0 ? Math.max(...e.range) : e.times,
+                };
+            });
+
+        if (cvHtml) {
+            let html = `
+                <div class="thong-ke-xuat-hien-it-nhat">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tổng số</th>
+                                <th>Lần chưa về</th>
+                                <th>Về gần nhất</th>
+                                <th>Lô gan cực</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            ${top10
+                                .map(({ num, times, lastReturnDate, max }) => {
+                                    return `
+                                        <tr>
+                                            <td>${num}</td>
+                                            <td>${times} lần</td>
+                                            <td>${lastReturnDate}</td>
+                                            <td>${max} lần</td>
+                                        </tr>
+                                    `;
+                                })
+                                .join("")}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+
+            res.json(html);
+        } else {
+            res.json(
+                top10.map((e) => {
+                    return {
+                        ...e,
+                        returnDates: [],
+                        range: [],
+                    };
+                })
+            );
         }
     } catch (error) {
         console.log(error);
@@ -2598,4 +2861,6 @@ module.exports = {
     loLoTheoGiai,
     xuatHienNhieuNhatV2,
     xuatHienItNhatV2,
+    thongKeGanGiaiDacBiet,
+    thongKeTongGiaiDacBiet,
 };
