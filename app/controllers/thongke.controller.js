@@ -2448,10 +2448,11 @@ const xuatHienNhieuNhatV2 = (req, res) => {
         if (cvHtml) {
             let html = `
                 <div class="thong-ke-xuat-hien-nhieu-nhat">
-                    <p class="table-main-title text-uppercase">Thống kê Loto xuất hiện nhiều nhất</p>
-
                     <table>
                         <thead>
+                            <tr>
+                                <th colspan="4" class="table-main-title">Thống kê Loto xuất hiện nhiều nhất</th>
+                            </tr>
                             <tr>
                                 <th>Loto</th>
                                 <th>Xuất hiện</th>
@@ -2549,10 +2550,11 @@ const xuatHienItNhatV2 = (req, res) => {
         if (cvHtml) {
             let html = `
                 <div class="thong-ke-xuat-hien-it-nhat">
-                    <p class="table-main-title text-uppercase">Thống kê loto xuất hiện ít nhất</p>
-
                     <table>
                         <thead>
+                            <tr>
+                                <th colspan="4" class="table-main-title">Thống kê loto xuất hiện ít nhất</th>
+                            </tr>
                             <tr>
                                 <th>Loto</th>
                                 <th>Xuất hiện</th>
@@ -2666,10 +2668,11 @@ const thongKeGanGiaiDacBiet = (req, res) => {
         if (cvHtml) {
             let html = `
                 <div class="thong-ke-xuat-hien-it-nhat">
-                    <p class="table-main-title text-uppercase">Thống kê gan giải đặc biệt</p>
-
                     <table>
                         <thead>
+                            <tr>
+                                <th colspan="4" class="table-main-title">Thống kê gan giải đặc biệt</th>
+                            </tr>
                             <tr>
                                 <th>Lô gan</th>
                                 <th>Lần chưa về</th>
@@ -2783,10 +2786,11 @@ const thongKeTongGiaiDacBiet = (req, res) => {
         if (cvHtml) {
             let html = `
                 <div class="thong-ke-xuat-hien-it-nhat">
-                    <p class="table-main-title text-uppercase">Thống kê tổng giải đặc biệt</p>
-
                     <table>
                         <thead>
+                            <tr>
+                                <th colspan="4" class="table-main-title">Thống kê tổng giải đặc biệt</th>
+                            </tr>
                             <tr>
                                 <th>Tổng số</th>
                                 <th>Lần chưa về</th>
