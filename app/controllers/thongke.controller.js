@@ -2448,6 +2448,8 @@ const xuatHienNhieuNhatV2 = (req, res) => {
         if (cvHtml) {
             let html = `
                 <div class="thong-ke-xuat-hien-nhieu-nhat">
+                    <p class="table-main-title text-uppercase">Thống kê Loto xuất hiện nhiều nhất</p>
+
                     <table>
                         <thead>
                             <tr>
@@ -2547,6 +2549,8 @@ const xuatHienItNhatV2 = (req, res) => {
         if (cvHtml) {
             let html = `
                 <div class="thong-ke-xuat-hien-it-nhat">
+                    <p class="table-main-title text-uppercase">Thống kê loto xuất hiện ít nhất</p>
+
                     <table>
                         <thead>
                             <tr>
@@ -2662,6 +2666,8 @@ const thongKeGanGiaiDacBiet = (req, res) => {
         if (cvHtml) {
             let html = `
                 <div class="thong-ke-xuat-hien-it-nhat">
+                    <p class="table-main-title text-uppercase">Thống kê gan giải đặc biệt</p>
+
                     <table>
                         <thead>
                             <tr>
@@ -2777,6 +2783,8 @@ const thongKeTongGiaiDacBiet = (req, res) => {
         if (cvHtml) {
             let html = `
                 <div class="thong-ke-xuat-hien-it-nhat">
+                    <p class="table-main-title text-uppercase">Thống kê tổng giải đặc biệt</p>
+
                     <table>
                         <thead>
                             <tr>
