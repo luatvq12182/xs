@@ -2840,8 +2840,258 @@ const rbkThongKeXSMBTongHop = (req, res) => {
         const { cvHtml } = req.query;
 
         let kqxs = CACHE.get("KQXS")[1];
+        kqxs = Object.values(kqxs)
+            .filter((e) => !Array.isArray(e))
+            .reverse()
+            .slice(0, 40);
 
-        res.json({ kqxs });
+        let response = {
+            loroi: {},
+            head: {
+                0: 0,
+                1: 0,
+                2: 0,
+                3: 0,
+                4: 0,
+                5: 0,
+                6: 0,
+                7: 0,
+                8: 0,
+                9: 0,
+            },
+            tail: {
+                0: 0,
+                1: 0,
+                2: 0,
+                3: 0,
+                4: 0,
+                5: 0,
+                6: 0,
+                7: 0,
+                8: 0,
+                9: 0,
+            },
+        };
+
+        for (let i = 0; i < kqxs.length; i++) {
+            const kq = kqxs[i];
+            const nums = Object.values(kq.ketqua)
+                .flat()
+                .slice(1)
+                .map((num) => {
+                    return num.slice(-2);
+                });
+
+            nums.forEach((num) => {
+                if (i === 0) {
+                    response.loroi[num] = 1;
+                } else {
+                    if (response.loroi[num] && i === response.loroi[num]) {
+                        response.loroi[num] = response.loroi[num] + 1;
+                    }
+                }
+
+                if (response[num]) {
+                    response[num].appear = response[num].appear + 1;
+                } else {
+                    response[num] = {
+                        appear: 1,
+                        numberOfDaysNotReturned: calculateDateDiff(
+                            kq.ngay,
+                            new Date()
+                        ),
+                    };
+                }
+
+                response.head[num[0]] = response.head[num[0]] + 1;
+                response.tail[num[1]] = response.tail[num[1]] + 1;
+            });
+        }
+
+        const sortArrByAppear = Object.entries(response).sort((a, b) => {
+            return b[1].appear - a[1].appear;
+        });
+        const sortArrByDaysNotReturn = Object.entries(response)
+            .sort((a, b) => {
+                return (
+                    b[1].numberOfDaysNotReturned - a[1].numberOfDaysNotReturned
+                );
+            })
+            .filter((e) => e[1].numberOfDaysNotReturned >= 10);
+        const sortArrByLoRoi = Object.entries(response.loroi)
+            .sort((a, b) => {
+                return b[1] - a[1];
+            })
+            .filter((e) => e[1] > 1);
+
+        if (cvHtml) {
+            res.json({
+                html: `
+                <div class="widget-content">
+                  <div class="tk-nhanh-item-header">
+                    10 bộ số xuất hiện <span class="red">nhiều</span> nhất trong 40 ngày
+                    qua
+                    </div>
+                    <table class="table col100">
+                    <tbody>
+                        <tr>
+                        ${sortArrByAppear.slice(0, 5).map((e) => {
+                            return `
+                                <td class="tk-nhanh-number">
+                                    <span class="bold">${e[0]}</span>: ${e[1].appear} lần
+                                </td>
+                            `;
+                        }).join('')}
+                        </tr>
+                        <tr>
+                        ${sortArrByAppear.slice(5, 10).map((e) => {
+                            return `
+                                <td class="tk-nhanh-number">
+                                    <span class="bold">${e[0]}</span>: ${e[1].appear} lần
+                                </td>
+                            `;
+                        }).join('')}
+                        </tr>
+                    </tbody>
+                    </table>
+                    <div class="tk-nhanh-item-header">
+                    10 bộ số xuất hiện <span class="red">ít</span> nhất trong 40 ngày qua
+                    </div>
+                    <table class="table col100">
+                    <tbody>
+                        <tr>
+                        ${sortArrByAppear.slice(-5).map((e) => {
+                            return `
+                                <td class="tk-nhanh-number">
+                                    <span class="bold">${e[0]}</span>: ${e[1].appear} lần
+                                </td>
+                            `;
+                        }).join('')}
+                        </tr>
+                        <tr>
+                        ${sortArrByAppear.slice(-10, -5).map((e) => {
+                            return `
+                                <td class="tk-nhanh-number">
+                                    <span class="bold">${e[0]}</span>: ${e[1].appear} lần
+                                </td>
+                            `;
+                        }).join('')}
+                        </tr>
+                    </tbody>
+                    </table>
+                    <div class="tk-nhanh-item-header">
+                    Bộ số ra liên tiếp (<span class="red">Lô rơi</span>)
+                    </div>
+                    <table class="table col100">
+                    <tbody>
+                        <tr>
+                        ${sortArrByLoRoi.slice(0, 5).map((e) => {
+                            return `
+                                <td class="tk-nhanh-number">
+                                    <span class="bold">${e[0]}</span>: ${e[1]} lần
+                                </td>
+                            `;
+                        }).join('')}
+                        </tr>
+                        <tr>
+                        ${sortArrByLoRoi.slice(5, 10).map((e) => {
+                            return `
+                                <td class="tk-nhanh-number">
+                                    <span class="bold">${e[0]}</span>: ${e[1]} lần
+                                </td>
+                            `;
+                        }).join('')}
+                        </tr>
+                    </tbody>
+                    </table>
+                    <div class="tk-nhanh-item-header">
+                    Bộ số không ra 10 ngày trở lên (<span class="red">Lô khan</span>)
+                    </div>
+                    <table class="table col100">
+                    <tbody>
+                        <tr>
+                        ${sortArrByDaysNotReturn.slice(0, 5).map((e) => {
+                            return `
+                                <td class="tk-nhanh-number">
+                                    <span class="bold">${e[0]}</span>: ${e[1].numberOfDaysNotReturned} lần
+                                </td>
+                            `;
+                        }).join('')}
+                        </tr>
+                        <tr>
+                        ${sortArrByDaysNotReturn.slice(5, 10).map((e) => {
+                            return `
+                                <td class="tk-nhanh-number">
+                                    <span class="bold">${e[0]}</span>: ${e[1].numberOfDaysNotReturned} lần
+                                </td>
+                            `;
+                        }).join('')}
+                        </tr>
+                    </tbody>
+                    </table>
+                    <div class="tk-nhanh-item-header">
+                    Thống kê <span class="red"> đầu số </span> xuất hiện trong 40 ngày qua
+                    </div>
+                    <table class="table col100 tsds-40">
+                    <tbody>
+                        <tr>
+                        ${Object.entries(response.head).slice(0, 10).map((e) => {
+                            return `
+                                <td class="tk-nhanh-number">
+                                    <span class="bold">${e[0]}</span>: ${e[1]} lần
+                                </td>
+                            `;
+                        }).join('')}
+                        </tr>
+                        <tr>
+                        ${Object.entries(response.head).slice(5, 10).map((e) => {
+                            return `
+                                <td class="tk-nhanh-number">
+                                    <span class="bold">${e[0]}</span>: ${e[1]} lần
+                                </td>
+                            `;
+                        }).join('')}
+                        </tr>
+                    </tbody>
+                    </table>
+                    <div class="tk-nhanh-item-header">
+                    Thống kê <span class="red"> đít số </span>xuất hiện trong 40 ngày qua
+                    </div>
+                    <table class="table col100 tsds-40">
+                    <tbody>
+                        <tr>
+                        ${Object.entries(response.tail).slice(0, 5).map((e) => {
+                            return `
+                                <td class="tk-nhanh-number">
+                                    <span class="bold">${e[0]}</span>: ${e[1]} lần
+                                </td>
+                            `;
+                        }).join('')}
+                        </tr>
+                        <tr>
+                        ${Object.entries(response.tail).slice(5, 10).map((e) => {
+                            return `
+                                <td class="tk-nhanh-number">
+                                    <span class="bold">${e[0]}</span>: ${e[1]} lần
+                                </td>
+                            `;
+                        }).join('')}
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>                
+                `,
+            });
+        } else {
+            res.json({
+                most: sortArrByAppear.slice(0, 10),
+                atLeast: sortArrByAppear.slice(-10),
+                sortArrByDaysNotReturn,
+                head: response.head,
+                tail: response.tail,
+                loroi: sortArrByLoRoi,
+            });
+        }
     } catch (error) {
         console.log(error);
         res.status(400).json("Error");
@@ -2990,14 +3240,14 @@ const rbkThongKeXSMBTheoNgay = (req, res) => {
         const day = today.getDay();
 
         const dayLabels = {
-            0: 'Chủ nhật',
-            1: 'Thứ hai',
-            2: 'Thứ ba',
-            3: 'Thứ tư',
-            4: 'Thứ năm',
-            5: 'Thứ sáu',
-            6: 'Thứ bảy',
-        }
+            0: "Chủ nhật",
+            1: "Thứ hai",
+            2: "Thứ ba",
+            3: "Thứ tư",
+            4: "Thứ năm",
+            5: "Thứ sáu",
+            6: "Thứ bảy",
+        };
 
         let kqxs = CACHE.get("KQXS")[1];
         kqxs = Object.values(kqxs)
@@ -3046,27 +3296,37 @@ const rbkThongKeXSMBTheoNgay = (req, res) => {
                     <div class="result-table">
                         <table class="table col100">
                             <tbody>
-                                <tr><td class="bold">27 bộ số xuất hiện nhiều nhất vào ${dayLabels[day]} trong 4 tuần:</td></tr>
+                                <tr><td class="bold">27 bộ số xuất hiện nhiều nhất vào ${
+                                    dayLabels[day]
+                                } trong 4 tuần:</td></tr>
                                 <tr>
                                     <td class="lh22">
-                                        ${sortArr.slice(0, 27).map((e) => {
-                                            return `<span class="bold red">${e[0]}</span>(${e[1]} lần); `;
-                                        }).join('')}
+                                        ${sortArr
+                                            .slice(0, 27)
+                                            .map((e) => {
+                                                return `<span class="bold red">${e[0]}</span>(${e[1]} lần); `;
+                                            })
+                                            .join("")}
                                     </td>
                                 </tr>
-                                <tr><td class="bold">10 bộ số xuất hiện ít nhất vào ${dayLabels[day]} trong 4 tuần: </td></tr>
+                                <tr><td class="bold">10 bộ số xuất hiện ít nhất vào ${
+                                    dayLabels[day]
+                                } trong 4 tuần: </td></tr>
                                 <tr>
                                     <td class="lh22">
-                                        ${sortArr.slice(-10).map((e) => {
-                                            return `<span class="bold red">${e[0]}</span>(${e[1]} lần); `;
-                                        }).join('')}
+                                        ${sortArr
+                                            .slice(-10)
+                                            .map((e) => {
+                                                return `<span class="bold red">${e[0]}</span>(${e[1]} lần); `;
+                                            })
+                                            .join("")}
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>            
-                `
-            })
+                `,
+            });
         } else {
             return res.json({
                 most: sortArr.slice(0, 27),
