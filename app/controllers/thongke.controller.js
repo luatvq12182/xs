@@ -2845,32 +2845,31 @@ const rbkThongKeXSMBTongHop = (req, res) => {
             .reverse()
             .slice(0, 40);
 
-        let response = {
-            loroi: {},
-            head: {
-                0: 0,
-                1: 0,
-                2: 0,
-                3: 0,
-                4: 0,
-                5: 0,
-                6: 0,
-                7: 0,
-                8: 0,
-                9: 0,
-            },
-            tail: {
-                0: 0,
-                1: 0,
-                2: 0,
-                3: 0,
-                4: 0,
-                5: 0,
-                6: 0,
-                7: 0,
-                8: 0,
-                9: 0,
-            },
+        let appear = {};
+        let loroi = {};
+        let head = {
+            0: 0,
+            1: 0,
+            2: 0,
+            3: 0,
+            4: 0,
+            5: 0,
+            6: 0,
+            7: 0,
+            8: 0,
+            9: 0,
+        };
+        let tail = {
+            0: 0,
+            1: 0,
+            2: 0,
+            3: 0,
+            4: 0,
+            5: 0,
+            6: 0,
+            7: 0,
+            8: 0,
+            9: 0,
         };
 
         for (let i = 0; i < kqxs.length; i++) {
@@ -2884,17 +2883,17 @@ const rbkThongKeXSMBTongHop = (req, res) => {
 
             nums.forEach((num) => {
                 if (i === 0) {
-                    response.loroi[num] = 1;
+                    loroi[num] = 1;
                 } else {
-                    if (response.loroi[num] && i === response.loroi[num]) {
-                        response.loroi[num] = response.loroi[num] + 1;
+                    if (loroi[num] && i === loroi[num]) {
+                        loroi[num] = loroi[num] + 1;
                     }
                 }
 
-                if (response[num]) {
-                    response[num].appear = response[num].appear + 1;
+                if (appear[num]) {
+                    appear[num].appear = appear[num].appear + 1;
                 } else {
-                    response[num] = {
+                    appear[num] = {
                         appear: 1,
                         numberOfDaysNotReturned: calculateDateDiff(
                             kq.ngay,
@@ -2903,22 +2902,22 @@ const rbkThongKeXSMBTongHop = (req, res) => {
                     };
                 }
 
-                response.head[num[0]] = response.head[num[0]] + 1;
-                response.tail[num[1]] = response.tail[num[1]] + 1;
+                head[num[0]] = head[num[0]] + 1;
+                tail[num[1]] = tail[num[1]] + 1;
             });
         }
 
-        const sortArrByAppear = Object.entries(response).sort((a, b) => {
+        const sortArrByAppear = Object.entries(appear).sort((a, b) => {
             return b[1].appear - a[1].appear;
         });
-        const sortArrByDaysNotReturn = Object.entries(response)
+        const sortArrByDaysNotReturn = Object.entries(appear)
             .sort((a, b) => {
                 return (
                     b[1].numberOfDaysNotReturned - a[1].numberOfDaysNotReturned
                 );
             })
             .filter((e) => e[1].numberOfDaysNotReturned >= 10);
-        const sortArrByLoRoi = Object.entries(response.loroi)
+        const sortArrByLoRoi = Object.entries(loroi)
             .sort((a, b) => {
                 return b[1] - a[1];
             })
@@ -2935,22 +2934,28 @@ const rbkThongKeXSMBTongHop = (req, res) => {
                     <table class="table col100">
                     <tbody>
                         <tr>
-                        ${sortArrByAppear.slice(0, 5).map((e) => {
-                            return `
+                        ${sortArrByAppear
+                            .slice(0, 5)
+                            .map((e) => {
+                                return `
                                 <td class="tk-nhanh-number">
                                     <span class="bold">${e[0]}</span>: ${e[1].appear} lần
                                 </td>
                             `;
-                        }).join('')}
+                            })
+                            .join("")}
                         </tr>
                         <tr>
-                        ${sortArrByAppear.slice(5, 10).map((e) => {
-                            return `
+                        ${sortArrByAppear
+                            .slice(5, 10)
+                            .map((e) => {
+                                return `
                                 <td class="tk-nhanh-number">
                                     <span class="bold">${e[0]}</span>: ${e[1].appear} lần
                                 </td>
                             `;
-                        }).join('')}
+                            })
+                            .join("")}
                         </tr>
                     </tbody>
                     </table>
@@ -2960,22 +2965,28 @@ const rbkThongKeXSMBTongHop = (req, res) => {
                     <table class="table col100">
                     <tbody>
                         <tr>
-                        ${sortArrByAppear.slice(-5).map((e) => {
-                            return `
+                        ${sortArrByAppear
+                            .slice(-5)
+                            .map((e) => {
+                                return `
                                 <td class="tk-nhanh-number">
                                     <span class="bold">${e[0]}</span>: ${e[1].appear} lần
                                 </td>
                             `;
-                        }).join('')}
+                            })
+                            .join("")}
                         </tr>
                         <tr>
-                        ${sortArrByAppear.slice(-10, -5).map((e) => {
-                            return `
+                        ${sortArrByAppear
+                            .slice(-10, -5)
+                            .map((e) => {
+                                return `
                                 <td class="tk-nhanh-number">
                                     <span class="bold">${e[0]}</span>: ${e[1].appear} lần
                                 </td>
                             `;
-                        }).join('')}
+                            })
+                            .join("")}
                         </tr>
                     </tbody>
                     </table>
@@ -2985,22 +2996,28 @@ const rbkThongKeXSMBTongHop = (req, res) => {
                     <table class="table col100">
                     <tbody>
                         <tr>
-                        ${sortArrByLoRoi.slice(0, 5).map((e) => {
-                            return `
+                        ${sortArrByLoRoi
+                            .slice(0, 5)
+                            .map((e) => {
+                                return `
                                 <td class="tk-nhanh-number">
                                     <span class="bold">${e[0]}</span>: ${e[1]} lần
                                 </td>
                             `;
-                        }).join('')}
+                            })
+                            .join("")}
                         </tr>
                         <tr>
-                        ${sortArrByLoRoi.slice(5, 10).map((e) => {
-                            return `
+                        ${sortArrByLoRoi
+                            .slice(5, 10)
+                            .map((e) => {
+                                return `
                                 <td class="tk-nhanh-number">
                                     <span class="bold">${e[0]}</span>: ${e[1]} lần
                                 </td>
                             `;
-                        }).join('')}
+                            })
+                            .join("")}
                         </tr>
                     </tbody>
                     </table>
@@ -3010,22 +3027,28 @@ const rbkThongKeXSMBTongHop = (req, res) => {
                     <table class="table col100">
                     <tbody>
                         <tr>
-                        ${sortArrByDaysNotReturn.slice(0, 5).map((e) => {
-                            return `
+                        ${sortArrByDaysNotReturn
+                            .slice(0, 5)
+                            .map((e) => {
+                                return `
                                 <td class="tk-nhanh-number">
                                     <span class="bold">${e[0]}</span>: ${e[1].numberOfDaysNotReturned} lần
                                 </td>
                             `;
-                        }).join('')}
+                            })
+                            .join("")}
                         </tr>
                         <tr>
-                        ${sortArrByDaysNotReturn.slice(5, 10).map((e) => {
-                            return `
+                        ${sortArrByDaysNotReturn
+                            .slice(5, 10)
+                            .map((e) => {
+                                return `
                                 <td class="tk-nhanh-number">
                                     <span class="bold">${e[0]}</span>: ${e[1].numberOfDaysNotReturned} lần
                                 </td>
                             `;
-                        }).join('')}
+                            })
+                            .join("")}
                         </tr>
                     </tbody>
                     </table>
@@ -3035,22 +3058,28 @@ const rbkThongKeXSMBTongHop = (req, res) => {
                     <table class="table col100 tsds-40">
                     <tbody>
                         <tr>
-                        ${Object.entries(response.head).slice(0, 10).map((e) => {
-                            return `
+                        ${Object.entries(head)
+                            .slice(0, 5)
+                            .map((e) => {
+                                return `
                                 <td class="tk-nhanh-number">
                                     <span class="bold">${e[0]}</span>: ${e[1]} lần
                                 </td>
                             `;
-                        }).join('')}
+                            })
+                            .join("")}
                         </tr>
                         <tr>
-                        ${Object.entries(response.head).slice(5, 10).map((e) => {
-                            return `
+                        ${Object.entries(head)
+                            .slice(5, 10)
+                            .map((e) => {
+                                return `
                                 <td class="tk-nhanh-number">
                                     <span class="bold">${e[0]}</span>: ${e[1]} lần
                                 </td>
                             `;
-                        }).join('')}
+                            })
+                            .join("")}
                         </tr>
                     </tbody>
                     </table>
@@ -3060,22 +3089,28 @@ const rbkThongKeXSMBTongHop = (req, res) => {
                     <table class="table col100 tsds-40">
                     <tbody>
                         <tr>
-                        ${Object.entries(response.tail).slice(0, 5).map((e) => {
-                            return `
+                        ${Object.entries(tail)
+                            .slice(0, 5)
+                            .map((e) => {
+                                return `
                                 <td class="tk-nhanh-number">
                                     <span class="bold">${e[0]}</span>: ${e[1]} lần
                                 </td>
                             `;
-                        }).join('')}
+                            })
+                            .join("")}
                         </tr>
                         <tr>
-                        ${Object.entries(response.tail).slice(5, 10).map((e) => {
-                            return `
+                        ${Object.entries(tail)
+                            .slice(5, 10)
+                            .map((e) => {
+                                return `
                                 <td class="tk-nhanh-number">
                                     <span class="bold">${e[0]}</span>: ${e[1]} lần
                                 </td>
                             `;
-                        }).join('')}
+                            })
+                            .join("")}
                         </tr>
                     </tbody>
                     </table>
@@ -3087,8 +3122,8 @@ const rbkThongKeXSMBTongHop = (req, res) => {
                 most: sortArrByAppear.slice(0, 10),
                 atLeast: sortArrByAppear.slice(-10),
                 sortArrByDaysNotReturn,
-                head: response.head,
-                tail: response.tail,
+                head: head,
+                tail: tail,
                 loroi: sortArrByLoRoi,
             });
         }
