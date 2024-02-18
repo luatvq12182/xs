@@ -65,4 +65,8 @@ router.get("/v2/xuat-hien-it-nhat", thongKeController.xuatHienItNhatV2);
 router.get("/v2/thong-ke-gan-giai-dac-biet", thongKeController.thongKeGanGiaiDacBiet);
 router.get("/v2/thong-ke-tong-giai-dac-biet", thongKeController.thongKeTongGiaiDacBiet);
 
+router.get("/v2/rbk/xsmb-tong-hop", thongKeController.rbkThongKeXSMBTongHop);
+router.get("/v2/rbk/dac-biet-xsmb-lau-chua-ra", thongKeController.rbkThongKeDacBietXSMBLauChuaRa);
+router.get("/v2/rbk/xsmb-theo-ngay", thongKeController.rbkThongKeXSMBTheoNgay);
+
 module.exports = router;

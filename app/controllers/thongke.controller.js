@@ -2835,6 +2835,149 @@ const thongKeTongGiaiDacBiet = (req, res) => {
     }
 };
 
+const rbkThongKeXSMBTongHop = (req, res) => {
+    try {
+        const { cvHtml } = req.query;
+
+        let kqxs = CACHE.get("KQXS")[1];
+
+        res.json({ kqxs });
+    } catch (error) {
+        console.log(error);
+        res.status(400).json("Error");
+    }
+};
+
+const rbkThongKeDacBietXSMBLauChuaRa = (req, res) => {
+    try {
+        const { cvHtml } = req.query;
+
+        let kqxs = CACHE.get("KQXS")[1];
+
+        kqxs = Object.values(kqxs)
+            .filter((e) => !Array.isArray(e))
+            .reverse();
+
+        const response = {};
+        let count = 100;
+
+        for (let i = 0; i < kqxs.length; i++) {
+            const kq = kqxs[i];
+            const giaidacbiet = kq.ketqua.giaidacbiet[0].slice(-2);
+
+            if (!response[giaidacbiet]) {
+                response[giaidacbiet] = calculateDateDiff(kq.ngay, new Date());
+                count--;
+            }
+
+            if (count === 0) break;
+        }
+
+        const sortArr = Object.entries(response).sort((a, b) => {
+            return b[1] - a[1];
+        });
+
+        if (+cvHtml) {
+            res.json({
+                html: `
+                    <div class="thongke-db">
+                        <table class="tbl1" cellspacing="1" cellpadding="4">
+                            <tbody>
+                                ${sortArr.slice(0, 5).map((e) => {
+                                    return `
+                                        <tr>
+                                            <td class="col1">${e[0]}</td>
+                                            <td class="col2">${e[1]}&nbsp;ngày</td>
+                                        </tr>                                        
+                                    `
+                                }).join('')}
+                            </tbody>
+                        </table>
+                        <table class="tbl1" cellspacing="1" cellpadding="4">
+                            <tbody>
+                                ${sortArr.slice(5, 10).map((e) => {
+                                    return `
+                                        <tr>
+                                            <td class="col1">${e[0]}</td>
+                                            <td class="col2">${e[1]}&nbsp;ngày</td>
+                                        </tr>                                        
+                                    `
+                                }).join('')}
+                            </tbody>
+                        </table>
+                        <table class="tbl1" cellspacing="1" cellpadding="4">
+                            <tbody>
+                                ${sortArr.slice(10, 15).map((e) => {
+                                    return `
+                                        <tr>
+                                            <td class="col1">${e[0]}</td>
+                                            <td class="col2">${e[1]}&nbsp;ngày</td>
+                                        </tr>                                        
+                                    `
+                                }).join('')}
+                            </tbody>
+                        </table>
+                        <table class="tbl1" cellspacing="1" cellpadding="4">
+                            <tbody>
+                                ${sortArr.slice(15, 20).map((e) => {
+                                    return `
+                                        <tr>
+                                            <td class="col1">${e[0]}</td>
+                                            <td class="col2">${e[1]}&nbsp;ngày</td>
+                                        </tr>                                        
+                                    `
+                                }).join('')}
+                            </tbody>
+                        </table>
+                        <table class="tbl1" cellspacing="1" cellpadding="4">
+                            <tbody>
+                                ${sortArr.slice(20, 25).map((e) => {
+                                    return `
+                                        <tr>
+                                            <td class="col1">${e[0]}</td>
+                                            <td class="col2">${e[1]}&nbsp;ngày</td>
+                                        </tr>                                        
+                                    `
+                                }).join('')}
+                            </tbody>
+                        </table>
+                        <table class="tbl1" cellspacing="1" cellpadding="4">
+                            <tbody>
+                                ${sortArr.slice(25, 30).map((e) => {
+                                    return `
+                                        <tr>
+                                            <td class="col1">${e[0]}</td>
+                                            <td class="col2">${e[1]}&nbsp;ngày</td>
+                                        </tr>                                        
+                                    `
+                                }).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `,
+            });
+        } else {
+            res.json(sortArr.slice(0, 30));
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(400).json("Error");
+    }
+};
+
+const rbkThongKeXSMBTheoNgay = (req, res) => {
+    try {
+        const { cvHtml } = req.query;
+
+        let kqxs = CACHE.get("KQXS")[1];
+
+        res.json({ kqxs });
+    } catch (error) {
+        console.log(error);
+        res.status(400).json("Error");
+    }
+};
+
 module.exports = {
     cangLoto,
     layKetQua,
@@ -2875,4 +3018,7 @@ module.exports = {
     xuatHienItNhatV2,
     thongKeGanGiaiDacBiet,
     thongKeTongGiaiDacBiet,
+    rbkThongKeXSMBTongHop,
+    rbkThongKeDacBietXSMBLauChuaRa,
+    rbkThongKeXSMBTheoNgay,
 };
