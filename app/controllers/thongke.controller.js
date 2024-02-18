@@ -3007,7 +3007,7 @@ const rbkThongKeXSMBTongHop = (req, res) => {
                             })
                             .join("")}
                         </tr>
-                        <tr>
+                        ${sortArrByLoRoi.length > 5 ? `<tr>
                         ${sortArrByLoRoi
                             .slice(5, 10)
                             .map((e) => {
@@ -3018,7 +3018,7 @@ const rbkThongKeXSMBTongHop = (req, res) => {
                             `;
                             })
                             .join("")}
-                        </tr>
+                        </tr>` : ''}
                     </tbody>
                     </table>
                     <div class="tk-nhanh-item-header">
