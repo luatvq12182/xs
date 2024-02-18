@@ -2883,74 +2883,92 @@ const rbkThongKeDacBietXSMBLauChuaRa = (req, res) => {
                     <div class="thongke-db">
                         <table class="tbl1" cellspacing="1" cellpadding="4">
                             <tbody>
-                                ${sortArr.slice(0, 5).map((e) => {
-                                    return `
+                                ${sortArr
+                                    .slice(0, 5)
+                                    .map((e) => {
+                                        return `
                                         <tr>
                                             <td class="col1">${e[0]}</td>
                                             <td class="col2">${e[1]}&nbsp;ngày</td>
                                         </tr>                                        
-                                    `
-                                }).join('')}
+                                    `;
+                                    })
+                                    .join("")}
                             </tbody>
                         </table>
                         <table class="tbl1" cellspacing="1" cellpadding="4">
                             <tbody>
-                                ${sortArr.slice(5, 10).map((e) => {
-                                    return `
+                                ${sortArr
+                                    .slice(5, 10)
+                                    .map((e) => {
+                                        return `
                                         <tr>
                                             <td class="col1">${e[0]}</td>
                                             <td class="col2">${e[1]}&nbsp;ngày</td>
                                         </tr>                                        
-                                    `
-                                }).join('')}
+                                    `;
+                                    })
+                                    .join("")}
                             </tbody>
                         </table>
                         <table class="tbl1" cellspacing="1" cellpadding="4">
                             <tbody>
-                                ${sortArr.slice(10, 15).map((e) => {
-                                    return `
+                                ${sortArr
+                                    .slice(10, 15)
+                                    .map((e) => {
+                                        return `
                                         <tr>
                                             <td class="col1">${e[0]}</td>
                                             <td class="col2">${e[1]}&nbsp;ngày</td>
                                         </tr>                                        
-                                    `
-                                }).join('')}
+                                    `;
+                                    })
+                                    .join("")}
                             </tbody>
                         </table>
                         <table class="tbl1" cellspacing="1" cellpadding="4">
                             <tbody>
-                                ${sortArr.slice(15, 20).map((e) => {
-                                    return `
+                                ${sortArr
+                                    .slice(15, 20)
+                                    .map((e) => {
+                                        return `
                                         <tr>
                                             <td class="col1">${e[0]}</td>
                                             <td class="col2">${e[1]}&nbsp;ngày</td>
                                         </tr>                                        
-                                    `
-                                }).join('')}
+                                    `;
+                                    })
+                                    .join("")}
                             </tbody>
                         </table>
                         <table class="tbl1" cellspacing="1" cellpadding="4">
                             <tbody>
-                                ${sortArr.slice(20, 25).map((e) => {
-                                    return `
+                                ${sortArr
+                                    .slice(20, 25)
+                                    .map((e) => {
+                                        return `
                                         <tr>
                                             <td class="col1">${e[0]}</td>
                                             <td class="col2">${e[1]}&nbsp;ngày</td>
                                         </tr>                                        
-                                    `
-                                }).join('')}
+                                    `;
+                                    })
+                                    .join("")}
                             </tbody>
                         </table>
                         <table class="tbl1" cellspacing="1" cellpadding="4">
                             <tbody>
-                                ${sortArr.slice(25, 30).map((e) => {
-                                    return `
+                                ${sortArr
+                                    .slice(25, 30)
+                                    .map((e) => {
+                                        return `
                                         <tr>
                                             <td class="col1">${e[0]}</td>
                                             <td class="col2">${e[1]}&nbsp;ngày</td>
                                         </tr>                                        
-                                    `
-                                }).join('')}
+                                    `;
+                                    })
+                                    .join("")}
                             </tbody>
                         </table>
                     </div>
@@ -2968,10 +2986,91 @@ const rbkThongKeDacBietXSMBLauChuaRa = (req, res) => {
 const rbkThongKeXSMBTheoNgay = (req, res) => {
     try {
         const { cvHtml } = req.query;
+        const today = new Date();
+        const day = today.getDay();
+
+        const dayLabels = {
+            0: 'Chủ nhật',
+            1: 'Thứ hai',
+            2: 'Thứ ba',
+            3: 'Thứ tư',
+            4: 'Thứ năm',
+            5: 'Thứ sáu',
+            6: 'Thứ bảy',
+        }
 
         let kqxs = CACHE.get("KQXS")[1];
+        kqxs = Object.values(kqxs)
+            .slice(-30)
+            .filter((e) => {
+                const d = new Date(e.ngay);
 
-        res.json({ kqxs });
+                return d.getDay() === day;
+            });
+
+        const response = Array.from({ length: 100 }, (_, index) => {
+            return index.toString().padStart(2, "0");
+        }).reduce((pre, cr) => {
+            return {
+                ...pre,
+                [cr]: 0,
+            };
+        }, {});
+
+        for (let i = 0; i < kqxs.length; i++) {
+            const kq = kqxs[i];
+
+            const nums = Object.values(kq.ketqua)
+                .flat()
+                .slice(1)
+                .map((e) => {
+                    return e.slice(-2);
+                });
+
+            nums.forEach((num) => {
+                if (response[num]) {
+                    response[num] = response[num] + 1;
+                } else {
+                    response[num] = 1;
+                }
+            });
+        }
+
+        const sortArr = Object.entries(response).sort((a, b) => {
+            return b[1] - a[1];
+        });
+
+        if (+cvHtml) {
+            return `
+                <div class="result-table">
+                    <table class="table col100">
+                        <tbody>
+                            <tr><td class="bold">27 bộ số xuất hiện nhiều nhất vào ${dayLabels[day]} trong 4 tuần:</td></tr>
+                            <tr>
+                                <td class="lh22">
+                                    ${sortArr.slice(0, 27).map((e) => {
+                                        return `<span class="bold red">${e[0]}</span>(${e[1]} lần); `;
+                                    }).join('')}
+                                </td>
+                            </tr>
+                            <tr><td class="bold">10 bộ số xuất hiện ít nhất vào ${dayLabels[day]} trong 4 tuần: </td></tr>
+                            <tr>
+                                <td class="lh22">
+                                    ${sortArr.slice(-10).map((e) => {
+                                        return `<span class="bold red">${e[0]}</span>(${e[1]} lần); `;
+                                    }).join('')}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>            
+            `;
+        } else {
+            return res.json({
+                most: sortArr.slice(0, 27),
+                atLeast: sortArr.slice(-10),
+            });
+        }
     } catch (error) {
         console.log(error);
         res.status(400).json("Error");
