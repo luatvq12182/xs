@@ -3041,30 +3041,32 @@ const rbkThongKeXSMBTheoNgay = (req, res) => {
         });
 
         if (+cvHtml) {
-            return `
-                <div class="result-table">
-                    <table class="table col100">
-                        <tbody>
-                            <tr><td class="bold">27 bộ số xuất hiện nhiều nhất vào ${dayLabels[day]} trong 4 tuần:</td></tr>
-                            <tr>
-                                <td class="lh22">
-                                    ${sortArr.slice(0, 27).map((e) => {
-                                        return `<span class="bold red">${e[0]}</span>(${e[1]} lần); `;
-                                    }).join('')}
-                                </td>
-                            </tr>
-                            <tr><td class="bold">10 bộ số xuất hiện ít nhất vào ${dayLabels[day]} trong 4 tuần: </td></tr>
-                            <tr>
-                                <td class="lh22">
-                                    ${sortArr.slice(-10).map((e) => {
-                                        return `<span class="bold red">${e[0]}</span>(${e[1]} lần); `;
-                                    }).join('')}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>            
-            `;
+            res.json({
+                html: `
+                    <div class="result-table">
+                        <table class="table col100">
+                            <tbody>
+                                <tr><td class="bold">27 bộ số xuất hiện nhiều nhất vào ${dayLabels[day]} trong 4 tuần:</td></tr>
+                                <tr>
+                                    <td class="lh22">
+                                        ${sortArr.slice(0, 27).map((e) => {
+                                            return `<span class="bold red">${e[0]}</span>(${e[1]} lần); `;
+                                        }).join('')}
+                                    </td>
+                                </tr>
+                                <tr><td class="bold">10 bộ số xuất hiện ít nhất vào ${dayLabels[day]} trong 4 tuần: </td></tr>
+                                <tr>
+                                    <td class="lh22">
+                                        ${sortArr.slice(-10).map((e) => {
+                                            return `<span class="bold red">${e[0]}</span>(${e[1]} lần); `;
+                                        }).join('')}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>            
+                `
+            })
         } else {
             return res.json({
                 most: sortArr.slice(0, 27),
