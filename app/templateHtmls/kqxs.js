@@ -44,7 +44,11 @@ const cvToHtml = (domain, ngay, kqxs) => {
                                         } ${el}"
                                         data-id-giai="${index - 1}"
                                         data-num="${el}"
-                                        >${el ? el : `<img class="orange-spinner" src="https://soicau888.io/wp-content/themes/xs/assets/images/orange-spinner.gif" alt="orange-spinner">`}</span
+                                        >${
+                                            el
+                                                ? el
+                                                : `<img class="orange-spinner" src="https://soicau888.io/wp-content/themes/xs/assets/images/orange-spinner.gif" alt="orange-spinner">`
+                                        }</span
                                         >                      
                                     `;
                                         })
@@ -59,7 +63,11 @@ const cvToHtml = (domain, ngay, kqxs) => {
                                 <td>Mã ĐB</td>
                                 <td>
                                     <span class="winner-code" id="mad_db">
-                                    ${ketqua[e] ? ketqua[e] : `<img class="orange-spinner" src="https://soicau888.io/wp-content/themes/xs/assets/images/orange-spinner.gif" alt="orange-spinner">`}
+                                    ${
+                                        ketqua[e]
+                                            ? ketqua[e]
+                                            : `<img class="orange-spinner" src="https://soicau888.io/wp-content/themes/xs/assets/images/orange-spinner.gif" alt="orange-spinner">`
+                                    }
                                     </span>
                                 </td>
                                 </tr>              
@@ -117,8 +125,12 @@ const cvToHtml = (domain, ngay, kqxs) => {
                                 return `
                             <tr>
                                 <td class="text-center">${index}</td>
-                                <td class="text-center">${e.sort().join(", ")}</td>
-                                <td class="text-center">${duoi[index].sort().join(", ")}</td>
+                                <td class="text-center">${e
+                                    .sort()
+                                    .join(", ")}</td>
+                                <td class="text-center">${duoi[index]
+                                    .sort()
+                                    .join(", ")}</td>
                                 <td class="text-center">${index}</td>
                             </tr>
                             `;
@@ -175,9 +187,15 @@ const cvToHtml = (domain, ngay, kqxs) => {
                                             ["giai8", "giaidacbiet"].includes(
                                                 giai
                                             )
-                                                ? (kqxs.length < 4 ? "big red" : "red")
+                                                ? kqxs.length < 4
+                                                    ? "big red"
+                                                    : "red"
                                                 : ""
-                                        }" data-id-giai="${giai}" data-num="${num}">${num ? num : `<img class="orange-spinner" src="https://soicau888.io/wp-content/themes/xs/assets/images/orange-spinner.gif" alt="orange-spinner">`}</span>`;
+                                        }" data-id-giai="${giai}" data-num="${num}">${
+                                            num
+                                                ? num
+                                                : `<img class="orange-spinner" src="https://soicau888.io/wp-content/themes/xs/assets/images/orange-spinner.gif" alt="orange-spinner">`
+                                        }</span>`;
                                     })
                                     .join("")}
                             </td>
@@ -245,11 +263,29 @@ const cvToHtml = (domain, ngay, kqxs) => {
                                             <td class="text-center">${e}</td>
                                             ${thongkes
                                                 .map((tk) => {
+                                                    if (
+                                                        Object.values(tk.dau[e])
+                                                            .length == 1
+                                                    ) {
+                                                        return `
+                                                            <td class="text-center">${Object.values(
+                                                                tk.dau[e]
+                                                            )[0]
+                                                                ?.split(",")
+                                                                ?.sort()
+                                                                ?.join(
+                                                                    ", "
+                                                                )}</td>
+                                                        `;
+                                                    }
+
                                                     return `
-                                                    <td class="text-center">${Object.values(
-                                                        tk.dau[e]
-                                                    ).sort().join(", ")}</td>
-                                                `;
+                                                        <td class="text-center">${Object.values(
+                                                            tk.dau[e]
+                                                        )
+                                                            .sort()
+                                                            .join(", ")}</td>
+                                                    `;
                                                 })
                                                 .join("")}
                                         </tr>
@@ -344,7 +380,11 @@ const cvToHtml = (domain, ngay, kqxs) => {
                                                         ].includes(giai)
                                                             ? "big red"
                                                             : ""
-                                                    }" data-id-giai="${giai}" data-num="${num}">${num ? num : `<img class="orange-spinner" src="https://soicau888.io/wp-content/themes/xs/assets/images/orange-spinner.gif" alt="orange-spinner">`}</span>
+                                                    }" data-id-giai="${giai}" data-num="${num}">${
+                                                    num
+                                                        ? num
+                                                        : `<img class="orange-spinner" src="https://soicau888.io/wp-content/themes/xs/assets/images/orange-spinner.gif" alt="orange-spinner">`
+                                                }</span>
                                                 `;
                                             })
                                             .join(
@@ -406,8 +446,12 @@ const cvToHtml = (domain, ngay, kqxs) => {
                                 return `
                             <tr>
                                 <td class="text-center">${index}</td>
-                                <td class="text-center">${e.sort().join(", ")}</td>
-                                <td class="text-center">${duoi[index].sort().join(", ")}</td>
+                                <td class="text-center">${e
+                                    .sort()
+                                    .join(", ")}</td>
+                                <td class="text-center">${duoi[index]
+                                    .sort()
+                                    .join(", ")}</td>
                                 <td class="text-center">${index}</td>
                             </tr>
                             `;
