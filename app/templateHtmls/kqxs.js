@@ -117,8 +117,8 @@ const cvToHtml = (domain, ngay, kqxs) => {
                                 return `
                             <tr>
                                 <td class="text-center">${index}</td>
-                                <td class="text-center">${e.join(", ")}</td>
-                                <td class="text-center">${duoi[index].join(", ")}</td>
+                                <td class="text-center">${e.sort().join(", ")}</td>
+                                <td class="text-center">${duoi[index].sort().join(", ")}</td>
                                 <td class="text-center">${index}</td>
                             </tr>
                             `;
@@ -248,7 +248,7 @@ const cvToHtml = (domain, ngay, kqxs) => {
                                                     return `
                                                     <td class="text-center">${Object.values(
                                                         tk.dau[e]
-                                                    ).join(", ")}</td>
+                                                    ).sort().join(", ")}</td>
                                                 `;
                                                 })
                                                 .join("")}
@@ -406,8 +406,8 @@ const cvToHtml = (domain, ngay, kqxs) => {
                                 return `
                             <tr>
                                 <td class="text-center">${index}</td>
-                                <td class="text-center">${e.join(", ")}</td>
-                                <td class="text-center">${duoi[index].join(", ")}</td>
+                                <td class="text-center">${e.sort().join(", ")}</td>
+                                <td class="text-center">${duoi[index].sort().join(", ")}</td>
                                 <td class="text-center">${index}</td>
                             </tr>
                             `;
